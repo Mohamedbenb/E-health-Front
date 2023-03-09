@@ -4,10 +4,12 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
-  NbDatepickerModule, NbIconModule,
+  NbDatepickerModule, NbDialogModule, NbIconModule,
   NbInputModule,
+  NbPopoverModule,
   NbRadioModule,
   NbSelectModule,
+  NbTreeGridModule,
   NbUserModule,
 } from '@nebular/theme';
 
@@ -19,6 +21,8 @@ import { FormLayoutsComponent } from './form-layouts/form-layouts.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { FormsModule as ngFormsModule } from '@angular/forms';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { TablesRoutingModule } from '../tables/tables-routing.module';
 
 @NgModule({
   imports: [
@@ -35,6 +39,15 @@ import { FormsModule as ngFormsModule } from '@angular/forms';
     NbSelectModule,
     NbIconModule,
     ngFormsModule,
+    NbCardModule,
+    NbTreeGridModule,
+    NbIconModule,
+    NbInputModule,
+    ThemeModule,
+    TablesRoutingModule,
+    Ng2SmartTableModule,
+    NbDialogModule,
+    NbPopoverModule,
   ],
   declarations: [
     FormsComponent,

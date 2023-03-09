@@ -1,0 +1,33 @@
+<nb-card>
+    <nb-card-header>Enter your name</nb-card-header>
+<nb-card-body>
+    
+    
+    
+    <form *ngIf="action === 'edit'||action === 'add' else delete" [formGroup]="modalForm" (submit)="onSubmit()" aria-labelledby="title">
+
+       
+          <div><input  [formControlName]="'id'" name="id" type="text" nbInput  placeholder="ID" required></div>
+          <div><input  [formControlName]="'firstname'" name="first_name" type="text" nbInput  placeholder="First Name" required></div>
+          <div><input  [formControlName]="'lastname'" name="last_name" type="text" nbInput  placeholder="Last Name" required></div>
+          <div><input  [formControlName]="'username'" name="user_name" type="text" nbInput  placeholder="Username" required></div>
+          <div><input  [formControlName]="'email'" name="email" type="text" nbInput  placeholder="email" required></div>
+          <div><input  [formControlName]="'age'" name="age" type="text" nbInput  placeholder="Age" required></div>
+        
+        
+        <button class="cancel" nbButton status="danger" (click)="onCancel()">Cancel</button>
+        <button  nbButton status="success"  type="submit"> Submit</button>
+    
+    </form>
+    <ng-template #delete >
+    <form [formGroup]="modalForm" (submit)="onDelete()" aria-labelledby="title">
+        <button class="cancel"   status="success"  nbButton (click)="onCancel()">Cancel</button>
+        <button  nbButton status="danger" type="submit"> delete</button>
+    
+    </form>
+</ng-template>
+
+</nb-card-body>
+</nb-card>
+
+    

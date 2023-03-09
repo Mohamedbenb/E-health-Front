@@ -1,0 +1,7 @@
+{
+    "/students/list": "/students",
+    "/students/get/:id": "/students/:id",
+    "/students/create": "/students",
+    "/students/update/:id": "/students/:id",
+    "/students/delete/:id": "/students/:id"
+  }

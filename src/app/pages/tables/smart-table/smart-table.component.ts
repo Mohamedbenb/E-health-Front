@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { SmartTableData } from '../../../@core/data/smart-table';
+import { ModalFormComponent } from '../../ModalForm/ModalFormComponent';
+
+
 
 @Component({
   selector: 'ngx-smart-table',
@@ -11,10 +15,13 @@ import { SmartTableData } from '../../../@core/data/smart-table';
 export class SmartTableComponent {
 
   settings = {
+    mode:'inline',
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
+      
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -50,14 +57,17 @@ export class SmartTableComponent {
         title: 'Age',
         type: 'number',
       },
+      
     },
   };
 
   source: LocalDataSource = new LocalDataSource();
-
-  constructor(private service: SmartTableData) {
+  names: any [] = [];
+  constructor(private service: SmartTableData,
+              private dialogService: NbDialogService,
+    ){
     const data = this.service.getData();
-    this.source.load(data);
+    this.source.load(data)
   }
 
   onDeleteConfirm(event): void {
@@ -67,4 +77,14 @@ export class SmartTableComponent {
       event.confirm.reject();
     }
   }
+  open() {
+    this.dialogService.open(ModalFormComponent)
+      .onClose.subscribe(
+        name => name
+                        
+        && this.names.push(name),
+        );
+        console.log('zekljf',this.names)
+  }
+
 }

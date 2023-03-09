@@ -1,0 +1,82 @@
+<h1 id="title" class="title">Register</h1>
+
+<form [formGroup]="signupForm" (ngSubmit)="signup()" aria-labelledby="title">
+
+  <div class="form-control-group">
+    <label class="label" for="input-name">User name:</label>
+    <input nbInput
+            [formControlName]="'username'"
+           placeholder="Full name"
+           autofocus
+           fullWidth
+           fieldSize="large"
+          >
+    <ng-container *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">
+      <p class="caption status-danger" >
+        Full name is required!
+      </p>
+
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
+    <label class="label" for="input-email">Email address:</label>
+    <input nbInput
+            [formControlName]="'email'"
+
+           id="input-email"
+           name="email-address"
+           
+           placeholder="Email address"
+           fullWidth
+           fieldSize="large"
+           >
+    <ng-container *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched">
+      <p class="caption status-danger" >
+        Email is required!
+      </p>
+      
+    </ng-container>
+  </div>
+
+  <div class="form-control-group">
+    <label class="label" for="input-password">Password:</label>
+    <input nbInput
+    [formControlName]="'password'" id="password" class="form-control" name="password" required
+           type="password"
+           id="input-password"
+           name="password"
+           placeholder="Password"
+           fullWidth
+           fieldSize="large"
+           >
+    <ng-container *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched">
+      <p class="caption status-danger" *ngIf="password.errors?.required">
+        Password is required!
+      </p>
+      <p class="caption status-danger" *ngIf="password.errors?.minlength || password.errors?.maxlength">
+        Password should contain
+        
+        characters
+      </p>
+    </ng-container>
+  </div>
+
+  
+
+
+
+    <button nbButton
+            fullWidth
+            status="primary"
+            size="large"
+            type="submit">
+        Register
+    </button>
+</form>
+
+
+
+<section class="another-action" aria-label="Sign in">
+  Already have an account? <a class="text-link" routerLink="../login">Log in</a>
+</section>

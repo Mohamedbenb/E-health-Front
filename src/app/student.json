@@ -1,0 +1,44 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "firstname": "Mohamedd",
+      "lastname": "benb",
+      "username": "sdfs",
+      "email": "sqfeqz",
+      "age": "25"
+    },
+    {
+      "id": "98",
+      "firstname": "Mohamed",
+      "lastname": "test",
+      "username": "testt",
+      "email": "testt@testt.com",
+      "age": "5452"
+    },
+    {
+      "id": "4",
+      "firstname": "hdhdd",
+      "lastname": "hdhdH",
+      "username": "HSJIKDH",
+      "email": "JKLSJL",
+      "age": "123"
+    },
+    {
+      "id": "6",
+      "firstname": "zdlmkkd",
+      "lastname": "lmkzfdkfd",
+      "username": "lkfzdkdfk",
+      "email": "lkzdkd",
+      "age": "23"
+    },
+    {
+      "id": "65",
+      "firstname": "6555",
+      "lastname": "5zdj",
+      "username": "molazikf",
+      "email": "amzolkdfj",
+      "age": "79"
+    }
+  ]
+}

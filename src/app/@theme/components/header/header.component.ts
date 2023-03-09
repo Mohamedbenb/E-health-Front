@@ -1,10 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMediaBreakpointsService, NbMenuItem, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../../shared/auth.service';
+import { Router } from '@angular/router';
+import { AuthGuard } from '../../../auth/auth.guard';
 
 @Component({
   selector: 'ngx-header',
@@ -12,7 +16,10 @@ import { Subject } from 'rxjs';
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-
+  faUser = faUser;
+  isLoggedIn: boolean;
+  username: string;
+  
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
@@ -38,19 +45,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Profile' }, { title: 'Log out', data: { id: 'logout' } }  ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private authService: AuthService, private router: Router,
+              //private nb: NbMenuItem
+              private ath : AuthGuard,
+              ) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
+    this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
+    this.authService.username.subscribe((data: string) => this.username = data);
+    this.isLoggedIn = this.authService.isLoggedIn();
+    this.username = this.authService.getUserName();
     this.userService.getUsers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((users: any) => this.user = users.nick);
@@ -69,6 +83,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+      this.menuService.onItemClick().subscribe((event) => {
+        if (event.item.title === 'Log out') {
+          console.log('logout clicked');
+          this.logout();
+          
+          
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -90,5 +112,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+  async logout() {
+if (this.authService.isLoggedIn())
+  { await this.authService.logout();}
+    this.isLoggedIn = false;
+    this.router.navigate([''])
+    .then(() => {
+      window.location.reload();
+    });
+    
   }
 }
