@@ -16,6 +16,7 @@ import { ModalFormComponent } from '../../ModalForm/ModalFormComponent';
 })
 export class FormLayoutsComponent implements OnInit{
   modalForm: FormGroup;
+  tableData: LocalDataSource;
   settings = {
     actions: {
       add:true,
@@ -83,7 +84,8 @@ export class FormLayoutsComponent implements OnInit{
   
 }
 source: LocalDataSource = new LocalDataSource();
-tableData: any[] = [];
+
+//tableData: any[] = [];
   constructor(private customTableService: CustomTableService,
               private dialogService: NbDialogService,
               
@@ -97,8 +99,9 @@ tableData: any[] = [];
 
   loadTableData() {
     this.customTableService.getTableData().subscribe((data) => {
-      this.tableData=data;
-      this.source = data;
+    this.tableData=new LocalDataSource(data);
+  }, (error) => {  
+    console.error('Error loading table data:', error);
     });
     
   }
@@ -128,6 +131,7 @@ tableData: any[] = [];
   }
 
   onEditClick(event: any) {
+    console.log(event.data)
     // get the data of the selected row
     const tableData = event.data;
   
@@ -138,10 +142,11 @@ tableData: any[] = [];
         action: 'edit',
         dialogData: tableData,
       },
-    }).onClose.subscribe(() => {
+    },).onClose.subscribe(() => {
       console.log('updating')
       this.loadTableData();
     })
+    console.log('Action:', );
 
   }
 

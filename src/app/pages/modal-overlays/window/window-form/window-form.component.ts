@@ -18,5 +18,6 @@ export class WindowFormComponent {
 
   close() {
     this.windowRef.close();
+   
   }
 }

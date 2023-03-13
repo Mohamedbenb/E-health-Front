@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NbButton, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbAlertModule, NbButton, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
 import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -14,12 +14,14 @@ import { ThemeModule } from '../../@theme/theme.module';
 @NgModule({
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     ThemeModule,
     NbMenuModule,
     NbCardModule,
     NbIconModule,
     NbInputModule,
-    ReactiveFormsModule,
+    NbAlertModule,
+    FormsModule,
     NbButtonModule,
     NbWindowModule,
     

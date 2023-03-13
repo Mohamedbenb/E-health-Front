@@ -2,7 +2,7 @@
   "students": [
     {
       "id": "1",
-      "firstname": "Mohamedd",
+      "firstname": "Mohamedda",
       "lastname": "benb",
       "username": "sdfs",
       "email": "sqfeqz",
@@ -31,14 +31,6 @@
       "username": "lkfzdkdfk",
       "email": "lkzdkd",
       "age": "23"
-    },
-    {
-      "id": "65",
-      "firstname": "6555",
-      "lastname": "5zdj",
-      "username": "molazikf",
-      "email": "amzolkdfj",
-      "age": "79"
     }
   ]
 }

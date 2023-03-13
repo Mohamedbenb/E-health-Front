@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomTableService } from '../../custom-table.service';
@@ -8,13 +8,19 @@ import { CustomTableService } from '../../custom-table.service';
   templateUrl:"Modal-template.html"
 })
 export class ModalFormComponent implements OnInit{
+  
   modalForm: FormGroup;
-  dialogTitle: string;
-  action: string;
-  dialogData: any;
+  @Input() dialogTitle: string;
+  @Input() action: string;
+  @Input() dialogData: any;
+  isDeleting = false;
+  
+  formData = {id: '', firstname: '',username: '',lastname: '', email: '',age: '',};
+  
   deleteMode = false;
-
-  constructor(private fb: FormBuilder,protected ref: NbDialogRef<ModalFormComponent>,
+  protected cd: ChangeDetectorRef;
+  
+  constructor(cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>,
     private customTableService: CustomTableService,
     @Inject(NB_DIALOG_CONFIG) public data: any
     ) {
@@ -23,51 +29,53 @@ export class ModalFormComponent implements OnInit{
       this.dialogData = data.dialogData;
       
       
+      
     }
+    
   ngOnInit(): void {
-    console.log('Dialog data:', this.dialogData);
-
-    this.modalForm = this.fb.group({
-      id: new FormControl('', Validators.required),
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
-      username: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      age: new FormControl('', Validators.required),
+    if (this.action === 'edit') {
+      this.formData = this.dialogData;
+      console.log('Form values:',this.dialogData)
       
-      
-
-    });
-        if (this.action === 'edit') {
-      this.modalForm.patchValue(this.dialogData);
-      console.log('Form values:',this.modalForm)
-      
-    }
-    if (this.action === 'delete') {
-      this.modalForm.disable();
-      this.deleteMode = true;
     }
   }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
   
-  
+  getConfigValue(key: string): any{};
   
 
   onCancel() {
     this.ref.close();
   }
-
+  
   onSubmit(): void {
-    console.log('Form value:', this.modalForm.value);
+    
+    console.log('Form value:', this.formData);
 
     if (this.action === 'add') {
-      this.customTableService.addTableData(this.modalForm.value).subscribe(() => {
+      this.customTableService.addTableData(this.formData).subscribe(() => {
         this.ref.close();
       }, (error) => {
         console.error('Error adding table data:', error);
       });
     } else if (this.action === 'edit') {
-      this.customTableService.updateTableData(this.modalForm.value).subscribe(() => {
-        console.log('Data sent to updateTableData:', this.modalForm.value);
+      
+      console.log('checkpoint',this.dialogData.id)
+      this.formData.id = this.dialogData.id;
+      this.formData.firstname = this.dialogData.firstname;
+      this.formData.lastname = this.dialogData.lastname;
+      this.formData.username = this.dialogData.username;
+      this.formData.email = this.dialogData.email;
+      this.formData.age = this.dialogData.age;
+      this.customTableService.updateTableData(this.dialogData).subscribe(() => {
+        console.log('Data sent to updateTableData:', this.formData);
         this.ref.close();
       }, (error) => {
         console.error('Error updating table data:', error);
@@ -89,10 +97,11 @@ export class ModalFormComponent implements OnInit{
       });
     } else {
       this.action = 'delete';
-      this.modalForm.disable();
+      
       this.deleteMode = true;
-    }
+    } 
   }
+  
 }
   
 
