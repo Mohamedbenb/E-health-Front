@@ -1,26 +1,8 @@
 <nb-card>
     <nb-card-header>Fill the form please</nb-card-header>
 <nb-card-body>
-    
-    
-    
     <form *ngIf="action === 'edit'||action === 'add' else delete" #modalForm="ngForm" (ngSubmit)="onSubmit()" aria-labelledby="title">
-
-       
-          <div>
-            <label class="label" for="id">Id:</label>
-            <input fullWidth 
-                    id="id" 
-                    (keypress)="numberOnly($event)"  
-                    [(ngModel)]="formData.id" 
-                    #id="ngModel" 
-                    name="id" 
-                    type="text" 
-                    nbInput  
-                    placeholder="ID" 
-                    required>
-        </div>
-          <div>
+<div>
             <label class="label" for="firstname">Firstname:</label>
             <input fullWidth 
                     id="firstname"  
@@ -59,7 +41,7 @@
                     Username should not be less than {{minlength}} characters
                 </p>
 
-                </ng-container>
+            </ng-container>
         </div>
           <div>
             <label class="label" for="email">Email address:</label>

@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 import {
   NbAlertModule,
   NbButtonModule,
+  NbCardComponent,
+  NbCardModule,
   NbChatModule,
   NbCheckboxModule,
   NbDatepickerModule,
@@ -37,6 +39,9 @@ import { LoginComponent } from './login/login.component';
 import { ToastrModule } from 'ngx-toastr';
 import { Modalmodule } from './pages/ModalForm/modal.module';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,6 +58,8 @@ import { Modalmodule } from './pages/ModalForm/modal.module';
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
+    NbCardModule,
+    Ng2SmartTableModule,
     CommonModule,
     FormsModule,
     RouterModule,

@@ -1,17 +1,16 @@
-import { Component, OnInit} from '@angular/core';
-import {  NbDialogService } from '@nebular/theme';
+import { Component, OnInit } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { CustomTableService} from '../../../custom-table.service';
-import { ModalFormComponent } from '../../ModalForm/ModalFormComponent';
-
+import { CustomTableService } from '../custom-table.service';
+import { ModalFormComponent } from '../pages/ModalForm/ModalFormComponent';
 
 @Component({
-  selector: 'ngx-form-layouts',
-  styleUrls: ['./form-layouts.component.scss'],
-  templateUrl: 'form-layouts.component.html',
+  selector: 'ngx-smart-table',
+  templateUrl: './smart-table.component.html',
+  
 })
-export class FormLayoutsComponent implements OnInit{
-  //modalForm: FormGroup;
+export class SMComponent implements OnInit{
+  
   tableData: LocalDataSource;
   settings = {
     actions: {
@@ -77,13 +76,13 @@ export class FormLayoutsComponent implements OnInit{
 }
 
   constructor(private customTableService: CustomTableService,
-              private dialogService: NbDialogService,
-              
-    ) {
+              private dialogService: NbDialogService
+              ) {
     
   }
   ngOnInit() {
     this.loadTableData();
+    console.log('Hey Hey')
      
   }
 
@@ -146,15 +145,3 @@ export class FormLayoutsComponent implements OnInit{
 
 
 }
-
-
-
-
-
-
-
-    
-  
-  
-
-  

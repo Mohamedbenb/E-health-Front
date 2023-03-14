@@ -1,6 +1,7 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AuthGuard } from './auth/auth.guard';
+
+
 
 
 
@@ -18,18 +19,21 @@ export const routes: Routes = [
     .then(m => m.NgxAuthModule),
     
   },
+  {path: 'smt',
+    loadChildren: () => import('./smart-table/smart-table.module')
+  .then(m => m.SmartTableModule),
+ },
+ // { path: 'login', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: 'smt', pathMatch: 'full' },
+
   
-  { path: 'login', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
   
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
+
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
+  imports: [RouterModule.forRoot(routes),],
   exports: [RouterModule],
 })
 export class AppRoutingModule {

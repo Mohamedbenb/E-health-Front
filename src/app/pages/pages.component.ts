@@ -22,16 +22,6 @@ export class PagesComponent {
       { //router.navigate(['login'])
       }
       
-      console.log(this.authService.isLoggedIn());
-      console.log(this.authService.jwtHelper.isTokenExpired(this.authService.getJwtToken()))
-      console.log(this.authService.jwtHelper.getTokenExpirationDate(this.authService.getJwtToken()))
-      
-      console.log(this.authService.jwtHelper.getTokenExpirationDate(this.authService.getJwtToken()))
-      setTimeout(() =>{
-        this.authService.refreshToken();
-        console.log(this.authService.jwtHelper.getTokenExpirationDate(this.authService.getJwtToken()))
-        console.log(this.authService.getRefreshToken())
-        console.log(this.authService.jwtHelper.isTokenExpired(this.authService.getJwtToken()))},10000)
   }
   
   

@@ -1,0 +1,51 @@
+
+<nb-layout>
+  <nb-layout-column>
+    
+<div class="row">
+    <div class="col-md-8">
+  
+      <nb-card>
+        <nb-card-header>
+          <div class="float-left">
+            <h3>My Table</h3>
+          </div>
+        </nb-card-header>
+        <nb-card-body>       
+          <ng2-smart-table
+            [settings]="settings"
+            [source]="tableData"
+            
+            (create)="openAddDialog()"
+            (edit)="onEditClick($event)"
+            (delete)="onDeleteConfirm($event)"
+            (custom)="openAddDialog()"
+            
+          ></ng2-smart-table>
+        </nb-card-body>
+      </nb-card>
+        
+  
+  
+  
+    </div>
+  </div>
+  </nb-layout-column>
+  </nb-layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

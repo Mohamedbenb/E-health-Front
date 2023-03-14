@@ -55,6 +55,7 @@ import { TablesRoutingModule } from '../tables/tables-routing.module';
     FormInputsComponent,
     FormLayoutsComponent,
     DatepickerComponent,
+    
   ],
 })
 export class FormsModule { }

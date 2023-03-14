@@ -11,6 +11,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TablesRoutingModule } from './tables/tables-routing.module';
 
 
+
 @NgModule({
   imports: [
     
@@ -30,7 +31,7 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
   ],
   declarations: [
     PagesComponent,
-  ],
+    ],
 })
 export class PagesModule {
 }

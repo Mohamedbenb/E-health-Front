@@ -12,9 +12,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
+  imports: [  
     ThemeModule,
     NbMenuModule,
     NbCardModule,

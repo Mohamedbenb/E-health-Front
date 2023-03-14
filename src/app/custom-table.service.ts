@@ -16,23 +16,24 @@ export class CustomTableService {
 
   getTableData(): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.get('http://localhost:3000/students/list', options);
+    console.log(this.http.get('http://localhost:8080/api/employees/', options));
+    return this.http.get('http://localhost:8080/api/employees/', options);
   }
 
   addTableData(data: any): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.post('http://localhost:3000/students/create', data, options);
+    return this.http.post('http://localhost:8080/api/employees/', data, options);
   }
 
   updateTableData(data: any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', data);
-    return this.http.put(`http://localhost:3000/students/update/${data.id}`, data, options);
+    return this.http.put(`http://localhost:8080/api/employees/${data.id}`, data, options);
   }
 
   deleteTableData(id: number): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.delete(`http://localhost:3000/students/delete/${id}`, options);
+    return this.http.delete(`http://localhost:8080/api/employees/${id}`, options);
   }
 }
 
