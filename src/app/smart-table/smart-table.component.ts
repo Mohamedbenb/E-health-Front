@@ -10,7 +10,7 @@ import { ModalFormComponent } from '../pages/ModalForm/ModalFormComponent';
   
 })
 export class SMComponent implements OnInit{
-  
+  submitted: boolean;
   tableData: LocalDataSource;
   settings = {
     actions: {
@@ -83,6 +83,7 @@ export class SMComponent implements OnInit{
   ngOnInit() {
     this.loadTableData();
     console.log('Hey Hey')
+    this.submitted=false;
      
   }
 

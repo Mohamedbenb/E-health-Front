@@ -1,9 +1,9 @@
-<nb-card>
+<nb-card *ngIf="action === 'edit'||action === 'add' else delete">
     <nb-card-header>Fill the form please</nb-card-header>
 <nb-card-body>
-    <form *ngIf="action === 'edit'||action === 'add' else delete" #modalForm="ngForm" (ngSubmit)="onSubmit()" aria-labelledby="title">
-<div>
-            <label class="label" for="firstname">Firstname:</label>
+    <form  #modalForm="ngForm" (ngSubmit)="onSubmit()" aria-labelledby="title">
+        <div class="form-control-group">
+            <label class="label" for="firstname">First name:</label>
             <input fullWidth 
                     id="firstname"  
                     [(ngModel)]="formData.firstname" 
@@ -12,10 +12,19 @@
                     type="text" 
                     nbInput  
                     placeholder="First Name" 
-                    [required]="getConfigValue('forms.validation.firstname.required')">
+                    [minlength]="1"
+                    [required]="true"
+                    [attr.aria-invalid]="firstname.invalid && firstname.touched ? true : null">
+                   
+                    <ng-container *ngIf=" firstname.invalid && firstname.touched ">
+                      <p class="caption status-danger" >
+                          First name is required.
+                      </p>
+                    </ng-container>
+
         </div>
-          <div>
-            <label class="label" for="lastname">Lastname:</label>
+          <div class="form-control-group">
+            <label class="label" for="lastname">Last name:</label>
             <input fullWidth
                     id="lastname"  
                     [(ngModel)]="formData.lastname" 
@@ -23,27 +32,37 @@
                     name="last_name" 
                     type="text" nbInput  
                     placeholder="Last Name" 
-                    required>
+                    [minlength]="1"
+                    [required]="true"
+                    [attr.aria-invalid]="lastname.invalid && lastname.touched? true : null">
+                    <ng-container *ngIf="lastname.invalid && lastname.touched ">
+                      <p class="caption status-danger" >
+                          Last name is required.
+                      </p>
+                    </ng-container>
+
         </div>
-          <div>
+          <div class="form-control-group">
             <label  class="label" for="username">Username:</label>
             <input fullWidth 
                     id="username"  
                     [(ngModel)]="formData.username" 
                     #username="ngModel" 
-                    name="user_name" 
+                    name="username" 
                     type="text" nbInput  
                     placeholder="Username" 
                     [minlength]="5"
+                    [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : 'basic'"
+                    [required]="true"
                     [attr.aria-invalid]="username.invalid && username.touched ? true : null">
-            <ng-container *ngIf="username.invalid && !username.pristine ">
-                <p class="caption status-danger" *ngIf="username.errors?.minlength">
-                    Username should not be less than {{minlength}} characters
+            <ng-container *ngIf="username.invalid && username.touched ">
+                <p class="caption status-danger" >
+                    Username should not be less than 5 characters
                 </p>
 
             </ng-container>
         </div>
-          <div>
+          <div class="form-control-group">
             <label class="label" for="email">Email address:</label>
             <input id="email" 
                     fullWidth  
@@ -52,50 +71,65 @@
                     name="email" 
                     type="text" 
                     nbInput  
-                    placeholder="email" 
+                    placeholder="email"
+                    autofocus 
                     pattern=".+@.+\..+" 
-                    [status]="email.dirty ? 
-                    (email.invalid  ? 'danger' : 'success') : 'basic'" 
-                    [required]="getConfigValue('forms.validation.email.required')" 
-                    [attr.aria-invalid]="email.invalid && !email.touched ? true : null">
-            <ng-container *ngIf="email.invalid && email.touched">
-                <p class="caption status-danger" *ngIf="email.errors?.required">
-                  Email is required!
+                    [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'" 
+                    [required]="true" 
+                    [attr.aria-invalid]="email.invalid.errors && email.touched? true : null">
+            <ng-container *ngIf="email.errors?.pattern && email.touched">
+                <p class="caption status-danger"   >
+                  Please enter a valid Email.
                 </p>
-                <p class="caption status-danger" *ngIf="email.errors?.pattern">
-                  Email should be the real one!
-                </p>
+ 
               </ng-container>
           </div>
           
-          <div>
+          <div class="form-control-group">
             <label class="label" for="age">Age:</label>
             <input fullWidth 
-                    id="age"  
+                    id="age"
+                    #age="ngModel"
                     (keypress)="numberOnly($event)"   
                     [(ngModel)]="formData.age" 
                     name="age" 
                     type="text" 
                     nbInput  
                     placeholder="Age" 
-                    required>
+                    [minlength]="1"
+                    [required]="true"
+                    [attr.aria-invalid]="age.invalid && age.touched? true : null">
+                    <ng-container *ngIf="age.invalid && age.touched ">
+                      <p class="caption status-danger" >
+                          Age is required.
+                      </p>
+                    </ng-container>
         </div>
+        <p>Form Status: {{ modalForm.status }}</p>
         <br>
-        <div>
+        <div class="buttons-container">
             <button class="cancel" nbButton status="danger" (click)="onCancel()">Cancel</button>
-            <button  nbButton status="success"  type="submit"> Submit</button>
+            <button  nbButton [disabled]="submitted || !modalForm.valid" status="success"   [class.btn-pulse]="submitted"> Submit</button>
         </div>
     
     </form>
+  </nb-card-body>
+</nb-card>
     <ng-template #delete >
-    <form #modalForm="ngForm" (ngSubmit)="onDelete()" aria-labelledby="title">
-        <button class="cancel"   status="success"  nbButton (click)="onCancel()">Cancel</button>
-        <button  nbButton status="danger" type="submit"> delete</button>
-    
-    </form>
+      <nb-card>
+      <nb-card-header>Are you sure you want to delete this Item?</nb-card-header>
+      <nb-card-body>
+      <form #modalForm="ngForm" (ngSubmit)="onDelete()" aria-labelledby="title">
+        <div class="buttons-container">
+          <button class="cancel"   status="success"  nbButton (click)="onCancel()">Cancel</button>
+          <button  nbButton status="danger" type="submit"> delete</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
 </ng-template>
 
-</nb-card-body>
-</nb-card>
+
+
 
     

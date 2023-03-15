@@ -33,7 +33,7 @@ export class CustomTableService {
 
   deleteTableData(id: number): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.delete(`http://localhost:8080/api/employees/${id}`, options);
+    return this.http.patch(`http://localhost:8080/api/employees/${id}`, options);
   }
 }
 

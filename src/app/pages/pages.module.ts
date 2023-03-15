@@ -14,7 +14,6 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
 
 @NgModule({
   imports: [
-    
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,

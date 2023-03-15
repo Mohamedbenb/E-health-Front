@@ -5,10 +5,12 @@ import { CustomTableService } from '../../custom-table.service';
 
 @Component({
   selector: 'app-my-actions',
-  templateUrl:"Modal-template.html"
+  templateUrl:"./Modal-template.html",
+  styleUrls:['./Modal.component.scss'],
 })
 export class ModalFormComponent implements OnInit{
-  
+
+  submitted : boolean;
   modalForm: FormGroup;
   @Input() dialogTitle: string;
   @Input() action: string;
@@ -36,6 +38,7 @@ export class ModalFormComponent implements OnInit{
     if (this.action === 'edit') {
       this.formData = this.dialogData;
       console.log('Form values:',this.dialogData)
+      this.submitted =false;
       
     }
   }
