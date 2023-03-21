@@ -1,5 +1,8 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { DragCompComponent } from './drag-comp/drag-comp.component';
+
+
 
 
 
@@ -24,9 +27,11 @@ export const routes: Routes = [
   .then(m => m.SmartTableModule),
  },
  // { path: 'login', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '', redirectTo: 'smt', pathMatch: 'full' },
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  {path:'cal', component:DragCompComponent}
 
-  
+
+
   
 ];
 

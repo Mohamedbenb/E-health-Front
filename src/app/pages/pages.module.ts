@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -9,6 +9,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TablesRoutingModule } from './tables/tables-routing.module';
+
+
 
 
 
@@ -26,10 +28,14 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
     NbInputModule,
     ThemeModule,
     TablesRoutingModule,
-    Ng2SmartTableModule,
+    Ng2SmartTableModule, 
+    NbLayoutModule,
+    //BrowserModule,
+
   ],
   declarations: [
     PagesComponent,
+
     ],
 })
 export class PagesModule {

@@ -1,31 +1,14 @@
-<div class="row">
-  <div class="col-md-12">
-    <nb-card class="inline-form-card">
-      <nb-card-header>Inline form</nb-card-header>
-      <nb-card-body>
-        <form class="form-inline">
-          <input type="text" nbInput fullWidth placeholder="Jane Doe">
-          <input type="text" nbInput fullWidth placeholder="Email">
-          <nb-checkbox>Remember me</nb-checkbox>
-          <button type="submit" nbButton status="primary">Submit</button>
-        </form>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
 
 
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-sm">
 
     <nb-card>
       <nb-card-header>
-        <div class="float-right">
-          <a href="#" class="btn btn-success" (click)="loadTableData()">Refresh</a>
-        </div>
-        <div class="float-left">
-          <h3>My Table</h3>
+
+        <div class="float-center">
+          <h3>Gestion des Collaborateurs</h3>
         </div>
       </nb-card-header>
       <nb-card-body>       
@@ -41,15 +24,7 @@
         ></ng2-smart-table>
       </nb-card-body>
     </nb-card>
-      <nb-card class="form-input-card">
-        <nb-card-header>Return Result From Dialog</nb-card-header>
-        <nb-card-body class="result-from-dialog">
-          <button nbButton (click)="openAddDialog()">Enter Name</button>
-          <br>
-
-        </nb-card-body>
-      </nb-card>
-
+      
 
 
   </div>

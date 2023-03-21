@@ -97,7 +97,7 @@
                     nbInput  
                     placeholder="Age" 
                     [minlength]="1"
-                    [required]="true"
+                    [required]="true"[required]="true"
                     [attr.aria-invalid]="age.invalid && age.touched? true : null">
                     <ng-container *ngIf="age.invalid && age.touched ">
                       <p class="caption status-danger" >
@@ -105,7 +105,7 @@
                       </p>
                     </ng-container>
         </div>
-        <p>Form Status: {{ modalForm.status }}</p>
+        
         <br>
         <div class="buttons-container">
             <button class="cancel" nbButton status="danger" (click)="onCancel()">Cancel</button>

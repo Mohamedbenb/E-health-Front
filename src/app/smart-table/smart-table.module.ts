@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { NbCardModule,  NbIconModule,  NbInputModule, NbLayoutModule, NbTreeGridModule } from "@nebular/theme";
+import { NbCardModule,  NbIconModule,  NbInputModule, NbLayoutModule, NbSidebarModule, NbTreeGridModule } from "@nebular/theme";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { ThemeModule } from "../@theme/theme.module";
 import { Modalmodule } from "../pages/ModalForm/modal.module";
@@ -25,6 +25,7 @@ import {  SMComponent } from "./smart-table.component";
         NbTreeGridModule,
         NbIconModule,
         SmartTableRoutingModule,
+        NbSidebarModule,
         
 
     ],

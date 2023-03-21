@@ -9,7 +9,7 @@ interface TreeNode<T> {
 
 interface FSEntry {
   name: string;
-  size: string;
+  surname: string;
   kind: string;
   items?: number;
 }
@@ -21,7 +21,7 @@ interface FSEntry {
 })
 export class TreeGridComponent {
   customColumn = 'name';
-  defaultColumns = [ 'size', 'kind', 'items' ];
+  defaultColumns = [ 'surname', 'kind', 'items' ];
   allColumns = [ this.customColumn, ...this.defaultColumns ];
 
   dataSource: NbTreeGridDataSource<FSEntry>;
@@ -47,26 +47,26 @@ export class TreeGridComponent {
 
   private data: TreeNode<FSEntry>[] = [
     {
-      data: { name: 'Projects', size: '1.8 MB', items: 5, kind: 'dir' },
+      data: { name: 'Marban', surname: 'Otto', items: 5, kind: 'dir' },
       children: [
-        { data: { name: 'project-1.doc', kind: 'doc', size: '240 KB' } },
-        { data: { name: 'project-2.doc', kind: 'doc', size: '290 KB' } },
-        { data: { name: 'project-3', kind: 'txt', size: '466 KB' } },
-        { data: { name: 'project-4.docx', kind: 'docx', size: '900 KB' } },
+        { data: { name: 'visit-1.pdf', kind: 'pdf', surname: '' } },
+        { data: { name: 'visit-2.pdf', kind: 'pdf', surname: '' } },
+        { data: { name: 'visit-3.pdf', kind: 'pdf', surname: '' } },
+        { data: { name: 'visit-4.pdf', kind: 'pdf', surname: '' } },
       ],
     },
     {
-      data: { name: 'Reports', kind: 'dir', size: '400 KB', items: 2 },
+      data: { name: 'Jacob', kind: 'dir', surname: 'Thornton', items: 2 },
       children: [
-        { data: { name: 'Report 1', kind: 'doc', size: '100 KB' } },
-        { data: { name: 'Report 2', kind: 'doc', size: '300 KB' } },
+        { data: { name: 'visit-1.pdf', kind: 'doc', surname: '' } },
+        { data: { name: 'visit-2.pdf', kind: 'doc', surname: '' } },
       ],
     },
     {
-      data: { name: 'Other', kind: 'dir', size: '109 MB', items: 2 },
+      data: { name: 'Albart', kind: 'dir', surname: 'Marken', items: 2 },
       children: [
-        { data: { name: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-        { data: { name: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
+        { data: { name: 'visit-1.pdf', kind: 'bkp', surname: '' } },
+        { data: { name: 'visit-2.pdf', kind: 'txt', surname: '' } },
       ],
     },
   ];

@@ -25,16 +25,16 @@ export class FormLayoutsComponent implements OnInit{
     columns: {
 
       firstname: {
-        title: 'First Name',
+        title: 'Nom',
         type: 'string',
         
       },
       lastname: {
-        title: 'Last Name',
+        title: 'Prenom',
         type: 'string',
       },
       username: {
-        title: 'Username',
+        title: 'Matricule',
         type: 'string',
       },
       email: {

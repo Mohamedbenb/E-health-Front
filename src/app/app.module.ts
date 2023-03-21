@@ -21,6 +21,7 @@ import {
   NbDatepickerModule,
   NbDialogModule,
   NbInputModule,
+  NbLayoutModule,
   NbMenuModule,
   NbSidebarModule,
   
@@ -32,25 +33,43 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TokenInterceptor } from './token-interceptor';
-import { LocalStorageService, NgxWebstorageModule } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+
 import { ToastrModule } from 'ngx-toastr';
 import { Modalmodule } from './pages/ModalForm/modal.module';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { DragCompComponent } from './drag-comp/drag-comp.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DateTimePickerComponent } from './drag-comp/DateTimePickerComponent';
+import { NgbDatepickerModule, NgbModalModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { BlockUIModule } from 'ng-block-ui';
+import { BlockTemplateComponent } from './drag-comp/blockui/block-template.component';
+
+
 
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DragCompComponent, DateTimePickerComponent],
   imports: [
+    NbLayoutModule,
     Modalmodule,
+    FlatpickrModule.forRoot(),
+    BlockUIModule.forRoot({
+      template: BlockTemplateComponent
+    }),
+    NgbModalModule,
+    NgbDatepickerModule,
+    NgbTimepickerModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
+    AppRoutingModule,    
     NgxWebstorageModule.forRoot(),
     ToastrModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -58,6 +77,10 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     NbCardModule,
     Ng2SmartTableModule,
     CommonModule,
@@ -75,6 +98,9 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    BlockUIModule.forRoot({
+      template: BlockTemplateComponent
+    })
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -85,7 +111,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
       
       
       
-    }
+    },
+
   ],
 })
 export class AppModule {

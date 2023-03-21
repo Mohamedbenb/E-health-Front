@@ -1,0 +1,9 @@
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+
+
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
