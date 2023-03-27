@@ -46,15 +46,11 @@ export class DateTimePickerComponent implements ControlValueAccessor {
   eve: any;
 
   constructor(private cdr: ChangeDetectorRef, private http: HttpClient) { }
-  getEvent():Observable<any>{
-    
-    console.log("upev",this.evid.id)
-    return this.http.get(`http://localhost:3000/events/${this.evid.id}`)
-     }
+  
   
 
   writeValue(date: Date): void {
-    this.getEvent().subscribe((data)=>{return this.ev=data})
+   
     this.date = date;
     this.dateStruct = {
       day: getDate(date),

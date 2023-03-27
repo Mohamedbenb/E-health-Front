@@ -72,7 +72,10 @@ export class DragCompComponent implements OnInit {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.http.delete(`http://localhost:3000/events/${event.id}`).subscribe(response => {
+          console.log('Event deleted:', response);
+        });
+        
       }
     }
   ];
@@ -88,7 +91,7 @@ export class DragCompComponent implements OnInit {
   public breadcrumb: any;
 
   datePicker: any;
-  private onChangeCallback: (date: Date) => void = () => { };
+  
 
   /**
    *
@@ -111,10 +114,12 @@ export class DragCompComponent implements OnInit {
           afterEnd: true
         },
         draggable: true,
-        color: event.color && event.color.primary ? { primary: event.color.primary, secondary: event.color.secondary } : colors.red // check if primary exists and assign default value
+        color: event.color && event.color.primary ? { primary: event.color.primary, secondary: event.color.secondary } : colors.red, // check if primary exists and assign default value
+        actions:this.actions
         
       }));
     });
+    this.refresh.next();
   }
 
   /**
@@ -168,7 +173,10 @@ export class DragCompComponent implements OnInit {
   handleEvent(action: string, event: CalendarEvent): void {
     
     this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    console.log('Handle action',action)
+    if(action==="Edited"||action==="Clicked"||action==="Add")
+    console.log('data:',this.modalContent)
+    {this.modal.open(this.modalContent, { size: 'lg' });}
   }
 
   /**
@@ -187,14 +195,10 @@ export class DragCompComponent implements OnInit {
       },
       actions: this.actions,
     };
-    this.events.push(this.newEvent);
-  
-    this.http.post<any>('http://localhost:3000/events', this.newEvent).subscribe(response => {
-      console.log('New event created:', response);
-    });
-  
+
     this.handleEvent('Add new event', this.newEvent);
     this.refresh.next();
+    this.ngOnInit()
   }
 
   /**
@@ -207,13 +211,30 @@ export class DragCompComponent implements OnInit {
        this.blockUIDefault.stop();
     }, 2500);
   }
-  UpdateEv(event: CalendarEvent):void{
-    console.log('Data received in updateTableData:', event);
-    this.http.put<any>(`http://localhost:3000/events/${event.id}`, event).subscribe(response => {
+  UpdateEv(mod: any):void{
+    
+    console.log('Data received:', mod.event);
+    this.http.put<any>(`http://localhost:3000/events/${mod.event.id}`, mod.event).subscribe(response => {
       console.log('Event updated:', response);
     });
     this.modal.dismissAll('Dismissed after saving data');
 
+  }
+  onSubmit(mod:any):void{
+    console.log('action', mod.action)
+    if(mod.action === "Edited"||mod.action ==="Clicked"){
+      console.log('action2',mod.action)
+      this.UpdateEv(mod)
+    }
+    else {
+      this.events.push(this.newEvent);
+      this.http.post<any>('http://localhost:3000/events', mod.event).subscribe(response => {
+        console.log('New event created:', response);
+      });
+      
+    }
+    this.modal.dismissAll('Dismissed after saving data');
+    this.refresh.next();
   }
 
 }
