@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { TemplateRef, ViewChild } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,11 +8,10 @@ import {
 } from '@angular/core';
 import { NgbDateStruct, NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarEventTitleFormatter, CalendarView } from 'angular-calendar';
-import { DayViewHourSegment } from 'calendar-utils';
-import { addDays, addMinutes, endOfDay, endOfMonth, endOfWeek, isSameDay, isSameMonth, startOfDay, startOfMonth, subDays } from 'date-fns';
+import {  endOfDay,isSameDay, isSameMonth, startOfDay} from 'date-fns';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { fromEvent, Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 
 const colors: any = {
   red: {
@@ -28,14 +28,6 @@ const colors: any = {
   }
 };
 
-function floorToNearest(amount: number, precision: number) {
-  return Math.floor(amount / precision) * precision;
-}
-
-
-function ceilToNearest(amount: number, precision: number) {
-  return Math.ceil(amount / precision) * precision;
-}
 
 @Component({
   selector: 'app-drag-comp',
@@ -59,6 +51,7 @@ export class DragCompComponent implements OnInit {
     minimize: true,
     reload: true
   };
+  jsonevent: any[];
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
@@ -86,42 +79,7 @@ export class DragCompComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 0),
-      end: addDays(new Date(), 1),
-      title: 'Business Lunch',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    },
-
-    {
-      start: subDays(endOfMonth(new Date()), 2),
-      end: addDays(endOfMonth(new Date()), 1),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true
-    },
-
-    {
-      start: subDays(startOfMonth(new Date()), 1),
-      end: addDays(startOfMonth(new Date()), 0),
-      title: 'Meeting',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      draggable: true
-    }
-  ];
+  events: CalendarEvent[] =[]
 
 
   dateStruct: NgbDateStruct;
@@ -136,37 +94,27 @@ export class DragCompComponent implements OnInit {
    *
    * @param NgbModal      modal
    */
-  constructor(private modal: NgbModal) { }
+  constructor(private modal: NgbModal, private http: HttpClient ) { }
 
   /**
    * onInit
    */
   ngOnInit() {
-    this.breadcrumb = {
-      'mainlabel': 'Calendar AddEvent',
-      'links': [
-        {
-          'name': 'Home',
-          'isLink': true,
-          'link': '/dashboard/sales'
+    
+    this.http.get<any[]>('http://localhost:3000/events').subscribe(data => {
+      this.events = data.map(event => ({
+        ...event,
+        start: new Date(event.start), // convert start to Date object
+        end: new Date(event.end), // convert end to Date object
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
         },
-        {
-          'name': 'Apps',
-          'isLink': true,
-          'link': '#'
-        },
-        {
-          'name': 'Calendars',
-          'isLink': true,
-          'link': '#'
-        },
-        {
-          'name': 'AddEvent',
-          'isLink': false,
-          'link': '#'
-        }
-      ]
-    };
+        draggable: true,
+        color: event.color && event.color.primary ? { primary: event.color.primary, secondary: event.color.secondary } : colors.red // check if primary exists and assign default value
+        
+      }));
+    });
   }
 
   /**
@@ -187,6 +135,7 @@ export class DragCompComponent implements OnInit {
         this.activeDayIsOpen = true;
       }
     }
+    console.log('clicked')
   }
 
   /**
@@ -202,9 +151,14 @@ export class DragCompComponent implements OnInit {
   }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
+  
+    this.http.put<any>(`http://localhost:3000/events/${event.id}`, event).subscribe(response => {
+      console.log('Event updated:', response);
+    });
+  
     this.refresh.next();
   }
+
 
   /**
    *
@@ -212,6 +166,7 @@ export class DragCompComponent implements OnInit {
    * @param event     calendar event
    */
   handleEvent(action: string, event: CalendarEvent): void {
+    
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -233,8 +188,11 @@ export class DragCompComponent implements OnInit {
       actions: this.actions,
     };
     this.events.push(this.newEvent);
-
-    // this.refresh.next();
+  
+    this.http.post<any>('http://localhost:3000/events', this.newEvent).subscribe(response => {
+      console.log('New event created:', response);
+    });
+  
     this.handleEvent('Add new event', this.newEvent);
     this.refresh.next();
   }
@@ -248,6 +206,14 @@ export class DragCompComponent implements OnInit {
     setTimeout(() => {
        this.blockUIDefault.stop();
     }, 2500);
+  }
+  UpdateEv(event: CalendarEvent):void{
+    console.log('Data received in updateTableData:', event);
+    this.http.put<any>(`http://localhost:3000/events/${event.id}`, event).subscribe(response => {
+      console.log('Event updated:', response);
+    });
+    this.modal.dismissAll('Dismissed after saving data');
+
   }
 
 }

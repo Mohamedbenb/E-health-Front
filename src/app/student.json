@@ -1,36 +1,109 @@
 {
-  "students": [
+  "events": [
     {
-      "id": "1",
-      "firstname": "Mohamedda",
-      "lastname": "benb",
-      "username": "sdfs",
-      "email": "sqfeqz",
-      "age": "25"
+      "id": 1,
+      "title": "Event 1",
+      "start": "2023-03-22T10:00:00.000Z",
+      "end": "2023-03-22T12:00:00.000Z",
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "draggable": true,
+      "color": {
+        "primary": "#1e90ff",
+        "secondary": "#D1E8FF"
+      }
     },
     {
-      "id": "98",
-      "firstname": "Mohamed",
-      "lastname": "test",
-      "username": "testt",
-      "email": "testt@testt.com",
-      "age": "5452"
+      "id": 2,
+      "title": "Event 2",
+      "start": "2023-03-23T04:45:00.000Z",
+      "end": "2023-03-23T09:00:00.000Z",
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "draggable": true,
+      "color": {
+        "primary": "#1e90ff",
+        "secondary": "#D1E8FF"
+      }
     },
     {
-      "id": "4",
-      "firstname": "hdhdd",
-      "lastname": "hdhdH",
-      "username": "HSJIKDH",
-      "email": "JKLSJL",
-      "age": "123"
+      "title": "New event",
+      "start": "2023-03-25T01:00:00.000Z",
+      "end": "2023-03-25T04:29:59.999Z",
+      "color": {
+        "primary": "#ad2121",
+        "secondary": "#FAE3E3"
+      },
+      "draggable": true,
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "actions": [
+        {
+          "label": "<i class=\"fa fa-fw fa-pencil\"></i>"
+        },
+        {
+          "label": "<i class=\"fa fa-fw fa-times\"></i>"
+        }
+      ],
+      "id": 3
     },
     {
-      "id": "6",
-      "firstname": "zdlmkkd",
-      "lastname": "lmkzfdkfd",
-      "username": "lkfzdkdfk",
-      "email": "lkzdkd",
-      "age": "23"
+      "start": "2023-03-19T06:00:00.000Z",
+      "end": "2023-03-19T02:33:00.000Z",
+      "id": 4,
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "draggable": true,
+      "color": {
+        "primary": "#ad2121",
+        "secondary": "#FAE3E3"
+      },
+      "title": "hmndhkslq"
+    },
+    {
+      "start": "2023-03-21T05:01:59.999Z",
+      "end": "2023-03-21T07:01:59.999Z",
+      "id": 5,
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "draggable": true,
+      "color": {
+        "primary": "#ad2121",
+        "secondary": "#FAE3E3"
+      }
+    },
+    {
+      "title": "New event",
+      "start": "2023-03-25T06:00:00.000Z",
+      "end": "2023-03-25T09:29:59.999Z",
+      "color": {
+        "primary": "#ad2121",
+        "secondary": "#FAE3E3"
+      },
+      "draggable": true,
+      "resizable": {
+        "beforeStart": true,
+        "afterEnd": true
+      },
+      "actions": [
+        {
+          "label": "<i class=\"fa fa-fw fa-pencil\"></i>"
+        },
+        {
+          "label": "<i class=\"fa fa-fw fa-times\"></i>"
+        }
+      ],
+      "id": 6
     }
   ]
 }

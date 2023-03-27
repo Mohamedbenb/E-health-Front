@@ -45,14 +45,14 @@
                               <label>Starts At:</label>
                               <!-- <input type="date" name="starts-at" [(ngModel)]="modalData?.event.start" (ngModelChange)="refresh.next()" placeholder="Not set"> -->
                               <!-- <input type="date" class="form-control" id="date" > -->
-                              <app-mwl-demo-utils-date-time-picker name="starts-at" [(ngModel)]="modalData?.event.start" (ngModelChange)="refresh.next()" placeholder="Not set">
+                              <app-mwl-demo-utils-date-time-picker name="starts-at" [(ngModel)]="modalData?.event.start" [evid]="modalData?.event" (ngModelChange)="refresh.next()" placeholder="Not set">
                               </app-mwl-demo-utils-date-time-picker>
                             </div>
                           </div>
                           <div class="col-md-6 col-12">
                             <div class="form-group">
                               <label>Ends At:</label>
-                              <app-mwl-demo-utils-date-time-picker name="ends-at" [(ngModel)]="modalData?.event.end" (ngModelChange)="refresh.next()" placeholder="Not set">
+                              <app-mwl-demo-utils-date-time-picker name="ends-at" [(ngModel)]="modalData?.event.end" [evid]="modalData?.event" (ngModelChange)="refresh.next()" placeholder="Not set">
                               </app-mwl-demo-utils-date-time-picker>
                             </div>
                           </div>
@@ -62,7 +62,7 @@
   
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+                      <button type="button" class="btn btn-outline-secondary" (click)="UpdateEv(modalData.event)">OK</button>
                     </div>
                   </ng-template>
                   <div class="card">
