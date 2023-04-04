@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TemplateRef, ViewChild } from '@angular/core';
 import {
   ChangeDetectionStrategy,
@@ -43,6 +43,10 @@ const colors: any = {
 })
 export class DragCompComponent implements OnInit {
 
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+
   @BlockUI('default') blockUIDefault: NgBlockUI;
   date: Date;
   options = {
@@ -72,8 +76,9 @@ export class DragCompComponent implements OnInit {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
-        this.http.delete(`http://localhost:3000/events/${event.id}`).subscribe(response => {
-          console.log('Event deleted:', response);
+        const options = { headers: this.headers };
+        this.http.patch(`http://localhost:8080/api/datecals/${event.id}`, options).subscribe(response => {
+          console.log('Event deleted:',response);
         });
         
       }
@@ -104,7 +109,7 @@ export class DragCompComponent implements OnInit {
    */
   ngOnInit() {
     
-    this.http.get<any[]>('http://localhost:3000/events').subscribe(data => {
+    this.http.get<any[]>('http://localhost:8080/api/datecals/').subscribe(data => {
       this.events = data.map(event => ({
         ...event,
         start: new Date(event.start), // convert start to Date object
@@ -115,6 +120,7 @@ export class DragCompComponent implements OnInit {
         },
         draggable: true,
         color: event.color && event.color.primary ? { primary: event.color.primary, secondary: event.color.secondary } : colors.red, // check if primary exists and assign default value
+        //resizable: event.resizable && event.resizable.beforeStart? {beforeStart:event.resizable.beforeStart,afterEnd: event.resizable.afterEnd}: resizable.beforeStart
         actions:this.actions
         
       }));
@@ -157,7 +163,7 @@ export class DragCompComponent implements OnInit {
     event.start = newStart;
     event.end = newEnd;
   
-    this.http.put<any>(`http://localhost:3000/events/${event.id}`, event).subscribe(response => {
+    this.http.put<any>(`http://localhost:8080/api/datecals/${event.id}`, event).subscribe(response => {
       console.log('Event updated:', response);
     });
   
@@ -198,7 +204,7 @@ export class DragCompComponent implements OnInit {
 
     this.handleEvent('Add new event', this.newEvent);
     this.refresh.next();
-    this.ngOnInit()
+    
   }
 
   /**
@@ -214,7 +220,7 @@ export class DragCompComponent implements OnInit {
   UpdateEv(mod: any):void{
     
     console.log('Data received:', mod.event);
-    this.http.put<any>(`http://localhost:3000/events/${mod.event.id}`, mod.event).subscribe(response => {
+    this.http.put<any>(`http://localhost:8080/api/datecals/${mod.event.id}`, mod.event).subscribe(response => {
       console.log('Event updated:', response);
     });
     this.modal.dismissAll('Dismissed after saving data');
@@ -228,8 +234,8 @@ export class DragCompComponent implements OnInit {
     }
     else {
       this.events.push(this.newEvent);
-      this.http.post<any>('http://localhost:3000/events', mod.event).subscribe(response => {
-        console.log('New event created:', response);
+      this.http.post<any>('http://localhost:8080/api/datecals/', mod.event).subscribe(response => {
+        console.log('New event created:', response),this.ngOnInit()
       });
       
     }

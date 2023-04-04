@@ -63,13 +63,13 @@ export class DateTimePickerComponent implements ControlValueAccessor {
       hour: getHours(date)
     };
     this.cdr.detectChanges();
-    console.log('check point #1',this.ev) 
+    console.log('check point #1',this.evid) 
     
   }
 
   registerOnChange(fn: any): void {
     this.onChangeCallback = fn;
-    console.log('check point #2',this.ev)
+    console.log('check point #2',this.evid)
   }
 
   registerOnTouched(fn: any): void { }
@@ -84,12 +84,12 @@ export class DateTimePickerComponent implements ControlValueAccessor {
       this.dateStruct.year
     );
     this.onChangeCallback(newDate);
-    console.log('check point #4',this.ev)
+    console.log('check point #4',this.evid)
   }
 
   updateTime(): void {
 
-    console.log('check point #3',this.ev)
+    console.log('check point #3',this.evid)
     const newDate: Date = setHours(
       setMinutes(
         setSeconds(this.date, this.timeStruct.second),
