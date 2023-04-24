@@ -24,7 +24,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       
 
-
+      {
+        title: 'Forms',
+        icon: 'edit-2-outline',
+        link: '/pages/forms/inputs',
+      },
   
 
       {

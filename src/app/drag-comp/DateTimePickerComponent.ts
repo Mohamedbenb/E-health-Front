@@ -84,6 +84,7 @@ export class DateTimePickerComponent implements ControlValueAccessor {
       this.dateStruct.year
     );
     this.onChangeCallback(newDate);
+    console.log('date picker update =',newDate)
     console.log('check point #4',this.evid)
   }
 

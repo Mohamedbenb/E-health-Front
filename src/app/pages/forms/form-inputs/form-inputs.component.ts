@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './form-inputs.component.html',
 })
 export class FormInputsComponent {
-
+  value: any ;
   starRate = 2;
   heartRate = 4;
   radioGroupValue = 'This is value 2';
