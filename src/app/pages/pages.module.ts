@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbTreeGridModule } from '@nebular/theme';
+import { NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -31,6 +31,7 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
     Ng2SmartTableModule, 
     NbLayoutModule,
     //BrowserModule,
+    NbCalendarModule
 
   ],
   declarations: [

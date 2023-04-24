@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {
   NbActionsModule,
   NbButtonModule,
+  NbCalendarModule,
   NbCardModule,
   NbCheckboxModule,
   NbDatepickerModule, NbDialogModule, NbIconModule,
@@ -48,6 +49,7 @@ import { TablesRoutingModule } from '../tables/tables-routing.module';
     Ng2SmartTableModule,
     NbDialogModule,
     NbPopoverModule,
+    NbCalendarModule
   ],
   declarations: [
     FormsComponent,
