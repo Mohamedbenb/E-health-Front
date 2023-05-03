@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GridService } from '../../tables/tree-grid/GridService';
+import { SocieteService } from '../../../services/societe.service';
 
 @Component({
   selector: 'ngx-visite',
@@ -9,14 +9,14 @@ import { GridService } from '../../tables/tree-grid/GridService';
 export class VisiteComponent implements OnInit {
   societes:[]
   ex:any
-  constructor(private Service: GridService) {}
+  constructor(private Service: SocieteService) {}
 
    ngOnInit() {
     this.Societes();
     console.log(this.societes)
   }
   Societes() {
-    this.Service.getTableData().subscribe((data) => {
+    this.Service.getData().subscribe((data) => {
     this.societes=data
     console.log("2",this.societes)
     

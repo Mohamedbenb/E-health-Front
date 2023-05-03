@@ -1,0 +1,46 @@
+
+
+
+<div class="row">
+  <div class="col-sm">
+
+    <nb-card>
+      <nb-card-header>
+
+        <div class="float-center">
+          <h3>Gestion des Collaborateurs</h3>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-select fullwidth [(ngModel)]="selectedOptions" multiple (selectedChange)="onSelectChange()">
+          <nb-option  *ngFor="let option of allColumns" [value]="option.title">{{ option.title }}</nb-option>
+        </nb-select>
+
+      </nb-card-body>
+      <nb-card-body>       
+        <ng2-smart-table
+          [settings]="settings"
+          [source]="tableData"
+          
+          (create)="openAddDialog()"
+          (edit)="onEditClick($event)"
+          (delete)="onDeleteConfirm($event)"
+          (custom)="openAddDialog()">
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+      
+    <nb-card>
+      <nb-select placeholder="Select Groups">
+        
+          <nb-option-group *ngFor="let group of societe" [title]="group.title">
+            <nb-option *ngFor="let option of group.uniops" [value]="option.id">
+              {{ option.title }}
+            </nb-option>
+          </nb-option-group>
+
+      </nb-select>
+    </nb-card>
+
+  </div>
+</div>

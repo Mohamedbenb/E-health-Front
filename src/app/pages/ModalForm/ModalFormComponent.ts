@@ -18,6 +18,7 @@ export class ModalFormComponent implements OnInit{
   @Input() formData:any;
   @Input() extra;
   @Input() customTableService:any;
+  @Input()societe:any;
   isDeleting = false;
 modalForm: FormGroup;
   
@@ -43,6 +44,7 @@ modalForm: FormGroup;
 
     
   ngOnInit(): void {
+    console.log('cell:', this.societe);
     const formGroupConfig = {};
     this.fields.forEach((field) => {
       formGroupConfig[field.name] = ['', field.validators];

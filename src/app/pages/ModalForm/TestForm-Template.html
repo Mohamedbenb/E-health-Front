@@ -7,9 +7,20 @@
         <ng-container [ngSwitch]="field.type">
           <input *ngSwitchCase="'text'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
           <input *ngSwitchCase="'email'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
+
           <input *ngSwitchCase="'number'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
           <input *ngSwitchCase="'nb-datepicker'" nbInput fullWidth [formControlName]="field.name" [required]="true" [nbDatepicker]="myDatepicker">
+          
           <nb-datepicker [nbDatepicker]="field.name" #myDatepicker></nb-datepicker>
+          <nb-select *ngSwitchCase= "'select'" placeholder="Select Groups">
+            
+                <nb-option-group *ngFor="let group of societe" [title]="group.title">
+                    <ng-container *ngFor="let option of group.uniops">
+                        <nb-option [value]="option.id">{{ option.title }}</nb-option>
+                    </ng-container>
+                </nb-option-group>
+            
+          </nb-select>
         </ng-container>
         <div *ngIf="modalForm.get(field.name).invalid && (modalForm.get(field.name).dirty || modalForm.get(field.name).touched)">
           <div *ngIf="modalForm.get(field.name).errors.required">{{ field.title }} is required</div>

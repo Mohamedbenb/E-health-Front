@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { ModalFormComponent } from './ModalFormComponent';
 import { ThemeModule } from '../../@theme/theme.module';
-import { MyCheckboxComponent } from '../forms/form-layouts/chkboxComponent';
+
 
 
 

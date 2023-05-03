@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
 
   {
     title: 'Gestion des Collaborateurs',
-    link: '/pages/forms/layouts',
+    link: '/pages/employees',
     icon:'grid-outline',
   },
 
@@ -28,36 +28,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       
 
-      {
-        title: 'Forms',
-        icon: 'edit-2-outline',
-        link: '/pages/forms/inputs',
-      },
-
+      
 
   
 
       {
         title: 'Statistiques',
-        link: '/pages/charts/chartjs',
+        link: '/pages/statistics',
         icon: 'pie-chart-outline',
       },
 
     
   
   
-  //{
-  //  title: 'Historique',
-  //  icon: 'archive-outline',
-  //  link: '/pages/tables/tree-grid',
-//
-  //},
+
 
     
   {
     title: 'Paramétrage',
     icon: 'settings-outline',
-    link: '/pages/tables/tree-grid',
+    link: '/pages/parametrage',
 
   },  
 

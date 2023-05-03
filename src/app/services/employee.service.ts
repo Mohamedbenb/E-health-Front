@@ -22,7 +22,7 @@ export class EmployeeService {
 
   addData(data: any, ex:any): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.post(`http://localhost:8080/api/uniops/${ex}/`, data, options);
+    return this.http.post(`http://localhost:8080/api/employees/${ex}/`, data, options);
   }
 
   updateData(data: any): Observable<any> {
