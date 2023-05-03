@@ -10,8 +10,10 @@ import { ModalFormComponent } from '../pages/ModalForm/ModalFormComponent';
   
 })
 export class SMComponent implements OnInit{
+  extra:41
   submitted: boolean;
   tableData: LocalDataSource;
+  formData = {id: null, firstname: '', username: '', lastname: '', email: '', age: null};
   settings = {
     actions: {
       add:true,
@@ -112,10 +114,14 @@ export class SMComponent implements OnInit{
   }
 
   openAddDialog() {
+    console.log('checkpoint',this.formData)
     this.dialogService.open(ModalFormComponent, {
       context: {
         dialogTitle: 'Add Item',
         action: 'add',
+        data: {
+          formData: this.formData,
+        },
       },}).onClose.subscribe(() => {
         console.log('updating')
         this.loadTableData();
@@ -133,6 +139,7 @@ export class SMComponent implements OnInit{
         dialogTitle: 'Edit Item',
         action: 'edit',
         dialogData: tableData,
+        
       },
     },).onClose.subscribe(() => {
       console.log('updating')

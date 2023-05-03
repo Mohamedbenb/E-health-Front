@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TablesComponent } from './tables.component';
 import { SmartTableComponent } from './smart-table/smart-table.component';
-import { TreeGridComponent } from './tree-grid/tree-grid.component';
+import {  TreeGridComponent } from './tree-grid/tree-grid.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,8 +14,9 @@ const routes: Routes = [{
       component: SmartTableComponent,
     },
     {
-      path: 'tree-grid',
-      component: TreeGridComponent,
+        path: 'tree-grid',
+          component: TreeGridComponent,
+
     },
   ],
 }];
@@ -30,4 +31,5 @@ export const routedComponents = [
   TablesComponent,
   SmartTableComponent,
   TreeGridComponent,
+  
 ];

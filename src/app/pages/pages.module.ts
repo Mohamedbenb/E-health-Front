@@ -9,6 +9,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TablesRoutingModule } from './tables/tables-routing.module';
+import { VisiteComponent } from './visite/visite/visite.component';
 
 
 
@@ -26,7 +27,6 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
     NbTreeGridModule,
     NbIconModule,
     NbInputModule,
-    ThemeModule,
     TablesRoutingModule,
     Ng2SmartTableModule, 
     NbLayoutModule,
@@ -36,6 +36,7 @@ import { TablesRoutingModule } from './tables/tables-routing.module';
   ],
   declarations: [
     PagesComponent,
+    VisiteComponent,
 
     ],
 })

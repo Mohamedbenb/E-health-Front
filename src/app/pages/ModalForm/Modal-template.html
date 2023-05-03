@@ -4,7 +4,7 @@
     <form  #modalForm="ngForm" (ngSubmit)="onSubmit()" aria-labelledby="title">
         <div class="form-control-group">
             <label class="label" for="firstname">First name:</label>
-            <input fullWidth 
+            <input  fullWidth 
                     id="firstname"  
                     [(ngModel)]="formData.firstname" 
                     #firstname="ngModel" 
@@ -43,21 +43,21 @@
 
         </div>
           <div class="form-control-group">
-            <label  class="label" for="username">Username:</label>
+            <label  class="label" for="matricule">Matricule:</label>
             <input fullWidth 
-                    id="username"  
-                    [(ngModel)]="formData.username" 
-                    #username="ngModel" 
-                    name="username" 
+                    id="matricule"  
+                    [(ngModel)]="formData.matricule" 
+                    #matricule="ngModel" 
+                    name="matricule" 
                     type="text" nbInput  
-                    placeholder="Username" 
+                    placeholder="Matricule" 
                     [minlength]="5"
-                    [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : 'basic'"
+                    [status]="matricule.dirty ? (matricule.invalid  ? 'danger' : 'success') : 'basic'"
                     [required]="true"
-                    [attr.aria-invalid]="username.invalid && username.touched ? true : null">
-            <ng-container *ngIf="username.invalid && username.touched ">
+                    [attr.aria-invalid]="matricule.invalid && matricule.touched ? true : null">
+            <ng-container *ngIf="matricule.invalid && matricule.touched ">
                 <p class="caption status-danger" >
-                    Username should not be less than 5 characters
+                    Matricule should not be less than 5 characters
                 </p>
 
             </ng-container>
@@ -86,25 +86,33 @@
           </div>
           
           <div class="form-control-group">
-            <label class="label" for="age">Age:</label>
+            <label class="label" for="age">Date de naissance:</label>
             <input fullWidth 
-                    id="age"
-                    #age="ngModel"
-                    (keypress)="numberOnly($event)"   
-                    [(ngModel)]="formData.age" 
-                    name="age" 
-                    type="text" 
+                    id="datenai"
+
+                    name="datenai" 
+                    [(ngModel)]="formData.datenai" 
                     nbInput  
-                    placeholder="Age" 
-                    [minlength]="1"
-                    [required]="true"[required]="true"
-                    [attr.aria-invalid]="age.invalid && age.touched? true : null">
-                    <ng-container *ngIf="age.invalid && age.touched ">
-                      <p class="caption status-danger" >
-                          Age is required.
-                      </p>
-                    </ng-container>
+                    [nbDatepicker]="datenai"
+                    placeholder="Date de naissance" 
+                    [required]="true"
+                    >
+                    <nb-datepicker #datenai></nb-datepicker>
         </div>
+        <div class="form-control-group">
+          <label class="label" for="age">Date d'embauche:</label>
+          <input fullWidth 
+                  id="daterecru"
+
+                  name="daterecru" 
+                  [(ngModel)]="formData.daterecru" 
+                  nbInput  
+                  [nbDatepicker]="daterecru"
+                  placeholder="Date de naissance" 
+                  [required]="true"
+                  >
+                  <nb-datepicker #daterecru></nb-datepicker>
+      </div>
         
         <br>
         <div class="buttons-container">

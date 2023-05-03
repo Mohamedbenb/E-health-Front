@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbButton, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
+import { NbAlertModule, NbButton, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
 import { BrowserModule } from '@angular/platform-browser';
 
 
 
 import { ModalFormComponent } from './ModalFormComponent';
 import { ThemeModule } from '../../@theme/theme.module';
+import { MyCheckboxComponent } from '../forms/form-layouts/chkboxComponent';
 
 
 
@@ -22,10 +23,17 @@ import { ThemeModule } from '../../@theme/theme.module';
     FormsModule,
     NbButtonModule,
     NbWindowModule,
+    ReactiveFormsModule,
+    NbDatepickerModule,
+    NbCalendarModule,
+    ReactiveFormsModule
+    
+    
     
   ],
   declarations: [
-    ModalFormComponent,
+    
+    
 
   ],
 })

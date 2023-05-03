@@ -11,6 +11,11 @@
           <h3>Gestion des Collaborateurs</h3>
         </div>
       </nb-card-header>
+      <nb-card-body>
+        <nb-select fullwidth [(ngModel)]="selectedOptions" multiple (selectedChange)="onSelectChange()">
+          <nb-option *ngFor="let option of allColumns" [value]="option.title">{{ option.title }}</nb-option>
+        </nb-select>
+      </nb-card-body>
       <nb-card-body>       
         <ng2-smart-table
           [settings]="settings"
@@ -19,9 +24,8 @@
           (create)="openAddDialog()"
           (edit)="onEditClick($event)"
           (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()"
-          
-        ></ng2-smart-table>
+          (custom)="openAddDialog()">
+        </ng2-smart-table>
       </nb-card-body>
     </nb-card>
       

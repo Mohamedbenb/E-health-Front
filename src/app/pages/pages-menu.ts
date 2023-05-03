@@ -8,7 +8,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   
   
-  
+  {
+    title: 'Nouvelle Visite',
+    icon: 'file-add-outline',
+    link: '/pages/visite',
+  },
   
 
   {
@@ -29,6 +33,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         icon: 'edit-2-outline',
         link: '/pages/forms/inputs',
       },
+
+
   
 
       {
@@ -40,11 +46,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     
   
   
+  //{
+  //  title: 'Historique',
+  //  icon: 'archive-outline',
+  //  link: '/pages/tables/tree-grid',
+//
+  //},
+
+    
   {
-    title: 'Historique',
-    icon: 'archive-outline',
+    title: 'Paramétrage',
+    icon: 'settings-outline',
     link: '/pages/tables/tree-grid',
 
-  },
+  },  
+
+  
   
 ];

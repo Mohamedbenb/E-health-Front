@@ -1,34 +1,57 @@
 <nb-card>
-  <nb-card-body>
+  <nb-card-header>
+   
+      <nb-card size="small">
+        <nb-tabset>
+        <nb-tab tabTitle="Societés">
+          <ng2-smart-table
+          [settings]="settings1"
+          [source]="tableData"
+          
+          (create)="openAddDialog()"
+          (edit)="onEditClick($event)"
+          (delete)="onDeleteConfirm($event)"
+          (custom)="openAddDialog()"
+          
+        >
+      
 
-    <label class="search-label" for="search">Search:</label>
-    <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
+      </ng2-smart-table>
+        </nb-tab>
+        <nb-tab tabTitle="Maladies professionelles">
+          <ng2-smart-table
+          [settings]="settings2"
+          [source]="tableData"
+          (create)="openAddDialog()"
+          (edit)="onEditClick($event)"
+          (delete)="onDeleteConfirm($event)"
+          (custom)="openAddDialog()">
+          </ng2-smart-table>
+        </nb-tab>
+        <nb-tab tabTitle="Examens complémentaires">
+          <ng2-smart-table
+          [settings]="settings3"
+          [source]="tableData"
+          (create)="openAddDialog()"
+          (edit)="onEditClick($event)"
+          (delete)="onDeleteConfirm($event)"
+          (custom)="openAddDialog()">
+          </ng2-smart-table>
+        </nb-tab>
+        <nb-tab tabTitle="Suivit Médicale Spéciale">
+          <ng2-smart-table
+          [settings]="settings4"
+          [source]="tableData"
+          (create)="openAddDialog()"
+          (edit)="onEditClick($event)"
+          (delete)="onDeleteConfirm($event)"
+          (custom)="openAddDialog()">
+          </ng2-smart-table>
+        </nb-tab>
+      </nb-tabset>
+      </nb-card>
+   
+  </nb-card-header>
 
-    <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
 
-      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-
-      <ng-container [nbTreeGridColumnDef]="customColumn">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-          {{customColumn}}
-        </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
-          {{row.data[customColumn]}}
-        </td>
-      </ng-container>
-
-      <ng-container *ngFor="let column of defaultColumns; let index = index"
-                    [nbTreeGridColumnDef]="column"
-                    [showOn]="getShowOn(index)">
-        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-          {{column}}
-        </th>
-        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
-      </ng-container>
-
-    </table>
-
-  </nb-card-body>
 </nb-card>

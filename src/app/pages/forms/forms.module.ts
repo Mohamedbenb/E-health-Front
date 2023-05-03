@@ -21,9 +21,11 @@ import { FormInputsComponent } from './form-inputs/form-inputs.component';
 import { FormLayoutsComponent } from './form-layouts/form-layouts.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { ButtonsComponent } from './buttons/buttons.component';
-import { FormsModule as ngFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule as ngFormsModule } from '@angular/forms';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { TablesRoutingModule } from '../tables/tables-routing.module';
+import { MyCheckboxComponent } from './form-layouts/chkboxComponent';
+import { ModalFormComponent } from '../ModalForm/ModalFormComponent';
 
 @NgModule({
   imports: [
@@ -49,7 +51,11 @@ import { TablesRoutingModule } from '../tables/tables-routing.module';
     Ng2SmartTableModule,
     NbDialogModule,
     NbPopoverModule,
-    NbCalendarModule
+    NbCalendarModule,
+    ReactiveFormsModule
+  ],
+  providers: [  
+    NbDatepickerModule,
   ],
   declarations: [
     FormsComponent,
@@ -57,7 +63,8 @@ import { TablesRoutingModule } from '../tables/tables-routing.module';
     FormInputsComponent,
     FormLayoutsComponent,
     DatepickerComponent,
-    
+    MyCheckboxComponent,
+    ModalFormComponent,
   ],
 })
 export class FormsModule { }

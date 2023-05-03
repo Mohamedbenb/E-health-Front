@@ -7,6 +7,7 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { SmartTableComponent } from './tables/smart-table/smart-table.component';
 import { DragCompComponent } from '../drag-comp/drag-comp.component';
+import { VisiteComponent } from './visite/visite/visite.component';
 
 
 const routes: Routes = [{
@@ -77,7 +78,14 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
-    {path:'cal', component:DragCompComponent}
+    {
+      path:'cal', 
+      component:DragCompComponent
+    },
+    {
+      path:'visite', 
+      component:VisiteComponent
+    }
 
 
   ],

@@ -98,6 +98,7 @@ import { BlockTemplateComponent } from './drag-comp/blockui/block-template.compo
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    
     BlockUIModule.forRoot({
       template: BlockTemplateComponent
     })

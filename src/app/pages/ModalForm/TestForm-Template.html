@@ -1,0 +1,49 @@
+<nb-card *ngIf="action === 'edit'||action === 'add' else delete">
+    <nb-card-header>Fill the form please</nb-card-header>
+<nb-card-body>
+    <form  [formGroup]="modalForm" (ngSubmit)="onSubmit()" aria-labelledby="title">
+      <div class="form-control-group" *ngFor="let field of fields">
+        <label class="label">{{ field.title }}:</label>
+        <ng-container [ngSwitch]="field.type">
+          <input *ngSwitchCase="'text'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
+          <input *ngSwitchCase="'email'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
+          <input *ngSwitchCase="'number'" nbInput fullWidth [type]="field.type" [formControlName]="field.name" [required]="true">
+          <input *ngSwitchCase="'nb-datepicker'" nbInput fullWidth [formControlName]="field.name" [required]="true" [nbDatepicker]="myDatepicker">
+          <nb-datepicker [nbDatepicker]="field.name" #myDatepicker></nb-datepicker>
+        </ng-container>
+        <div *ngIf="modalForm.get(field.name).invalid && (modalForm.get(field.name).dirty || modalForm.get(field.name).touched)">
+          <div *ngIf="modalForm.get(field.name).errors.required">{{ field.title }} is required</div>
+          <div *ngIf="modalForm.get(field.name).errors.email">Please enter a valid email address for {{ field.title }}</div>
+          <div *ngIf="modalForm.get(field.name).errors.minlength">{{ field.title }} must be at least {{ modalForm.get(field.name).errors.minlength.requiredLength }} characters long</div>
+        </div>
+        </div>
+
+ 
+        
+        <br>
+        <div class="buttons-container">
+            <button class="cancel" nbButton status="danger" (click)="onCancel()">Cancel</button>
+            <button  nbButton  status="success" [disabled]="modalForm.invalid"  [class.btn-pulse]="submitted"> Submit</button>
+        </div>
+    
+    </form>
+  </nb-card-body>
+</nb-card>
+    <ng-template #delete >
+      <nb-card>
+      <nb-card-header>Are you sure you want to delete this Item?</nb-card-header>
+      <nb-card-body>
+      <form #modalForm="ngForm" (ngSubmit)="onDelete()" aria-labelledby="title">
+        <div class="buttons-container">
+          <button class="cancel"   status="success"  nbButton (click)="onCancel()">Cancel</button>
+          <button  nbButton status="danger" type="submit"> delete</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+
+
+
+    

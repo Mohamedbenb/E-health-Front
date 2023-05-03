@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
-import { NbDialogRef, NB_DIALOG_CONFIG, NbDatepickerAdapter } from '@nebular/theme';
+import { NbDialogRef, NB_DIALOG_CONFIG } from '@nebular/theme';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomTableService } from '../../custom-table.service';
 
 @Component({
   selector: 'app-my-actions',
-  templateUrl:"./TestForm-Template.html",
+  templateUrl:"./Modal-template.html",
   styleUrls:['./Modal.component.scss'],
 })
 export class ModalFormComponent implements OnInit{
@@ -19,7 +19,7 @@ export class ModalFormComponent implements OnInit{
   @Input() extra;
   @Input() customTableService:any;
   isDeleting = false;
-modalForm: FormGroup;
+  modalForm: FormGroup;
   
   //formData = {id: '', firstname: '',username: '',lastname: '', email: '',age: '',};
   
@@ -27,7 +27,6 @@ modalForm: FormGroup;
   protected cd: ChangeDetectorRef;
   
   constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>,
-    //private readonly datepickeradapter: NbDatepickerAdapter<Date>,
     //private customTableService: CustomTableService,
     @Inject(NB_DIALOG_CONFIG) public data: any
     ) {
@@ -43,17 +42,9 @@ modalForm: FormGroup;
 
     
   ngOnInit(): void {
-    const formGroupConfig = {};
-    this.fields.forEach((field) => {
-      formGroupConfig[field.name] = ['', field.validators];
-      console.log('field name ',field.name)
-    });
-    this.modalForm = this.formBuilder.group(formGroupConfig);
-    console.log('form',this.modalForm)
     if (this.action === 'edit') {
-      //this.populate(this.formData,this.dialogData);
-      this.modalForm.patchValue(this.dialogData)
-
+      this.populate(this.formData,this.dialogData);
+      
       //console.log('Form valuess:',this.dialogForm)
       this.submitted =false;
       console.log('model',this.formData)
@@ -68,8 +59,7 @@ modalForm: FormGroup;
    //
    //console.log('Form valuess:',Object.keys(this.formData))
    if (this.action === 'add') {
-   // this.buildForm(this.formData);
-
+    this.buildForm(this.formData);
   }
   }
   getFormControlsFields(model:any) {   
@@ -106,26 +96,25 @@ populate(model:any, data:any) {
   }
   
   onSubmit(): void {
-    const data = this.modalForm.getRawValue()
-    console.log('Form value:', data);
+    
+    console.log('Form value:', this.modalForm.value);
 
     if (this.action === 'add') {
-
-      console.log('Form values:',data)
-      this.customTableService.addData(data,this.extra).subscribe(() => {
+      console.log('Form values:',this.modalForm.value)
+      this.customTableService.addTableData(this.modalForm.value,this.extra).subscribe(() => {
         this.ref.close();
       }, (error) => {
         console.error('Error adding table data:', error);
       });
     } else if (this.action === 'edit') {
       
-      //console.log('checkpointy',this.modalForm.value.firstname)
+      console.log('checkpointy',this.modalForm.value.firstname)
       
       
       this.modalForm.value.id=this.dialogData.id
-      this.customTableService.updateData(this.modalForm.value,this.extra).subscribe(() => {
-        console.log('Data sent to updateTableData:', this.formData);
-        console.log('id', this.formData.id);
+      this.customTableService.updateTableData(this.modalForm.value,this.extra).subscribe(() => {
+        console.log('Data sent to updateTableData:', this.modalForm.value);
+        console.log('id', this.modalForm.value.id);
         this.ref.close();
       }, (error) => {
         console.error('Error updating table data:', error);
