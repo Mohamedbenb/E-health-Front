@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbButton, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbIconModule, NbInputModule, NbMenuModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
+import { NbAlertModule, NbButton, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbIconModule, NbInputModule, NbMenuModule, NbSelectModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
 import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -26,7 +26,8 @@ import { ThemeModule } from '../../@theme/theme.module';
     ReactiveFormsModule,
     NbDatepickerModule,
     NbCalendarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbSelectModule
     
     
     
@@ -34,7 +35,7 @@ import { ThemeModule } from '../../@theme/theme.module';
   declarations: [
     
     
-
+    ModalFormComponent
   ],
 })
 export class Modalmodule {

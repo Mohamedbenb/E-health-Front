@@ -21,6 +21,7 @@ import { ParametersComponent } from './parameters/parameters.component';
 import { UniopsComponent } from './parameters/UniopsComponent';
 import { EmployeesComponent } from './employees/employees.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -59,7 +60,8 @@ const components = [
     NbRouteTabsetModule,
     NbTabsetModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   declarations: [
     PagesComponent,
