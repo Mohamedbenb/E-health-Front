@@ -17,7 +17,7 @@ import { ChartjsPieComponent } from './statistiques/chartjs-pie.component';
 
 import { ChartjsBarHorizontalComponent } from './statistiques/chartjs-bar-horizontal.component';
 import { ChartModule } from 'angular2-chartjs';
-import { ParametersComponent } from './parameters/parameterscomponent';
+import { ParametersComponent } from './parameters/parameters.component';
 import { UniopsComponent } from './parameters/UniopsComponent';
 import { EmployeesComponent } from './employees/employees.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

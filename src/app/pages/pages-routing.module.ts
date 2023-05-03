@@ -8,7 +8,7 @@ import { PagesComponent } from './pages.component';
 import { DragCompComponent } from '../drag-comp/drag-comp.component';
 import { VisiteComponent } from './visite/visite/visite.component';
 
-import { ParametersComponent } from './parameters/parameterscomponent';
+import { ParametersComponent } from './parameters/parameters.component';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { StatisticsComponent } from './statistiques/statistics.component';
