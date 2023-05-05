@@ -19,6 +19,11 @@ export class SocieteService {
     //console.log(this.http.get('http://localhost:8080/api/uniops/${ex}/employees', options));
     return this.http.get(`${this.url}societes/`, options);
   }
+  getuData(): Observable<any> {
+    const options = { headers: this.headers };
+    //console.log(this.http.get('http://localhost:8080/api/uniops/${ex}/employees', options));
+    return this.http.get(`${this.url}getAllUniOpsIdTitle/`, options);
+  }
 
   addData(data: any,ex:any): Observable<any> {
     const options = { headers: this.headers };

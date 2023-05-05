@@ -27,7 +27,7 @@ export class EmployeesComponent implements OnInit{
     { name: 'matricule', type: 'number', title:'Matricule', validators: [Validators.required, Validators.minLength(8)]},
     { name: 'datenai', type: 'nb-datepicker', title: 'Date de naissance', validators: [Validators.required] },
     { name: 'daterecru', type: 'nb-datepicker', title: "Date d'embauche", validators: [Validators.required] },
-    { name: 'idOp', type: 'select', title: "Unité operationelle", validators: [Validators.required] },
+    //{ name: 'idOp', type: 'select', title: "Unité operationelle", validators: [Validators.required] },
   ];
   extra=1;
   tableData: LocalDataSource;
@@ -119,15 +119,18 @@ export class EmployeesComponent implements OnInit{
 
   
   ngOnInit() {
+    
     //this.societe$ = this.Ser.getData();
     this.getxExtra()
     this.loadTableData();
     this.selectedOptions = [this.cols.firstname.title];
     this.onSelectChange()
     setTimeout(() => {
+      
       console.log('cell:', this.societe);
       console.log(this.displayedColumns);
     }, 1000);
+    console.log(navigator.mediaSession)
     
 }
 
@@ -142,7 +145,7 @@ export class EmployeesComponent implements OnInit{
     
   }
 getxExtra(){
-  this.Ser.getData().subscribe((data) => {
+  this.Ser.getuData().subscribe((data) => {
     this.societe=data
     console.log('soc',this.societe)
   });
