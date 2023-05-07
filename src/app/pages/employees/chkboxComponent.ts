@@ -7,6 +7,7 @@ import { EmployeeService } from "../../services/employee.service";
     selector: 'my-checkbox',
     template: `
     <input type="checkbox" [checked]="rowData.status" (change)="setValue(rowData)">
+    
   `,
   })
  

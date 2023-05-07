@@ -119,9 +119,7 @@ export class SMComponent implements OnInit{
       context: {
         dialogTitle: 'Add Item',
         action: 'add',
-        data: {
-          formData: this.formData,
-        },
+
       },}).onClose.subscribe(() => {
         console.log('updating')
         this.loadTableData();

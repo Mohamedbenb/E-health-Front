@@ -5,14 +5,14 @@
         <nb-tabset>
         <nb-tab tabTitle="Societés">
           <ng2-smart-table
-          [settings]="settings1"
+          [settings]="sett"
           [source]="tableData"
           
           (create)="openAddDialog()"
           (edit)="onEditClick($event)"
           (delete)="onDeleteConfirm($event)"
           (custom)="openAddDialog()"
-          
+          (customEvent)="onCustomEvent($event)"
         >
       
 
@@ -20,7 +20,7 @@
         </nb-tab>
         <nb-tab tabTitle="Maladies professionelles">
           <ng2-smart-table
-          [settings]="settings2"
+          [settings]="sett2"
           [source]="tableData"
           (create)="openAddDialog()"
           (edit)="onEditClick($event)"
@@ -30,7 +30,7 @@
         </nb-tab>
         <nb-tab tabTitle="Examens complémentaires">
           <ng2-smart-table
-          [settings]="settings3"
+          [settings]="sett3"
           [source]="tableData"
           (create)="openAddDialog()"
           (edit)="onEditClick($event)"
@@ -40,12 +40,14 @@
         </nb-tab>
         <nb-tab tabTitle="Suivit Médicale Spéciale">
           <ng2-smart-table
-          [settings]="settings4"
+          [settings]="sett4"
           [source]="tableData"
           (create)="openAddDialog()"
           (edit)="onEditClick($event)"
           (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()">
+          (custom)="openAddDialog()"
+          (customEvent)="onCustomEvent($event)">
+          
           </ng2-smart-table>
         </nb-tab>
       </nb-tabset>

@@ -15,12 +15,12 @@ export class ModalFormComponent implements OnInit{
   @Input() dialogTitle: string;
   @Input() action: string;
   @Input() dialogData: any;
-  @Input() formData:any;
+
   @Input() extra;
   @Input() customTableService:any;
-  @Input()societe:any;
-  isDeleting = false;
-modalForm: FormGroup;
+ 
+  
+  modalForm: FormGroup;
   
   //formData = {id: '', firstname: '',username: '',lastname: '', email: '',age: '',};
   
@@ -30,35 +30,26 @@ modalForm: FormGroup;
   constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>,
     //private readonly datepickeradapter: NbDatepickerAdapter<Date>,
     //private customTableService: CustomTableService,
-    @Inject(NB_DIALOG_CONFIG) public data: any
-    ) {
-      this.dialogTitle = data.dialogTitle;
-      this.action = data.action;
-      
-      
-
-      
-      
-    }
+    ) {}
     
 
     
   ngOnInit(): void {
-    console.log('cell:', this.societe);
+    
     const formGroupConfig = {};
     this.fields.forEach((field) => {
       formGroupConfig[field.name] = ['', field.validators];
       console.log('field name ',field.name)
     });
     this.modalForm = this.formBuilder.group(formGroupConfig);
-    console.log('form',this.modalForm)
+    console.log('form',this.modalForm.getRawValue())
     if (this.action === 'edit') {
       //this.populate(this.formData,this.dialogData);
       this.modalForm.patchValue(this.dialogData)
 
       //console.log('Form valuess:',this.dialogForm)
       this.submitted =false;
-      console.log('model',this.formData)
+      
       console.log('form',this.modalForm)
       console.log('edit',this.dialogData)
       
@@ -71,7 +62,7 @@ modalForm: FormGroup;
    //console.log('Form valuess:',Object.keys(this.formData))
    if (this.action === 'add') {
    // this.buildForm(this.formData);
-
+    console.log('extraaa',this.extra)
   }
   }
   getFormControlsFields(model:any) {   
@@ -122,12 +113,12 @@ populate(model:any, data:any) {
     } else if (this.action === 'edit') {
       
       //console.log('checkpointy',this.modalForm.value.firstname)
-      
+     
+      console.log('Data sent to this.extra:', this.extra);
       
       this.modalForm.value.id=this.dialogData.id
+      console.log('Data sent to updateTableData:', this.modalForm.value.id);
       this.customTableService.updateData(this.modalForm.value,this.extra).subscribe(() => {
-        console.log('Data sent to updateTableData:', this.formData);
-        console.log('id', this.formData.id);
         this.ref.close();
       }, (error) => {
         console.error('Error updating table data:', error);
@@ -142,8 +133,9 @@ populate(model:any, data:any) {
 
   onDelete() {
     if (this.action === 'delete') {
-      console.log('del',this.dialogData)
-      this.customTableService.deleteTableData(this.dialogData.id,this.extra).subscribe(() => {
+      console.log('del',this.dialogData.id)
+      console.log('extra',this.extra)
+      this.customTableService.deleteData(this.dialogData.id,this.extra).subscribe(() => {
         this.ref.close();
       }, (error) => {
         console.error('Error deleting table data:', error);

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { ModalFormComponent } from '../ModalForm/ModalFormComponent';
 
@@ -8,6 +8,7 @@ import { UniopsComponent } from './UniopsComponent';
 import { actionSettings } from '../../constants';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocieteService } from '../../services/societe.service';
+import { SharedService } from '../../services/shared.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { SocieteService } from '../../services/societe.service';
 })
 export class ParametersComponent {
   formData = { title: '', mat: '', tel: '', fax: '',  adresse:'',codepostale:''};
+  @ViewChild('uniops') uniopsComponent: UniopsComponent;
   tableData: LocalDataSource;
   modalForm: FormGroup;
   extra=41;
@@ -58,7 +60,14 @@ export class ParametersComponent {
     Uniops: {
       title: 'Unités opérationelles',
       type: 'custom',
+      width: '400px',
       renderComponent: UniopsComponent,
+      onComponentInitFunction: (instance) => {
+      instance.customEvent.subscribe(() => {
+        console.log('Custom event emitted from UniopsComponent');
+        this.loadTableData()
+      });
+      }
     },
 
   }
@@ -110,104 +119,58 @@ export class ParametersComponent {
       
     },
   }
-  settings1 = {
-  columns: this.cols1,
-    
-  ...actionSettings
-}
-settings2={
-  columns: this.cols2,
-    
-  ...actionSettings
-}
-settings3={
-  columns: this.cols3,
-    
-  ...actionSettings
-}
-settings4={
-  columns: this.cols4,
-    
-  ...actionSettings
-}
+
   constructor(private Service: SocieteService,
               private dialogService: NbDialogService,
-              private formBuilder: FormBuilder
+              private SharedService: SharedService
               
     ) {
 
   }
+  tabs = [];
+  sett:any
+  sett2:any
+  sett3:any
+  sett4:any
   ngOnInit() {
     this.loadTableData();
     console.log("ex",this.extra)
-    
-     
-  }
-
-
-  loadTableData() {
-    this.Service.getData().subscribe((data) => {
-    this.tableData=new LocalDataSource(data);
-    
-  }, (error) => {  
-    console.error('Error loading table data:', error);
-    });
-    
+    this.sett=this.SharedService.getSettings(this.cols1)
+    this.sett2=this.SharedService.getSettings(this.cols2)
+    this.sett3=this.SharedService.getSettings(this.cols3)
+    this.sett4=this.SharedService.getSettings(this.cols4)
+    console.log("aaad",this.sett)
+    }
+    loadTableData() {
+      this.SharedService.loadTableData(this.Service).subscribe((dataSource: LocalDataSource) => {
+        this.tableData = dataSource;
+        console.log('done')
+      });
+    }
+  onCustomEvent(event: any) {
+    console.log('Custom event received in ParentComponent:', event);
+    console.log("event emitted")
   }
 
   onDeleteConfirm(event: any): void {
-    const tableData = event.data;
-    this.dialogService.open(ModalFormComponent, {
-      context: {
-        dialogTitle: 'delete Item',
-        action: 'delete',
-        dialogData:tableData,
-        customTableService: this.Service
-      },}).onClose.subscribe(() => {
-        console.log('updating')
-        this.loadTableData();
+    this.SharedService.onDeleteConfirm( event,this.Service, this.extra).subscribe(() => {
+      console.log('dialog closed'); 
+      this.loadTableData()
       })
   }
 
-  openAddDialog() {
-    console.log('checkpoint',this.formData)
-    this.dialogService.open(ModalFormComponent, {
-      context: {
-        dialogTitle: 'Add Item',
-        action: 'add',
-        formData: this.formData,
-        customTableService: this.Service,
-        fields:this.fields,
-        extra:this.extra,
-        modalForm:this.modalForm
-      },}).onClose.subscribe(() => {
-        console.log('updating')
-        this.loadTableData();
-      })
+  openAddDialog(): void {
+    this.SharedService.openAddDialog(this.Service, this.fields, this.extra, this.modalForm).subscribe(() => {
+      console.log('dialog closed'); 
+      this.loadTableData()
+    });
   }
 
   onEditClick(event: any) {
-    //console.log("ev",event.data)
-    // get the data of the selected row
-    const tableData = event.data;
-    console.log("tableData",tableData)
-  
-    // open the dialog with pre-filled fields
-    this.dialogService.open(ModalFormComponent, {
-      context: {
-        dialogTitle: 'Edit Item',
-        action: 'edit',
-        dialogData: tableData,
-        formData: this.formData,
-        customTableService: this.Service,
-        fields:this.fields,
-        extra:this.extra,
-        modalForm:this.modalForm
-      },
-    },).onClose.subscribe(() => {
-      console.log('updating',this.tableData)
-      this.loadTableData();
-    })
+    this.SharedService. onEditClick(event,this.Service, this.fields, this.extra, this.modalForm).subscribe(() => {
+      console.log('dialog closed'); 
+      this.loadTableData()
+    });
 }
 
 }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
+import {  NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -22,6 +22,7 @@ import { UniopsComponent } from './parameters/UniopsComponent';
 import { EmployeesComponent } from './employees/employees.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 
 
 
@@ -61,7 +62,8 @@ const components = [
     NbTabsetModule,
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NbButtonModule
   ],
   declarations: [
     PagesComponent,
@@ -72,7 +74,7 @@ const components = [
     ChartjsBarHorizontalComponent,
     ChartjsPieComponent,
     ParametersComponent,
-    UniopsComponent
+    UniopsComponent,
     ],
 })
 export class PagesModule {

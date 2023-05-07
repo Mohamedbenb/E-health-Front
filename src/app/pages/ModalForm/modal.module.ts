@@ -35,7 +35,8 @@ import { ThemeModule } from '../../@theme/theme.module';
   declarations: [
     
     
-    ModalFormComponent
+    ModalFormComponent,
+    //UniopsComponent
   ],
 })
 export class Modalmodule {

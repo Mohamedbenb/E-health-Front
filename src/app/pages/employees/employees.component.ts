@@ -174,7 +174,6 @@ getxExtra(){
         extra:this.extra,
         fields:this.fields,
         modalForm:this.modalForm,
-        societe:this.societe
       },}).onClose.subscribe(() => {
         console.log('updating')
         console.log('soc',this.societe)
@@ -194,7 +193,6 @@ getxExtra(){
         dialogTitle: 'Edit Item',
         action: 'edit',
         dialogData: tableData,
-        formData: this.formData,
         customTableService: this.customTableService,
         extra:this.extra,
         fields:this.fields,
