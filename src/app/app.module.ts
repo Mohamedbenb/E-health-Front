@@ -56,6 +56,7 @@ import { BlockTemplateComponent } from './drag-comp/blockui/block-template.compo
 
 
 
+
 @NgModule({
   declarations: [AppComponent, DragCompComponent, DateTimePickerComponent],
   imports: [

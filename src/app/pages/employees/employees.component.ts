@@ -54,7 +54,7 @@ export class EmployeesComponent implements OnInit{
       hide:false
     },
     Status: {
-      title: 'Status',
+      title: 'EVREST',
       type: 'custom',
       renderComponent: MyCheckboxComponent,
       hide:false
@@ -95,7 +95,6 @@ export class EmployeesComponent implements OnInit{
 
   constructor(private customTableService: EmployeeService,
               private dialogService: NbDialogService,
-              private formBuilder: FormBuilder,
               private Ser: SocieteService,
              
               
@@ -123,7 +122,7 @@ export class EmployeesComponent implements OnInit{
     //this.societe$ = this.Ser.getData();
     this.getxExtra()
     this.loadTableData();
-    this.selectedOptions = [this.cols.firstname.title];
+    this.selectedOptions = [this.cols.firstname.title,this.cols.lastname.title];
     this.onSelectChange()
     setTimeout(() => {
       

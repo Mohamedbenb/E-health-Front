@@ -1,14 +1,17 @@
-import { Component, ViewChild} from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
-import { ModalFormComponent } from '../ModalForm/ModalFormComponent';
+import { ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+
 
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { UniopsComponent } from './UniopsComponent';
-import { actionSettings } from '../../constants';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import {  FormGroup, Validators } from '@angular/forms';
 import { SocieteService } from '../../services/societe.service';
 import { SharedService } from '../../services/shared.service';
+import { MalProfService } from '../../services/mal-prof.service';
+import { actionSettings } from '../../constants';
+import { ExamService } from '../../services/service-exam.service';
+import { VisiteService } from '../../services/service-visite.service';
 
 
 @Component({
@@ -20,6 +23,7 @@ export class ParametersComponent {
   formData = { title: '', mat: '', tel: '', fax: '',  adresse:'',codepostale:''};
   @ViewChild('uniops') uniopsComponent: UniopsComponent;
   tableData: LocalDataSource;
+  tableData2: LocalDataSource;
   modalForm: FormGroup;
   extra=41;
   fields = [
@@ -29,6 +33,28 @@ export class ParametersComponent {
     { name: 'tel', type: 'number', title:'Tel', validators: [Validators.required, Validators.minLength(8)]},
     { name: 'fax', type: 'number', title:'Fax', validators: [Validators.required, Validators.minLength(8)]},
     { name: 'mat', type: 'number', title:'Matricule', validators: [Validators.required, Validators.minLength(8)]},
+  ];
+  fields2 = [
+    { name: 'title', type: 'text', title:'tableau', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'nbr', type: 'text', title:'prise en charge', validators: [Validators.required, Validators.minLength(1)] },
+    { name: 'effects', type: 'text', title:'Liste des Effets', validators: [Validators.required,  Validators.minLength(2)] },
+    { name: 'design', type: 'text', title:'Désignation des maladies', validators: [Validators.required,  Validators.minLength(4)] },
+
+
+  ];
+  fields3 = [
+    { name: 'title', type: 'text', title:'tableau', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'frequence', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
+    { name: 'dateec', type: 'date', title:'Liste des Effets', validators: [Validators.required,  Validators.minLength(2)] },
+
+
+  ];
+  fields4 = [
+    { name: 'type', type: 'text', title:'type', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'frequency', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
+    { name: 'remarque', type: 'text', title:'Remarque', validators: [Validators.required,  Validators.minLength(2)] },
+
+
   ];
   cols1={
 
@@ -65,7 +91,7 @@ export class ParametersComponent {
       onComponentInitFunction: (instance) => {
       instance.customEvent.subscribe(() => {
         console.log('Custom event emitted from UniopsComponent');
-        this.loadTableData()
+        this.loadTableData(this.getService())
       });
       }
     },
@@ -73,11 +99,15 @@ export class ParametersComponent {
   }
   cols2={
     title: {
+      title: 'Tableau',
+      type: 'string',
+    },
+    design: {
       title: 'Désignation des maladies',
       type: 'string',
       
     },
-    pench: {
+    nbr: {
       title: 'Délai de prise en charge',
       type: 'number',
     },
@@ -86,6 +116,8 @@ export class ParametersComponent {
       type: 'string',
       
     },
+
+
   }
   cols3={
     title: {
@@ -104,12 +136,12 @@ export class ParametersComponent {
     },
   }
   cols4={
-    title: {
+    type: {
       title: 'Type',
       type: 'string',
       
     },
-    frequence: {
+    frequency: {
       title: 'Fréquence',
       type: 'number',
     },
@@ -121,60 +153,128 @@ export class ParametersComponent {
   }
 
   constructor(private Service: SocieteService,
-              private dialogService: NbDialogService,
-              private SharedService: SharedService
+              private SharedService: SharedService,
+              private servmal: MalProfService,
+              private servx: ExamService,
+              private servv: VisiteService,
               
     ) {
 
   }
-  tabs = [];
-  sett:any
-  sett2:any
-  sett3:any
-  sett4:any
+  tabs = [
+    { title: 'Sociétés', id: 'tab1' },
+    { title: 'Maladies professionnelles', id: 'tab2' },
+    { title: 'Examens complémentaires', id: 'tab3' },
+    { title: 'Suivi Médicale Spéciale', id: 'tab4' }
+  ];
+  selectedTabIndex='tab1';
+  
+  settings=this.SharedService.getSettings(this.cols1)
   ngOnInit() {
-    this.loadTableData();
+    
     console.log("ex",this.extra)
-    this.sett=this.SharedService.getSettings(this.cols1)
-    this.sett2=this.SharedService.getSettings(this.cols2)
-    this.sett3=this.SharedService.getSettings(this.cols3)
-    this.sett4=this.SharedService.getSettings(this.cols4)
-    console.log("aaad",this.sett)
+    console.log("aaad",this.settings);
+
     }
-    loadTableData() {
-      this.SharedService.loadTableData(this.Service).subscribe((dataSource: LocalDataSource) => {
+
+
+    async onTabChanged(event: any) {
+      try {
+        this.selectedTabIndex = event.tabId;
+        const cols = await this.getCols();
+        this.settings = this.SharedService.getSettings(cols);
+        
+        this.loadTableData(this.getService());
+        console.log('cols', cols);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+    loadTableData(serv:any) {
+      this.SharedService.loadTableData(serv).subscribe((dataSource: LocalDataSource) => {
         this.tableData = dataSource;
         console.log('done')
+        //this.cdr.detectChanges();
       });
     }
+
   onCustomEvent(event: any) {
     console.log('Custom event received in ParentComponent:', event);
     console.log("event emitted")
   }
 
   onDeleteConfirm(event: any): void {
-    this.SharedService.onDeleteConfirm( event,this.Service, this.extra).subscribe(() => {
+    this.SharedService.onDeleteConfirm( event,this.getService(), this.extra).subscribe(() => {
       console.log('dialog closed'); 
-      this.loadTableData()
+      this.loadTableData(this.getService())
       })
   }
 
   openAddDialog(): void {
-    this.SharedService.openAddDialog(this.Service, this.fields, this.extra, this.modalForm).subscribe(() => {
+    this.SharedService.openAddDialog(this.getService(), this.getFields(), this.extra, this.modalForm).subscribe(() => {
       console.log('dialog closed'); 
-      this.loadTableData()
+      this.loadTableData(this.getService())
     });
   }
 
   onEditClick(event: any) {
-    this.SharedService. onEditClick(event,this.Service, this.fields, this.extra, this.modalForm).subscribe(() => {
+    this.SharedService. onEditClick(event,this.getService(), this.getFields(), this.extra, this.modalForm).subscribe(() => {
       console.log('dialog closed'); 
-      this.loadTableData()
+      this.loadTableData(this.getService())
     });
 }
 
+private getService():any{
+  switch (this.selectedTabIndex) {
+    case 'tab1':
+      return this.Service;
+    case 'tab2':
+      return this.servmal;
+    case 'tab3':
+      return this.servx;
+    case 'tab4':
+      return this.servv;
+    default:
+      throw new Error('Invalid tab index');
+  }
+}
+private getFields():any{
+  switch (this.selectedTabIndex) {
+    case 'tab1':
+      return this.fields;
+    case 'tab2':
+      return this.fields2;
+    case 'tab3':
+      return this.fields3;
+    case 'tab4':
+      return this.fields4;
+    default:
+      throw new Error('Invalid tab index');
+  }
+}
+private getCols(): Promise<any> {
+  console.log('tabnum',this.selectedTabIndex)
+  return new Promise((resolve, reject) => {
+    switch (this.selectedTabIndex) {
+      case 'tab1':
+        resolve(this.cols1);
+        break;
+      case 'tab2':
+        resolve(this.cols2);
+        break;
+      case 'tab3':
+        resolve(this.cols3);
+        break;
+      case 'tab4':
+        resolve(this.cols4);
+        break;
+      default:
+        reject('Invalid tab index');
+    }
+  });
 }
 
 
 
+}
 

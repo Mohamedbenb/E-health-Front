@@ -58,7 +58,7 @@ import { UniopService } from "../../services/uniop.service";
     ngOnInit() {
         
         this.uniops=this.rowData.uniops
-        console.log('his.uniops',this.uniops)
+        
         //this.emitEvent()
     }
     openAddDialog() {

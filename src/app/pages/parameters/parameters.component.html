@@ -1,59 +1,19 @@
 <nb-card>
   <nb-card-header>
-   
-      <nb-card size="small">
-        <nb-tabset>
-        <nb-tab tabTitle="Societés">
+    <nb-card>
+      <nb-tabset (changeTab)="onTabChanged($event)">
+        <nb-tab *ngFor="let tab of tabs" [tabTitle]="tab.title" [tabId]="tab.id">
           <ng2-smart-table
-          [settings]="sett"
-          [source]="tableData"
-          
-          (create)="openAddDialog()"
-          (edit)="onEditClick($event)"
-          (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()"
-          (customEvent)="onCustomEvent($event)"
-        >
-      
-
-      </ng2-smart-table>
-        </nb-tab>
-        <nb-tab tabTitle="Maladies professionelles">
-          <ng2-smart-table
-          [settings]="sett2"
-          [source]="tableData"
-          (create)="openAddDialog()"
-          (edit)="onEditClick($event)"
-          (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()">
-          </ng2-smart-table>
-        </nb-tab>
-        <nb-tab tabTitle="Examens complémentaires">
-          <ng2-smart-table
-          [settings]="sett3"
-          [source]="tableData"
-          (create)="openAddDialog()"
-          (edit)="onEditClick($event)"
-          (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()">
-          </ng2-smart-table>
-        </nb-tab>
-        <nb-tab tabTitle="Suivit Médicale Spéciale">
-          <ng2-smart-table
-          [settings]="sett4"
-          [source]="tableData"
-          (create)="openAddDialog()"
-          (edit)="onEditClick($event)"
-          (delete)="onDeleteConfirm($event)"
-          (custom)="openAddDialog()"
-          (customEvent)="onCustomEvent($event)">
-          
+            [settings]="settings"
+            [source]="tableData"
+            (create)="openAddDialog()"
+            (edit)="onEditClick($event)"
+            (delete)="onDeleteConfirm($event)"
+            (custom)="openAddDialog()"
+            (customEvent)="onCustomEvent($event)">
           </ng2-smart-table>
         </nb-tab>
       </nb-tabset>
-      </nb-card>
-   
+    </nb-card>
   </nb-card-header>
-
-
 </nb-card>
