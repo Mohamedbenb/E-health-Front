@@ -26,13 +26,13 @@ export class MalProfService {
   updateData(data: any,ex:any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', data);
-    return this.http.put(`${this.url}ed/${data.id}`, data, options);
+    return this.http.put(`${this.url}malprof/ed/${data.id}`, data, options);
   }
 
   deleteData(id: number,ex:any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', id);
     console.log('exreceived in updateTableData:', ex);
-    return this.http.patch(`${this.url}del/${id}`, options);
+    return this.http.patch(`${this.url}malprof/del/${id}`, options);
   }
 }
