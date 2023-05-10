@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { ModalFormComponent } from './ModalFormComponent';
 import { ThemeModule } from '../../@theme/theme.module';
+import { DialogNamePromptComponent } from '../../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
 
 
 
@@ -36,7 +37,7 @@ import { ThemeModule } from '../../@theme/theme.module';
     
     
     ModalFormComponent,
-    //UniopsComponent
+    //DialogNamePromptComponent
   ],
 })
 export class Modalmodule {

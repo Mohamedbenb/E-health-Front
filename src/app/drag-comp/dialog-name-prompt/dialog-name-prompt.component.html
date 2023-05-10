@@ -1,0 +1,65 @@
+
+
+
+<nb-card>
+  <nb-card-header>Enter your name</nb-card-header>
+
+  <nb-card size="small">
+    <nb-card-body>
+      <nb-stepper (stepChange)="handleStepChange($event)" orientation="vertical">
+        <nb-step label="First step">
+          <h3>Step content #1</h3>
+          <p class="lorem">
+            <nb-card>
+              <nb-card-body>
+                <nb-select placeholder="Select Groups" [(ngModel)]="selectedIndex" (selectedChange)="onSelectionChange($event)">
+                  <nb-option-group *ngFor="let group of societe" [title]="group.title">
+                    <nb-option *ngFor="let option of group.uniops" [value]="option">
+                      {{ option.title }}
+                    </nb-option>
+                  </nb-option-group>
+                </nb-select>
+              </nb-card-body>
+            </nb-card>
+          </p>
+          <button nbButton disabled nbStepperNext>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </nb-step>
+        <nb-step label="Second step">
+          <h3>Step content #2</h3>
+          <p class="lorem">
+            Curabitur 
+          </p>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </nb-step>
+        <nb-step label="Third step">
+          <h3>Step content #3</h3>
+          <p class="lorem">
+            Proin 
+          </p>
+          <p class="lorem">
+            Curabitur luctus matti Mauriien pellentesque, eu placerat leo lucturetra blandit fermentum.
+          </p>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </nb-step>
+        <nb-step label="Fourth step">
+          <h3>Step content #4</h3>
+          <p class="lorem">
+            Proin varius accumsan semper. Pdum,
+            sit amet fringilla orci efficitur. Nam bibendum lecstiuuis
+            viverra ex.
+          </p>
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton disabled nbStepperNext>next</button>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card>
+  <nb-card-footer>
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
+    <button nbButton status="success" (click)="cancel()">Submit</button>
+  </nb-card-footer>
+</nb-card>
+

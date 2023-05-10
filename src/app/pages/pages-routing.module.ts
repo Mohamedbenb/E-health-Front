@@ -12,6 +12,7 @@ import { ParametersComponent } from './parameters/parameters.component';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { StatisticsComponent } from './statistiques/statistics.component';
+import { DeclarationComponent } from './stepper/declaration.component';
 
 
 const routes: Routes = [{
@@ -30,7 +31,10 @@ const routes: Routes = [{
     },
 
 
-
+    {
+      path:'declaration', 
+      component:DeclarationComponent
+    },
 
 
     {

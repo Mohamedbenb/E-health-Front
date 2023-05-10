@@ -11,6 +11,9 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 import {  endOfDay,isSameDay, isSameMonth, startOfDay} from 'date-fns';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Subject } from 'rxjs';
+import { SocieteService } from '../services/societe.service';
+import { NbDialogService } from '@nebular/theme';
+import { DialogNamePromptComponent } from './dialog-name-prompt/dialog-name-prompt.component';
 
 
 const colors: any = {
@@ -96,19 +99,26 @@ export class DragCompComponent implements OnInit {
   public breadcrumb: any;
 
   datePicker: any;
+  names: any;
   
 
   /**
    *
    * @param NgbModal      modal
    */
-  constructor(private modal: NgbModal, private http: HttpClient ) { }
+  constructor(private modal: NgbModal, private http: HttpClient,
+              private socser: SocieteService,
+              private dialogService: NbDialogService,
+    ) { }
 
   /**
    * onInit
    */
   ngOnInit() {
-    
+    this.socser.getData().subscribe((data) => {
+      this.societe = data;
+      console.log(this.societe);
+    });
     this.http.get<any[]>('http://localhost:8080/api/datecals/').subscribe(data => {
       this.events = data.map(event => ({
         ...event,
@@ -188,22 +198,15 @@ export class DragCompComponent implements OnInit {
   /**
    * Add new event in modal
    */
+  societe:any
   addEvent(): void {
-    this.newEvent = {
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      },
-      actions: this.actions,
-    };
-
-    this.handleEvent('Add new event', this.newEvent);
-    this.refresh.next();
+    console.log(this.societe)
+    this.dialogService.open(DialogNamePromptComponent,{
+      context:{
+        societe:this.societe
+      }
+    })
+      .onClose.subscribe(name => name && this.names.push(name));
     
   }
 

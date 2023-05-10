@@ -29,18 +29,7 @@
         </ng2-smart-table>
       </nb-card-body>
     </nb-card>
-      
-    <nb-card>
-      <nb-select placeholder="Select Groups">
-        
-          <nb-option-group *ngFor="let group of societe" [title]="group.title">
-            <nb-option *ngFor="let option of group.uniops" [value]="option.id">
-              {{ option.title }}
-            </nb-option>
-          </nb-option-group>
 
-      </nb-select>
-    </nb-card>
 
   </div>
 </div>

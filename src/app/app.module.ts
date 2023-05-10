@@ -23,6 +23,7 @@ import {
   NbInputModule,
   NbLayoutModule,
   NbMenuModule,
+  NbSelectModule,
   NbSidebarModule,
   
   NbWindowModule,
@@ -101,7 +102,7 @@ import { BlockTemplateComponent } from './drag-comp/blockui/block-template.compo
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    
+    NbSelectModule,
     BlockUIModule.forRoot({
       template: BlockTemplateComponent
     })

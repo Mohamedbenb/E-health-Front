@@ -1,16 +1,14 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Cell, ViewCell } from "ng2-smart-table";
-import { CustomTableService } from "../../custom-table.service";
+import { ViewCell } from "ng2-smart-table";
 import { ModalFormComponent } from "../ModalForm/ModalFormComponent";
 import { NbDialogService } from "@nebular/theme";
-import { SocieteService } from "../../services/societe.service";
+
 import { FormGroup, Validators } from "@angular/forms";
 import { UniopService } from "../../services/uniop.service";
 
 @Component({
     selector: 'ngx-Uniops',
-      styleUrls: ['./uniops.component.scss'],
-
+    styleUrls: ['./uniops.component.scss'],
     template: `
 <div class="uniops-container">
   <nb-select placeholder="Unités opérationelles" [(ngModel)]="selectedUniopIndex">

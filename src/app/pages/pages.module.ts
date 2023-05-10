@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {  NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
+import {  NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -22,6 +22,8 @@ import { UniopsComponent } from './parameters/UniopsComponent';
 import { EmployeesComponent } from './employees/employees.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DeclarationComponent } from './stepper/declaration.component';
+import { DialogNamePromptComponent } from '../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
 
 
 
@@ -63,6 +65,7 @@ const components = [
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
+    NbStepperModule,
     NbButtonModule
   ],
   declarations: [
@@ -75,6 +78,8 @@ const components = [
     ChartjsPieComponent,
     ParametersComponent,
     UniopsComponent,
+    DeclarationComponent,
+    DialogNamePromptComponent
     ],
 })
 export class PagesModule {
