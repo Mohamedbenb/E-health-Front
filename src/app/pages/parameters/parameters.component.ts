@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 
 
 import { LocalDataSource } from 'ng2-smart-table';
@@ -9,7 +9,7 @@ import {  FormGroup, Validators } from '@angular/forms';
 import { SocieteService } from '../../services/societe.service';
 import { SharedService } from '../../services/shared.service';
 import { MalProfService } from '../../services/mal-prof.service';
-import { actionSettings } from '../../constants';
+
 import { ExamService } from '../../services/service-exam.service';
 import { VisiteService } from '../../services/service-visite.service';
 
@@ -64,7 +64,7 @@ export class ParametersComponent {
       
     },
     mat: {
-      title: 'Matricule CNSS',
+      title: 'Num Afilliation CNSS',
       type: 'string',
     },
     tel: {
@@ -86,7 +86,7 @@ export class ParametersComponent {
     Uniops: {
       title: 'Unités opérationelles',
       type: 'custom',
-      width: '400px',
+      
       renderComponent: UniopsComponent,
       onComponentInitFunction: (instance) => {
       instance.customEvent.subscribe(() => {
@@ -112,7 +112,7 @@ export class ParametersComponent {
       type: 'number',
     },
     effects: {
-      title: 'Liste indicative des principaux travaux susceptibles de provoquer ces maladies',
+      title: 'Travaux susceptibles de provoquer ces maladies',
       type: 'string',
       
     },

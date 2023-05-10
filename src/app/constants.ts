@@ -1,4 +1,5 @@
 export const actionSettings ={
+  
    add: {
     addButtonContent: '<i class="nb-plus"></i>',
     createButtonContent: '<i class="nb-checkmark"></i>',
@@ -25,6 +26,7 @@ export const actionSettings ={
     add:true,
     edit: true,
     delete: true,
+    position: 'right',
     },
     mode:'external',
 }
