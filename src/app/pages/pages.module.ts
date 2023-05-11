@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {  NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
+import {  NbAutocompleteModule, NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -66,7 +66,8 @@ const components = [
     FormsModule,
     CommonModule,
     NbStepperModule,
-    NbButtonModule
+    NbButtonModule,
+    NbAutocompleteModule
   ],
   declarations: [
     PagesComponent,

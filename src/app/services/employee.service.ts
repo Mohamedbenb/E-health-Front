@@ -20,6 +20,12 @@ export class EmployeeService {
     //console.log(this.http.get('http://localhost:8080/api/uniops/41/employees', options));
     return this.http.get(`${this.url}employees/`, options);
   }
+  getbyuni(id:any): Observable<any> {
+    const options = { headers: this.headers };
+    
+    //console.log(this.http.get('http://localhost:8080/api/uniops/41/employees', options));
+    return this.http.get(`${this.url}employees/uniop/${id}`, options);
+  }
 
   addData(data: any, ex:any): Observable<any> {
     const options = { headers: this.headers };

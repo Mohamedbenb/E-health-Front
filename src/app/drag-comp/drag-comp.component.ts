@@ -114,11 +114,15 @@ export class DragCompComponent implements OnInit {
   /**
    * onInit
    */
+  titles:any[]
   ngOnInit() {
     this.socser.getData().subscribe((data) => {
       this.societe = data;
       console.log(this.societe);
+      
     });
+
+    console.log('titles',this.titles)
     this.http.get<any[]>('http://localhost:8080/api/datecals/').subscribe(data => {
       this.events = data.map(event => ({
         ...event,

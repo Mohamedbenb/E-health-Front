@@ -10,17 +10,30 @@
         <nb-step label="First step">
           <h3>Step content #1</h3>
           <p class="lorem">
-            <nb-card>
+            <nb-card size="medium">
               <nb-card-body>
-                <nb-select placeholder="Select Groups" [(ngModel)]="selectedIndex" (selectedChange)="onSelectionChange($event)">
-                  <nb-option-group *ngFor="let group of societe" [title]="group.title">
-                    <nb-option *ngFor="let option of group.uniops" [value]="option">
-                      {{ option.title }}
+                <input
+                  [formControl]="inputFormControl"
+                  nbInput
+                  type="text"
+                  placeholder="Enter value"
+                  [nbAutocomplete]="auto"
+                  
+                />
+            
+                <nb-autocomplete #auto>
+                  <nb-option-group
+                    *ngFor="let group of filteredGroups$ | async; trackBy: trackByFn"
+                    [title]="group.title"
+                  >
+                    <nb-option *ngFor="let uniop of group.uniops" (click)="onOptionSelectionChange(uniop)" [value]="uniop.title">
+                      {{ uniop.title }}
                     </nb-option>
                   </nb-option-group>
-                </nb-select>
+                </nb-autocomplete>
               </nb-card-body>
             </nb-card>
+                     
           </p>
           <button nbButton disabled nbStepperNext>prev</button>
           <button nbButton nbStepperNext>next</button>
