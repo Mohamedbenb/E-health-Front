@@ -1,3 +1,5 @@
+import { UniOp } from "./UniOp";
+
 export class Employee{
     id:number;
     firstname:String;
@@ -8,6 +10,7 @@ export class Employee{
     datenai:Date;
     email:String;
     age:number;
+    uniop:UniOp
     numdosmed:number;
     status:boolean;
     idOp:number;

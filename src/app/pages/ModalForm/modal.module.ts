@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbAlertModule, NbButton, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbIconModule, NbInputModule, NbMenuModule, NbSelectModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
+import { NbAlertModule, NbAutocompleteModule, NbButton, NbButtonModule, NbCalendarModule, NbCardModule, NbDatepicker, NbDatepickerModule, NbIconModule, NbInputModule, NbMenuModule, NbOptionModule, NbSelectModule, NbStepperModule, NbTimepickerModule, NbTreeGridModule, NbWindowModule } from '@nebular/theme';
 import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -28,7 +28,11 @@ import { DialogNamePromptComponent } from '../../drag-comp/dialog-name-prompt/di
     NbDatepickerModule,
     NbCalendarModule,
     ReactiveFormsModule,
-    NbSelectModule
+    NbSelectModule,
+    NbStepperModule,
+    NbTimepickerModule,
+    NbAutocompleteModule,
+    NbOptionModule
     
     
     
@@ -37,7 +41,7 @@ import { DialogNamePromptComponent } from '../../drag-comp/dialog-name-prompt/di
     
     
     ModalFormComponent,
-    //DialogNamePromptComponent
+    
   ],
 })
 export class Modalmodule {

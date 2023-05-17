@@ -8,4 +8,8 @@
   .cancel {
     margin-right: 1rem;
   }
+
+}
+.custom-timepicker ::ng-deep .timepicker-list {
+  max-height: 200px; /* Adjust the desired height here */
 }

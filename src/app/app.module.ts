@@ -26,6 +26,8 @@ import {
   NbSelectModule,
   NbSidebarModule,
   
+  NbTimepickerModule,
+  
   NbWindowModule,
 } from '@nebular/theme';
 
@@ -79,6 +81,7 @@ import { BlockTemplateComponent } from './drag-comp/blockui/block-template.compo
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
+    NbTimepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     CalendarModule.forRoot({

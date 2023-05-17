@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {  NbAutocompleteModule, NbButtonModule, NbCalendarModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbTreeGridModule } from '@nebular/theme';
+import {  NbAutocompleteModule, NbButtonModule, NbCalendarModule, NbCardModule, NbCheckboxModule, NbDatepickerModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbRouteTabsetModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbTimepickerModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DeclarationComponent } from './stepper/declaration.component';
 import { DialogNamePromptComponent } from '../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
+import { ColorPickerCellComponent } from './parameters/color-picker.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 
@@ -67,7 +69,11 @@ const components = [
     CommonModule,
     NbStepperModule,
     NbButtonModule,
-    NbAutocompleteModule
+    NbAutocompleteModule,
+    NbDatepickerModule,
+    NbTimepickerModule,
+    NbCheckboxModule,
+    ColorPickerModule
   ],
   declarations: [
     PagesComponent,
@@ -80,8 +86,10 @@ const components = [
     ParametersComponent,
     UniopsComponent,
     DeclarationComponent,
-    DialogNamePromptComponent
+    DialogNamePromptComponent,
+    ColorPickerCellComponent
     ],
+    
 })
 export class PagesModule {
 }

@@ -4,9 +4,92 @@
         <nb-card-body>
           <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
             <h2 class="title">Nouvelle visite</h2>
-  
+            
   
           </div>
+          <nb-card>
+            <nb-card-body>
+          <nb-select placeholder="Select Groups"  (selectedChange)="onChange($event)">
+            <nb-option *ngFor="let option of visites" [value]="option">
+                {{ option.employee.firstname }} {{option.primaryType.type}}
+              </nb-option>
+          </nb-select>
+        </nb-card-body>
+      </nb-card>
+        <nb-card>
+          <nb-card-body>
+            <div class="header">
+              <h3>L'ENTREPRISE:</h3>
+              <br>
+              <br>
+            </div>
+              <div class="name bold">Raison Sociale: {{selectedVisite.employee?.uniop?.socname?.toUpperCase()}}</div>
+              <br>
+              <div class="name bold">Adresse: {{selectedVisite.employee?.uniop?.address}}</div>
+              <br>
+              <div class="name bold">Nature d'activité: {{selectedVisite.employee?.uniop?.title}}</div>
+              <br>
+              <div class="name bold">N° d'affiliation à la caisse nationale: {{selectedVisite.employee?.uniop?.matsoc}}</div>
+              <br>
+              <br>
+             
+                <div class="header">
+                  <h3>LE TRAVAILLEUR</h3>
+                </div>
+                <br>
+                <br>
+                <div class="name bold">Nom et Prénom : {{selectedVisite.employee?.firstname}} {{selectedVisite.employee?.lastname}}</div>
+                <br>
+                <div class="name bold">Date de naissaince: {{selectedVisite.employee?.datenai}}</div>
+                <br>
+                <div class="name bold">Qualifications professionelles: {{selectedVisite.employee?.postetrav}}</div>
+                <br>
+                <div class="name bold">Date de recrutement: {{selectedVisite.employee?.daterecru}} &nbsp; &nbsp; Poste de travail: {{selectedVisite.employee?.postetrav}}</div>
+                <br>
+                <br>
+                <div class="header">
+                  <h3>Examen MEDICAL</h3>
+                </div>
+                <br>
+                <br>
+                <div class="demo-items">
+                  <div>
+                    <nb-checkbox [(ngModel)]="apteAuPoste">Apte au poste(à préciser)</nb-checkbox>
+                    <br>
+                    <input nbInput fullWidth *ngIf="apteAuPoste" type="text" placeholder="Specify" [(ngModel)]="apteAuPosteDetails" />
+                  </div>
+                  <br>
+                  <div>
+                    <nb-checkbox [(ngModel)]="amenagementPoste">Apte avec aménagement du poste(à préciser)</nb-checkbox>
+                    <br>
+                    <input nbInput fullWidth *ngIf="amenagementPoste" type="text" placeholder="Spécifier"  [(ngModel)]="amenagementPosteDetails"/>
+                  </div>
+                  <br>
+                  <div>
+                    <nb-checkbox [(ngModel)]="changementPoste">Apte avec changement de poste (à préciser)</nb-checkbox>
+                    <br>
+                    <input nbInput fullWidth *ngIf="changementPoste" type="text" placeholder="Spécifier" [(ngModel)]="changementPosteDetails"/>
+                  </div>
+                  <br>
+                  <div>
+                    <nb-checkbox [(ngModel)]="inapteTemporaire">Inapte temporaire au poste (préciser la période)</nb-checkbox>
+                    <br>
+                    <input nbInput fullWidth *ngIf="inapteTemporaire" type="text" placeholder="Spécifier période" [(ngModel)]="inapteTemporairePeriod"/>
+                  </div>
+                  <br>
+                  <div>
+                    <nb-checkbox [(ngModel)]="inapteDefinitif">Inapte définitif à tout poste du travail dans l'entreprise</nb-checkbox>
+                    <br>
+                    <input nbInput fullWidth *ngIf="inapteDefinitif" type="text" placeholder="Spécifier raison" [(ngModel)]="inapteDefinitifReason" />
+                  </div>
+                </div>
+                <br>
+                <div>
+                  <button nbButton status="primary" (click)="onSubmit()">Valider</button>
+                </div>
+                
+        </nb-card-body>
+      </nb-card>
         </nb-card-body>
       </nb-card>
     </div>

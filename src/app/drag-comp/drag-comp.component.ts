@@ -123,6 +123,10 @@ export class DragCompComponent implements OnInit {
     });
 
     console.log('titles',this.titles)
+    this.getEvents()
+    this.refresh.next();
+  }
+  getEvents(){
     this.http.get<any[]>('http://localhost:8080/api/datecals/').subscribe(data => {
       this.events = data.map(event => ({
         ...event,
@@ -138,10 +142,10 @@ export class DragCompComponent implements OnInit {
         actions:this.actions
         
       }));
+      this.refresh.next();
+      console.log('done')
     });
-    this.refresh.next();
   }
-
   /**
    * selacted date
    *
@@ -210,7 +214,11 @@ export class DragCompComponent implements OnInit {
         societe:this.societe
       }
     })
-      .onClose.subscribe(name => name && this.names.push(name));
+      .onClose.subscribe(()=>{this.getEvents()
+                              this.refresh.next();
+                              this.ngOnInit()
+      
+      });
     
   }
 

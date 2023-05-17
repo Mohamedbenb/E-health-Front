@@ -114,9 +114,10 @@ populate(model:any, data:any) {
       
       //console.log('checkpointy',this.modalForm.value.firstname)
      
-      console.log('Data sent to this.extra:', this.extra);
+      console.log('Data sent to this.extra:', this.modalForm.value);
       
       this.modalForm.value.id=this.dialogData.id
+      
       console.log('Data sent to updateTableData:', this.modalForm.value.id);
       this.customTableService.updateData(this.modalForm.value,this.extra).subscribe(() => {
         this.ref.close();

@@ -12,6 +12,7 @@ import { MalProfService } from '../../services/mal-prof.service';
 
 import { ExamService } from '../../services/service-exam.service';
 import { VisiteService } from '../../services/service-visite.service';
+import { ColorPickerCellComponent } from './color-picker.component';
 
 
 @Component({
@@ -53,6 +54,14 @@ export class ParametersComponent {
     { name: 'type', type: 'text', title:'type', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'frequency', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
     { name: 'remarque', type: 'text', title:'Remarque', validators: [Validators.required,  Validators.minLength(2)] },
+    {
+      name: 'color',
+      type: 'group',
+      title: 'Color',
+      fields: [
+        { name: 'primary', type: 'color', title: 'Primary', validators: [Validators.required] }
+      ]
+    }
 
 
   ];
@@ -150,6 +159,12 @@ export class ParametersComponent {
       type: 'string',
       
     },
+    color: {
+      title: 'Color',
+      type: 'custom',
+      renderComponent: ColorPickerCellComponent,
+      
+    },
   }
 
   constructor(private Service: SocieteService,
@@ -193,7 +208,7 @@ export class ParametersComponent {
     loadTableData(serv:any) {
       this.SharedService.loadTableData(serv).subscribe((dataSource: LocalDataSource) => {
         this.tableData = dataSource;
-        console.log('done')
+        console.log(dataSource)
         //this.cdr.detectChanges();
       });
     }

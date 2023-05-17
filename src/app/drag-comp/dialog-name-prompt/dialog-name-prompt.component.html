@@ -8,11 +8,10 @@
     <nb-card-body>
       <nb-stepper (stepChange)="handleStepChange($event)" orientation="vertical">
         <nb-step label="First step">
-          <h3>Step content #1</h3>
-          <p class="lorem">
-            <nb-card size="medium">
-              <nb-card-body>
+        
+
                 <input
+                   
                   [formControl]="inputFormControl"
                   nbInput
                   type="text"
@@ -31,48 +30,97 @@
                     </nb-option>
                   </nb-option-group>
                 </nb-autocomplete>
-              </nb-card-body>
-            </nb-card>
+
                      
-          </p>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>
+         
           <button nbButton disabled nbStepperNext>prev</button>
           <button nbButton nbStepperNext>next</button>
         </nb-step>
         <nb-step label="Second step">
-          <h3>Step content #2</h3>
-          <p class="lorem">
-            Curabitur 
-          </p>
+          <ng-container *ngIf="changeEvent && changeEvent.index === 1">
+            <input
+             
+              [formControl]="employeeFormControl"
+              nbInput
+              type="text"
+              placeholder="Enter value"
+              [nbAutocomplete]="auto"
+              
+            />
+                      
+            <nb-autocomplete #auto >
+              <nb-option *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn" (click)="emp(option)" [value]="option.firstname">
+                {{ option.firstname }} {{option.lastname}}
+              </nb-option>
+            </nb-autocomplete>
+          </ng-container>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>next</button>
         </nb-step>
         <nb-step label="Third step">
-          <h3>Step content #3</h3>
-          <p class="lorem">
-            Proin 
-          </p>
-          <p class="lorem">
-            Curabitur luctus matti Mauriien pellentesque, eu placerat leo lucturetra blandit fermentum.
-          </p>
+          <input nbInput
+          placeholder="Form Picker"
+          [formControl]="dateFormControl"
+          [nbDatepicker]="formpicker">
+          <nb-datepicker  #formpicker></nb-datepicker>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
           <button nbButton nbStepperPrevious>prev</button>
           <button nbButton nbStepperNext>next</button>
         </nb-step>
         <nb-step label="Fourth step">
-          <h3>Step content #4</h3>
-          <p class="lorem">
-            Proin varius accumsan semper. Pdum,
-            sit amet fringilla orci efficitur. Nam bibendum lecstiuuis
-            viverra ex.
-          </p>
+          
+            <input nbInput
+                   type="text"
+                   [formControl]="time"
+                   [nbTimepicker]="timepicker1"/>
+            <nb-timepicker (timeChange)="time = $event"  #timepicker1  ></nb-timepicker>
+            <br>
+            <input nbInput
+            type="text"
+            [formControl]="time2"
+            [nbTimepicker]="timepicker"/>
+            <nb-timepicker #timepicker  ></nb-timepicker>
+
+            
+            <br>
+            <br>
           <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton disabled nbStepperNext>next</button>
+          <button nbButton nbStepperNext>next</button>
         </nb-step>
+        <nb-step label="Fifth step">
+          <nb-card>
+          <nb-select placeholder="Select Groups" [formControl]="selectedItemFormControl">
+            <nb-option *ngFor="let option of typevis" [value]="option">
+                {{ option.type }}
+              </nb-option>
+          </nb-select>
+        </nb-card>
+          
+          <br>
+          <br>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton disabled nbStepperNext>next</button>
+      </nb-step>
       </nb-stepper>
     </nb-card-body>
   </nb-card>
   <nb-card-footer>
     <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
-    <button nbButton status="success" (click)="cancel()">Submit</button>
+    <button nbButton status="success" (click)="submit()">Submit</button>
   </nb-card-footer>
 </nb-card>
 
