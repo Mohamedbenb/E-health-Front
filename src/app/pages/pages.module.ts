@@ -26,6 +26,7 @@ import { DeclarationComponent } from './stepper/declaration.component';
 import { DialogNamePromptComponent } from '../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
 import { ColorPickerCellComponent } from './parameters/color-picker.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { HistoriqueComponent } from './historique/historique.component';
 
 
 
@@ -87,7 +88,8 @@ const components = [
     UniopsComponent,
     DeclarationComponent,
     DialogNamePromptComponent,
-    ColorPickerCellComponent
+    ColorPickerCellComponent,
+    HistoriqueComponent
     ],
     
 })

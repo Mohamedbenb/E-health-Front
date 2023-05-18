@@ -13,6 +13,7 @@ import { EmployeeService } from '../services/employee.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { StatisticsComponent } from './statistiques/statistics.component';
 import { DeclarationComponent } from './stepper/declaration.component';
+import { HistoriqueComponent } from './historique/historique.component';
 
 
 const routes: Routes = [{
@@ -52,6 +53,11 @@ const routes: Routes = [{
     {
       path:'statistics', 
       component:StatisticsComponent
+    },
+
+    {
+      path:'historique', 
+      component:HistoriqueComponent
     }
 
 

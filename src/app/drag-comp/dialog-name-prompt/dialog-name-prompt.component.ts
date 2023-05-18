@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NbDialogRef, NbOptionComponent, NbStepChangeEvent } from '@nebular/theme';
+import { NbDialogRef, NbOptionComponent, NbStepChangeEvent, NbStepperComponent } from '@nebular/theme';
 import { EmployeeService } from '../../services/employee.service';
 import { Observable, of } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -42,7 +42,8 @@ export class DialogNamePromptComponent implements OnInit {
   
   selectedItemFormControl = new FormControl();
   @ViewChild('autoInput', { static: true }) autoInput: ElementRef<HTMLInputElement>;
-
+  @ViewChild('stepper') stepper: NbStepperComponent;
+  isLastStep: boolean = false;
   constructor(
     protected ref: NbDialogRef<DialogNamePromptComponent>,
     private socser: SocieteService,
@@ -145,6 +146,7 @@ export class DialogNamePromptComponent implements OnInit {
 
   handleStepChange(e: NbStepChangeEvent): void {
     this.changeEvent = e;
+    this.isLastStep = e.step === this.stepper.steps.last;
     console.log(e);
     if (e.index == 1) {
       if (this.uniopid) {
@@ -180,7 +182,9 @@ export class DialogNamePromptComponent implements OnInit {
     this.employeeFormControl.setValue(selectedName);
   }
   submit(){
-    console.log(this.employeeFormControl)
+    const isLastStep = this.stepper.selectedIndex === (this.stepper.steps.length - 1);
+    if (isLastStep)
+{    console.log(this.employeeFormControl)
     const datevalue = this.dateFormControl.value;
     datevalue.setHours(this.time.value.getHours())
     datevalue.setMinutes(this.time.value.getMinutes())
@@ -204,7 +208,7 @@ export class DialogNamePromptComponent implements OnInit {
     console.log('generatedform',this.Form.value)
     const ex ='aa'
     this.viser.addDatav(this.Form.value,ex).subscribe(()=>console.log('done'))
-    this.ref.close()
+    this.ref.close()}
   }
   clicked(event:any){
     console.log(event)
