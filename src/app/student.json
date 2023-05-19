@@ -11,8 +11,9 @@
       },
       "draggable": true,
       "color": {
-        "primary": "#1e90ff",
+        "color global": "#74d900",
         "secondary": "#D1E8FF"
+        
       }
     },
     {
@@ -26,7 +27,7 @@
       },
       "draggable": true,
       "color": {
-        "primary": "#1e90ff",
+        "primary": "#74d900",
         "secondary": "#D1E8FF"
       },
       "actions": [

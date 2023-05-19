@@ -67,5 +67,9 @@ export class VisiteService {
     const options = { headers: this.headers };
     return this.http.put(`${this.url}visites/validate/${id}`,str, options);
   }
+  getByEmployee(id):Observable<any>{
+    const options = { headers: this.headers };
+    return this.http.get(`${this.url}visites/employee/${id}`, options);
+  }
   
 }

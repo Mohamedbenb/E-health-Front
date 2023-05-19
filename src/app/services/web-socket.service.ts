@@ -10,13 +10,20 @@ export class WebSocketService {
   private client: Client;
   private readonly websocketUrl = 'ws://localhost:8080/websocket';
   private readonly topic = '/topic/new-visite';
-  
+  private onConnectCallback: () => void;
   constructor() {
     this.client = new Client();
   }
 
   public init(): void {
     this.configureWebSocket();
+    this.client.onConnect = () => {
+      console.log('connected');
+    this.subscribeToVisiteEvent((visite: any) => {
+      // Handle the visite event here
+      console.log('New visite event received:', visite);
+    });
+  };
     this.client.activate();
   }
 
@@ -28,9 +35,6 @@ export class WebSocketService {
     this.client.onWebSocketClose = this.onWebSocketClose.bind(this);
   }
 
-  private onConnect(): void {
-   console.log('connected')
-  }
 
   private onDisconnect(): void {
     // Handle disconnection logic
@@ -45,11 +49,15 @@ export class WebSocketService {
   }
 
   public subscribeToVisiteEvent(callback: (visite: any) => void): void {
-    console.log('called  subscribeToVisiteEvent')
+    console.log('Called subscribeToVisiteEvent');
     this.client.subscribe(this.topic, (message: Message) => {
       const visite = JSON.parse(message.body);
       console.log('New visite event received:', visite);
       callback(visite);
     });
+  }
+  public onConnect(callback: () => void): void {
+    console.log("connected");
+    this.onConnectCallback = callback;
   }
 }

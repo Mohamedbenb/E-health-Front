@@ -12,7 +12,15 @@
           <input *ngSwitchCase="'nb-datepicker'" nbInput fullWidth [formControlName]="field.name" [required]="true" [nbDatepicker]="myDatepicker">
           
           <nb-datepicker [nbDatepicker]="field.name" #myDatepicker></nb-datepicker>
-
+          <ng-container *ngSwitchCase="'select'">
+            <nb-select *ngIf="action === 'add'" fullWidth [formControlName]="field.name" [required]="true">
+              <nb-option-group *ngFor="let optionGroup of field.optionGroups" [title]="optionGroup.title">
+                <nb-option *ngFor="let option of optionGroup.uniops" [value]="option" (click)="onClick(option)">
+                  {{ option.title }}
+                </nb-option>
+              </nb-option-group>
+            </nb-select>
+          </ng-container>
         </ng-container>
         <div *ngIf="modalForm.get(field.name).invalid && (modalForm.get(field.name).dirty || modalForm.get(field.name).touched)">
           <div *ngIf="modalForm.get(field.name).errors.required">{{ field.title }} is required</div>

@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { SocieteService } from '../../services/societe.service';
 import { Observable } from 'rxjs';
+import { Societe } from '../../models/Societe';
 
 
 @Component({
@@ -27,11 +28,11 @@ export class EmployeesComponent implements OnInit{
     { name: 'matricule', type: 'number', title:'Matricule', validators: [Validators.required, Validators.minLength(8)]},
     { name: 'datenai', type: 'nb-datepicker', title: 'Date de naissance', validators: [Validators.required] },
     { name: 'daterecru', type: 'nb-datepicker', title: "Date d'embauche", validators: [Validators.required] },
-    //{ name: 'idOp', type: 'select', title: "Unité operationelle", validators: [Validators.required] },
+    { name: 'uniop', type: 'select', title: "Unité operationelle", validators: [Validators.required],optionGroups: [] },
   ];
   extra=1;
   tableData: LocalDataSource;
-  societe
+  societes:Societe[]
   societe$: Observable<any>
    
   cols = {
@@ -95,7 +96,7 @@ export class EmployeesComponent implements OnInit{
 
   constructor(private customTableService: EmployeeService,
               private dialogService: NbDialogService,
-              private Ser: SocieteService,
+              private societeService: SocieteService,
              
               
     ) {
@@ -120,16 +121,22 @@ export class EmployeesComponent implements OnInit{
   ngOnInit() {
     
     //this.societe$ = this.Ser.getData();
-    this.getxExtra()
+    this.societeService.getData().subscribe((data)=>{
+      console.log('heeeey')
+      this.societes=data;
+      const optionGroups = data.map((societe) => ({
+        title: societe.title,
+        uniops: societe.uniops,
+      }));
+      console.log('optionGroups', optionGroups);
+    
+      this.fields.find((field) => field.name === 'uniop').optionGroups = optionGroups;
+    })
+  
     this.loadTableData();
     this.selectedOptions = [this.cols.firstname.title,this.cols.lastname.title];
     this.onSelectChange()
-    setTimeout(() => {
-      
-      console.log('cell:', this.societe);
-      console.log(this.displayedColumns);
-    }, 1000);
-    console.log(navigator.mediaSession)
+    
     
 }
 
@@ -143,12 +150,7 @@ export class EmployeesComponent implements OnInit{
     });
     
   }
-getxExtra(){
-  this.Ser.getuData().subscribe((data) => {
-    this.societe=data
-    console.log('soc',this.societe)
-  });
-}
+
   onDeleteConfirm(event: any): void {
     const tableData = event.data;
     this.dialogService.open(ModalFormComponent, {
@@ -175,7 +177,7 @@ getxExtra(){
         modalForm:this.modalForm,
       },}).onClose.subscribe(() => {
         console.log('updating')
-        console.log('soc',this.societe)
+        
         this.loadTableData();
       })
   }

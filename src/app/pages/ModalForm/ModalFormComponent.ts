@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/co
 import { NbDialogRef, NB_DIALOG_CONFIG, NbDatepickerAdapter } from '@nebular/theme';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomTableService } from '../../custom-table.service';
+import { SocieteService } from '../../services/societe.service';
+import { Societe } from '../../models/Societe';
 
 @Component({
   selector: 'app-my-actions',
@@ -15,7 +17,7 @@ export class ModalFormComponent implements OnInit{
   @Input() dialogTitle: string;
   @Input() action: string;
   @Input() dialogData: any;
-
+  societes:Societe[]
   @Input() extra;
   @Input() customTableService:any;
  
@@ -27,20 +29,21 @@ export class ModalFormComponent implements OnInit{
   deleteMode = false;
   protected cd: ChangeDetectorRef;
   
-  constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>,
+  constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>, private societeService: SocieteService
     //private readonly datepickeradapter: NbDatepickerAdapter<Date>,
     //private customTableService: CustomTableService,
     ) {}
     
 
-    
+  
   ngOnInit(): void {
-    
+
     const formGroupConfig = {};
     this.fields.forEach((field) => {
       formGroupConfig[field.name] = ['', field.validators];
       console.log('field name ',field.name)
     });
+
     this.modalForm = this.formBuilder.group(formGroupConfig);
     console.log('form',this.modalForm.getRawValue())
     if (this.action === 'edit') {
@@ -97,7 +100,10 @@ populate(model:any, data:any) {
   onCancel() {
     this.ref.close();
   }
-  
+  onClick(option){
+   
+    console.log('this.extra',option)
+  }
   onSubmit(): void {
     const data = this.modalForm.getRawValue()
     console.log('Form value:', data);

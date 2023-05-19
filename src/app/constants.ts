@@ -30,3 +30,8 @@ export const actionSettings ={
     },
     mode:'external',
 }
+export const columns={
+
+  
+
+}

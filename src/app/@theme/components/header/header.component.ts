@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       });
       this.webSocketService.init();
-      this.webSocketService.subscribeToVisiteEvent(this.onVisiteEvent.bind(this));
+      //this.subscribeToVisiteEvent();
   }
 
   ngOnDestroy() {
@@ -131,5 +131,12 @@ if (this.authService.isLoggedIn())
   onVisiteEvent(visite: any): void {
     // Handle the received visite event
     this.visites.push(visite);
+  }
+  subscribeToVisiteEvent() {
+    this.webSocketService.subscribeToVisiteEvent((visite: any) => {
+      // Handle the received visite event
+      console.log('New visite event received:', visite);
+      // Perform further actions as needed
+    });
   }
 }

@@ -19,7 +19,7 @@ import { WebSocketService } from './services/web-socket.service';
 })
 export class AppComponent implements OnInit {
 
-
+  isServiceInitialized = false;
   constructor(private analytics: AnalyticsService, private seoService: SeoService, private notificationService: NotificationService, private websocketService:WebSocketService,
 
 
@@ -38,11 +38,14 @@ export class AppComponent implements OnInit {
     
     this.analytics.trackPageViews();
     this.seoService.trackCanonicalChanges();
-    this.notificationService.init((visite: any) => {
-      this.handleNewVisiteEvent(visite);
-    });
-    this.subscribeToVisiteEvent();
+    //this.notificationService.init((visite: any) => {
+    //  this.handleNewVisiteEvent(visite);
+    //});
+    
 
+    this.websocketService.init();
+    
+  
     
     
 

@@ -1,4 +1,5 @@
 import { UniOp } from "./UniOp";
+import { Visite } from "./Visite";
 
 export class Employee{
     id:number;
@@ -9,6 +10,7 @@ export class Employee{
     daterecru:Date;
     datenai:Date;
     email:String;
+    visites:Visite[]
     age:number;
     uniop:UniOp
     numdosmed:number;
