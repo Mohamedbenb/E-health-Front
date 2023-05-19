@@ -54,6 +54,8 @@ import { NgbDatepickerModule, NgbModalModule, NgbTimepickerModule } from '@ng-bo
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockTemplateComponent } from './drag-comp/blockui/block-template.component';
+import { NotificationService } from './services/notification.service';
+import { WebSocketService } from './services/web-socket.service';
 
 
 
@@ -112,6 +114,8 @@ import { BlockTemplateComponent } from './drag-comp/blockui/block-template.compo
   ],
   bootstrap: [AppComponent],
   providers: [
+    WebSocketService,
+    NotificationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

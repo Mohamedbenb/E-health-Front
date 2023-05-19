@@ -46,7 +46,7 @@ export class VisiteService {
   
   addDatav(data: any,ex:any): Observable<any> {
     
-
+    console.log('data received fro visite', data)
     const options = { headers: this.headers };
     return this.http.post(`${this.url}visites?employeeId=${data.employee.id}&primaryTypeId=${data.visite.id}`, data, options);
   }

@@ -9,6 +9,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../shared/auth.service';
 import { Router } from '@angular/router';
 import { AuthGuard } from '../../../auth/auth.guard';
+import { WebSocketService } from '../../../services/web-socket.service';
 
 @Component({
   selector: 'ngx-header',
@@ -46,6 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   userMenu = [ { title: 'Profile' }, { title: 'Log out', data: { id: 'logout' } }  ];
+  visites: any[] = []
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -56,6 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private authService: AuthService, private router: Router,
               //private nb: NbMenuItem
               private ath : AuthGuard,
+              private webSocketService: WebSocketService
               ) {
   }
 
@@ -91,6 +94,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
           
         }
       });
+      this.webSocketService.init();
+      this.webSocketService.subscribeToVisiteEvent(this.onVisiteEvent.bind(this));
   }
 
   ngOnDestroy() {
@@ -122,5 +127,9 @@ if (this.authService.isLoggedIn())
       window.location.reload();
     });
     
+  }
+  onVisiteEvent(visite: any): void {
+    // Handle the received visite event
+    this.visites.push(visite);
   }
 }

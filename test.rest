@@ -1,0 +1,7 @@
+{
+  "name": "WebSocket Test",
+  "url": "ws://localhost:8080/websocket",
+  "protocols": [],
+  "headers": {},
+  "autoConnect": true
+}

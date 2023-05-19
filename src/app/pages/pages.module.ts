@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { DeclarationComponent } from './stepper/declaration.component';
 import { DialogNamePromptComponent } from '../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
 import { ColorPickerCellComponent } from './parameters/color-picker.component';
-import { ColorPickerModule } from 'ngx-color-picker';
+
 import { HistoriqueComponent } from './historique/historique.component';
 
 
@@ -74,7 +74,7 @@ const components = [
     NbDatepickerModule,
     NbTimepickerModule,
     NbCheckboxModule,
-    ColorPickerModule
+
   ],
   declarations: [
     PagesComponent,
