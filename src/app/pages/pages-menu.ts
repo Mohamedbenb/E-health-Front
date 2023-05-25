@@ -38,7 +38,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Historique',
     link: '/pages/historique',
-    icon: 'pie-chart-outline',
+    icon: 'file-text-outline',
   },
 
   {

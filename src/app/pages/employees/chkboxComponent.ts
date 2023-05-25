@@ -1,22 +1,25 @@
 import { Component, Input } from "@angular/core";
-import { Cell, ViewCell } from "ng2-smart-table";
+import { Cell, DefaultFilter, ViewCell } from "ng2-smart-table";
 
 import { EmployeeService } from "../../services/employee.service";
 
 @Component({
     selector: 'my-checkbox',
+    //template: `{{ displayValue }}`,
     template: `
     <input type="checkbox" [checked]="rowData.status" (change)="setValue(rowData)">
     
   `,
   })
  
-  export class MyCheckboxComponent implements ViewCell {
+  export class MyCheckboxComponent extends DefaultFilter implements ViewCell {
 
     @Input() rowData: any;
     @Input() value: any
-   
-    constructor(private serv:EmployeeService) {}
+    displayValue: string;
+    constructor(private serv:EmployeeService) {
+      super();
+    }
     ngOnInit() {
    
     }
@@ -38,4 +41,13 @@ import { EmployeeService } from "../../services/employee.service";
         });
 
     }
+    ngOnChanges(): void {
+      this.displayValue = this.rowData.status ? 'True' : 'False';
+    }
+    // get displayValue(): string {
+    //   return this.rowData.status ? 'Oui' : 'Non';
+    // }
+    // filterFunction(value: string, search: string): boolean {
+    //   return value.toLowerCase() === search.toLowerCase();
+    // }
   }

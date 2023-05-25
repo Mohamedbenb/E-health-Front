@@ -1,51 +1,50 @@
 <nb-card>
-    <nb-card-body>
-        <nb-card-header centered><h2>Choisir L'unitée opérationelle</h2></nb-card-header>
-        <br>
-        <nb-select placeholder="Séléctionner">
-                        
-            <nb-option-group *ngFor="let group of societes" [title]="group.title">
-              <nb-option *ngFor="let option of group.uniops" [value]="option" (click)="onClick(option)">
-                {{ option.title }}
-              </nb-option>
-            </nb-option-group>
-  
-        </nb-select>
-    </nb-card-body>
-    <nb-card-body>
-        <ng-container *ngIf="selectedOption">
-            <input
-             
-              [formControl]="employeeFormControl"
-              nbInput
-              type="text"
-              placeholder="Enter value"
-              [nbAutocomplete]="auto"
-              fullWidth
-              
-            />
+  <nb-card-body>
+      <nb-card-header centered><h2>Choisir L'unitée opérationelle</h2></nb-card-header>
+      <br>
+      <nb-select placeholder="Séléctionner" [(selected)]="selectedItem">
                       
-            <nb-autocomplete #auto >
-              <nb-option *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn" (click)="getSelectedEmployee(option)" [value]="option.firstname">
-                <strong>Matricule</strong>: &nbsp;{{option.matricule}}  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong>  &nbsp;{{ option.firstname }} {{option.lastname}}
-              </nb-option>
-            </nb-autocomplete>
-          </ng-container>
-        <ng-container *ngIf="selectedEmployee">
-            <br>
-            <br>
-            <br>
-            <br>
-            <nb-card-body class="name bold"><strong>Matricule</strong>:   {{employee?.matricule}}<strong>&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong> {{employee?.firstname}} {{employee?.lastname}}<strong>&nbsp;&nbsp;&nbsp;Age: {{employee?.age}}</strong></nb-card-body>
-            <br>
-            <br>
-          <ng2-smart-table
-          [settings]="settings"
-          [source]="tableData"
-          
->
-        </ng2-smart-table>
-    </ng-container>
-    </nb-card-body>
-</nb-card>
+          <nb-option-group *ngFor="let group of societes" [title]="group.title">
+            <nb-option *ngFor="let option of group.uniops" [value]="option.id" (click)="onClick(option)">
+              {{ option.title }}
+            </nb-option>
+          </nb-option-group>
 
+      </nb-select>
+  </nb-card-body>
+  <nb-card-body>
+      <ng-container *ngIf="selectedOption">
+          <input
+           
+            [formControl]="employeeFormControl"
+            nbInput
+            type="text"
+            placeholder="Enter value"
+            [nbAutocomplete]="auto"
+            fullWidth
+            
+          />
+                    
+          <nb-autocomplete #auto >
+            <nb-option *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn" (click)="getSelectedEmployee(option)" [value]="option.firstname">
+              <strong>Matricule</strong>: &nbsp;{{option.matricule}}  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong>  &nbsp;{{ option.firstname }} {{option.lastname}}
+            </nb-option>
+          </nb-autocomplete>
+        </ng-container>
+      <ng-container *ngIf="employee">
+          <br>
+          <br>
+          <br>
+          <br>
+          <nb-card-body class="name bold"><strong>Matricule</strong>:   {{employee?.matricule}}<strong>&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong> {{employee?.firstname}} {{employee?.lastname}}<strong>&nbsp;&nbsp;&nbsp;Age: {{employee?.age}}</strong></nb-card-body>
+          <br>
+          <br>
+        <ng2-smart-table
+        [settings]="settings"
+        [source]="tableData"
+        
+>
+      </ng2-smart-table>
+  </ng-container>
+  </nb-card-body>
+</nb-card>

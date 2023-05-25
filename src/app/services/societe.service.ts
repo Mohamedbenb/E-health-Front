@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Societe } from '../models/Societe';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,25 @@ export class SocieteService {
   deleteData(id: number,ex:any): Observable<any> {
     const options = { headers: this.headers };
     return this.http.patch(`${this.url}societes/${id}`, options);
+  }
+  filter(value: string,societe:any): Societe[] {
+    const filterValue = value ? value.toLowerCase() : '';
+    return societe
+      .map((societe) => {
+        return {
+          id: societe.id,
+          title: societe.title,
+          mat: societe.mat,
+          tel: societe.tel,
+          fax: societe.fax,
+          adresse: societe.adresse,
+          codepostale: societe.codepostale,
+          uniops: societe.uniops.filter((u) =>
+            typeof u.title === 'string' &&
+            u.title.toString().toLowerCase().includes(filterValue)
+          ),
+        };
+      })
+      .filter((societe) => societe.uniops.length);
   }
 }

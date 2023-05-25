@@ -12,8 +12,9 @@ import { ParametersComponent } from './parameters/parameters.component';
 import { EmployeeService } from '../services/employee.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { StatisticsComponent } from './statistiques/statistics.component';
-import { DeclarationComponent } from './stepper/declaration.component';
+import { DeclarationComponent } from './declaration/declaration.component';
 import { HistoriqueComponent } from './historique/historique.component';
+import { DetailsComponent } from './details/details.component';
 
 
 const routes: Routes = [{
@@ -58,6 +59,10 @@ const routes: Routes = [{
     {
       path:'historique', 
       component:HistoriqueComponent
+    },
+    {
+      path:'details',
+      component:DetailsComponent
     }
 
 

@@ -22,11 +22,15 @@ import { UniopsComponent } from './parameters/UniopsComponent';
 import { EmployeesComponent } from './employees/employees.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DeclarationComponent } from './stepper/declaration.component';
+import { DeclarationComponent } from './declaration/declaration.component';
 import { DialogNamePromptComponent } from '../drag-comp/dialog-name-prompt/dialog-name-prompt.component';
 import { ColorPickerCellComponent } from './parameters/color-picker.component';
 
 import { HistoriqueComponent } from './historique/historique.component';
+import { DetailsComponent } from './details/details.component';
+import { LinkComponent } from './parameters/linkComponents/link.component';
+import { LinkComponent2 } from './parameters/linkComponents/link.component2';
+import { LinkComponent3 } from './parameters/linkComponents/link.component3';
 
 
 
@@ -57,7 +61,7 @@ const components = [
     NbInputModule,
     Ng2SmartTableModule, 
     NbLayoutModule,
-    //BrowserModule,
+    
     NbCalendarModule,
     NgxChartsModule,
     NgxEchartsModule,
@@ -89,7 +93,12 @@ const components = [
     DeclarationComponent,
     DialogNamePromptComponent,
     ColorPickerCellComponent,
-    HistoriqueComponent
+    HistoriqueComponent,
+    DetailsComponent,
+    LinkComponent,
+    LinkComponent2,
+    LinkComponent3,
+    
     ],
     
 })

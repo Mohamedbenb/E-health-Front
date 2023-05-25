@@ -13,6 +13,10 @@ import { MalProfService } from '../../services/mal-prof.service';
 import { ExamService } from '../../services/service-exam.service';
 import { VisiteService } from '../../services/service-visite.service';
 import { ColorPickerCellComponent } from './color-picker.component';
+import { ExamensComplementairesService } from '../../services/examens-complementaires.service';
+import { LinkComponent } from './linkComponents/link.component';
+import { LinkComponent2 } from './linkComponents/link.component2';
+import { LinkComponent3 } from './linkComponents/link.component3';
 
 
 @Component({
@@ -44,9 +48,9 @@ export class ParametersComponent {
 
   ];
   fields3 = [
-    { name: 'title', type: 'text', title:'tableau', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'title', type: 'text', title:'Type', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'frequence', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
-    { name: 'dateec', type: 'date', title:'Liste des Effets', validators: [Validators.required,  Validators.minLength(2)] },
+    
 
 
   ];
@@ -54,15 +58,7 @@ export class ParametersComponent {
     { name: 'type', type: 'text', title:'type', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'frequency', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
     { name: 'remarque', type: 'text', title:'Remarque', validators: [Validators.required,  Validators.minLength(2)] },
-    {
-      name: 'color',
-      type: 'group',
-      title: 'Color',
-      fields: [
-        { name: 'primary', type: 'color', title: 'Primary', validators: [Validators.required] }
-      ]
-    }
-
+ 
 
   ];
   cols1={
@@ -109,7 +105,8 @@ export class ParametersComponent {
   cols2={
     title: {
       title: 'Tableau',
-      type: 'string',
+      type: 'custom',
+      renderComponent:LinkComponent2
     },
     design: {
       title: 'Désignation des maladies',
@@ -131,23 +128,21 @@ export class ParametersComponent {
   cols3={
     title: {
       title: 'Type',
-      type: 'string',
+      type: 'custom',
+      renderComponent:LinkComponent3
       
     },
     frequence: {
       title: 'Fréquence',
       type: 'number',
     },
-    dateec: {
-      title: 'Date',
-      type: 'string',
-      
-    },
+
   }
   cols4={
     type: {
       title: 'Type',
-      type: 'string',
+      type: 'custom',
+      renderComponent: LinkComponent,
       
     },
     frequency: {
@@ -160,17 +155,22 @@ export class ParametersComponent {
       
     },
     color: {
-      title: 'Color',
+      title: 'Code couleur',
       type: 'custom',
       renderComponent: ColorPickerCellComponent,
       
     },
   }
-
+  receiveMessage(message: string) {
+    console.log('Received message in ParentComponent:', message);
+    // Perform any necessary actions based on the received message
+  }
+  
+  customData='string'
   constructor(private Service: SocieteService,
               private SharedService: SharedService,
               private servmal: MalProfService,
-              private servx: ExamService,
+              private servx: ExamensComplementairesService,
               private servv: VisiteService,
               
     ) {
@@ -178,9 +178,11 @@ export class ParametersComponent {
   }
   tabs = [
     { title: 'Sociétés', id: 'tab1' },
-    { title: 'Maladies professionnelles', id: 'tab2' },
+    { title: 'Examens médicales', id: 'tab4' },
     { title: 'Examens complémentaires', id: 'tab3' },
-    { title: 'Suivi Médicale Spéciale', id: 'tab4' }
+    { title: 'Maladies professionnelles', id: 'tab2' },
+    
+    
   ];
   selectedTabIndex='tab1';
   
@@ -206,7 +208,7 @@ export class ParametersComponent {
       }
     }
     loadTableData(serv:any) {
-      this.SharedService.loadTableData(serv).subscribe((dataSource: LocalDataSource) => {
+      this.SharedService.loadTableData(serv,1).subscribe((dataSource: LocalDataSource) => {
         this.tableData = dataSource;
         console.log(dataSource)
         //this.cdr.detectChanges();

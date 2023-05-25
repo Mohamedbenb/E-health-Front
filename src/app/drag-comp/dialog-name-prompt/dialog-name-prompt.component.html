@@ -1,35 +1,25 @@
 
 
 
-<nb-card>
-  <nb-card-header>Enter your name</nb-card-header>
 
-  <nb-card size="small">
+  <nb-card class="custom-card">
+    <nb-card-header>Enter your name</nb-card-header>
     <nb-card-body>
       <nb-stepper #stepper (stepChange)="handleStepChange($event)" orientation="horizontal">
-        <nb-step label="First step">
-        
-
-                <input
-                   
-                  [formControl]="inputFormControl"
-                  nbInput
-                  type="text"
-                  placeholder="Enter value"
-                  [nbAutocomplete]="auto"
-                  
-                />
-            
-                <nb-autocomplete #auto>
-                  <nb-option-group
-                    *ngFor="let group of filteredGroups$ | async; trackBy: trackByFn"
-                    [title]="group.title"
-                  >
-                    <nb-option *ngFor="let uniop of group.uniops" (click)="onOptionSelectionChange(uniop)" [value]="uniop.title">
-                      {{ uniop.title }}
-                    </nb-option>
-                  </nb-option-group>
-                </nb-autocomplete>
+        <nb-step label="Première étape">
+          <ng-template #labelOne>First step</ng-template>
+          
+          <br>
+          <br>
+          <nb-select placeholder="Séléctionner l'unité opérationelle" >
+                        
+            <nb-option-group *ngFor="let group of societes" [title]="group.title">
+              <nb-option *ngFor="let option of group.uniops" [value]="option" (click)="selectUniOp(option)">
+                {{ option.title }}
+              </nb-option>
+            </nb-option-group>
+  
+        </nb-select>
 
                      
          <br>
@@ -38,36 +28,58 @@
          <br>
          <br>
          
-          <button nbButton disabled nbStepperNext>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          <button nbButton disabled nbStepperNext style="margin-right:50px">Précédent &nbsp; &nbsp;&nbsp;</button>
+          <button nbButton nbStepperNext>Suivant</button>
         </nb-step>
-        <nb-step label="Second step">
+        <nb-step label="Deuxième étape">
+          <br>
+          <br>
           <ng-container *ngIf="changeEvent && changeEvent.index === 1">
             <input
              
               [formControl]="employeeFormControl"
               nbInput
               type="text"
-              placeholder="Enter value"
+              placeholder="Choisir collaborateur(s)"
               [nbAutocomplete]="auto"
-              
-            />
-                      
-            <nb-autocomplete #auto >
-              <nb-option *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn" (click)="emp(option)" [value]="option.firstname">
-                {{ option.firstname }} {{option.lastname}}
-              </nb-option>
+              style="margin-left: 0%;"            
+              />
+              <div class="selected-items">
+                <span *ngFor="let item of selectedItems" class="selected-item">
+                  {{ item.employee.firstname }} {{ item.employee.lastname }}
+                  <button nbButton   size="small" (click)="removeSelectedItem(item)">
+                    <nb-icon icon="close-outline"></nb-icon>
+                  </button>
+                </span>
+              </div>     
+            <nb-autocomplete #auto [selectedItems]="employeeFormControl.value">
+              <nb-option
+              *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn"
+              [value]="optionValue(option)"
+            >
+          
+                <nb-checkbox
+                #checkbox
+                  (click)="$event.stopPropagation()"
+                  [checked]="selectedItemsState[option.id]"
+                  (change)="toggleSelection(option, $event.target.checked)"
+                >
+                {{ option.firstname }} {{ option.lastname }}</nb-checkbox>
+             
+            </nb-option>
             </nb-autocomplete>
           </ng-container>
           <br>
           <br>
           <br>
           <br>
-          <br>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          
+          <button nbButton nbStepperPrevious style="margin-right:50px">Précédent</button>
+          <button nbButton nbStepperNext [disabled]="!hasSelectedItems()">Suivant</button>
         </nb-step>
-        <nb-step label="Third step">
+        <nb-step label="Troisième étape">
+          <br>
+          <br>
           <input nbInput
           placeholder="Form Picker"
           [formControl]="dateFormControl"
@@ -78,51 +90,65 @@
           <br>
           <br>
           <br>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          <button nbButton nbStepperPrevious style="margin-right:50px">Précédent</button>
+          <button nbButton nbStepperNext>Suivant</button>
         </nb-step>
-        <nb-step label="Fourth step">
-          
+        <nb-step label="Quatrième étape">
+          <br>
+          <br>
             <input nbInput
                    type="text"
                    [formControl]="time"
                    [nbTimepicker]="timepicker1"/>
             <nb-timepicker (timeChange)="time = $event"  #timepicker1  ></nb-timepicker>
             <br>
+            
+            <br>
             <input nbInput
             type="text"
             [formControl]="time2"
-            [nbTimepicker]="timepicker"/>
-            <nb-timepicker #timepicker  ></nb-timepicker>
+            [nbTimepicker]="timepicker2"/>
+            <nb-timepicker  (timeChange)="time2 = $event"  #timepicker2 ></nb-timepicker>
 
             
             <br>
             <br>
-          <button nbButton nbStepperPrevious>prev</button>
-          <button nbButton nbStepperNext>next</button>
+          <button nbButton nbStepperPrevious style="margin-right:50px">Précédent</button>
+          <button nbButton nbStepperNext>Suivant</button>
         </nb-step>
-        <nb-step label="Fifth step">
-          <nb-card>
-          <nb-select placeholder="Select Groups" [formControl]="selectedItemFormControl">
-            <nb-option *ngFor="let option of typevis" [value]="option">
-                {{ option.type }}
-              </nb-option>
-          </nb-select>
-        </nb-card>
+        <nb-step label="Cinquième étape">
+          <br>
+          <br>
+        
+          <div class="select-container">
+            <ng-container *ngFor="let item of selectedItems; let i=index">
+              <div class="select-wrapper">
+                <span class="seleted-item">
+                  {{ item.employee.firstname }} {{ item.employee.lastname }}
+                </span>
+                <nb-select size="small" placeholder="Type de visite" [(ngModel)]="item.visite" >
+                  <nb-option *ngFor="let option of typevis" [value]="option" >
+                    {{ option.type }}
+                  </nb-option>
+                </nb-select>
+              </div>
+            </ng-container>
+          </div>
+        
           
           <br>
           <br>
-        <button nbButton nbStepperPrevious>prev</button>
-        <button nbButton disabled nbStepperNext>next</button>
+        <button nbButton nbStepperPrevious style="margin-right:50px">Précédent</button>
+        <button nbButton disabled nbStepperNext>Suivant</button>
       </nb-step>
       </nb-stepper>
     </nb-card-body>
+    <nb-card-footer>
+      <button class="cancel" nbButton status="danger" (click)="cancel()">Annuler</button>
+      <button nbButton status="success" (click)="submit()" [disabled]="!isLastStep">Confirmer</button>
+  
+  
+    </nb-card-footer>
   </nb-card>
-  <nb-card-footer>
-    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
-    <button nbButton status="success" (click)="submit()" [disabled]="!isLastStep">Submit</button>
-
-
-  </nb-card-footer>
-</nb-card>
-
+  
+ 

@@ -1,0 +1,65 @@
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+  <nb-card-body>
+    <nb-stepper orientation="horizontal">
+      <nb-step [label]="labelOne">
+        <ng-template #labelOne>First step</ng-template>
+        <nb-select placeholder="Séléctionner l'unité opérationelle" fullWidth>
+                        
+          <nb-option-group *ngFor="let group of societes" [title]="group.title">
+            <nb-option *ngFor="let option of group.uniops" [value]="option" (click)="selectUniOp(option)">
+              {{ option.title }}
+            </nb-option>
+          </nb-option-group>
+
+      </nb-select>
+        <button nbButton disabled nbStepperNext>prev</button>
+        <button nbButton nbStepperNext>next</button>
+      </nb-step>
+      <nb-step [label]="labelTwo">
+        <ng-template #labelTwo>Second step</ng-template>
+        <input
+             
+              [formControl]="employeeFormControl"
+              nbInput
+              type="text"
+              placeholder="Enter value"
+              [nbAutocomplete]="auto"
+              fullWidth
+              
+            />
+        <nb-autocomplete #auto >
+          <nb-option *ngFor="let option of filteredOptions$ | async; trackBy: trackByFn" (click)="getSelectedEmployee(option)" [value]="option.firstname">
+            <strong>Matricule</strong>: &nbsp;{{option.matricule}}  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong>  &nbsp;{{ option.firstname }} {{option.lastname}}
+          </nb-option>
+        </nb-autocomplete>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext>next</button>
+      </nb-step>
+      <nb-step label="Third step">
+        <nb-select placeholder="Select Groups" fullWidth>
+                        
+          
+            <nb-option *ngFor="let option of malProf" [value]="option" (click)="selectmalProf(option)">
+              {{ option.title }} 
+            </nb-option>
+          
+
+      </nb-select>
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton nbStepperNext>next</button>
+      </nb-step>
+      <nb-step [label]="labelFour">
+        <ng-template #labelFour>Fourth step</ng-template>
+        <textarea nbInput  [formControl]="constatFormControl" type="text" fullWidth placeholder="Constations médicales"></textarea>
+        
+        <button nbButton nbStepperPrevious>prev</button>
+        <button nbButton disabled nbStepperNext>next</button>
+      </nb-step>
+    </nb-stepper>
+    <div>
+      <button nbButton status="primary" (click)="onSubmit()">Valider</button>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+

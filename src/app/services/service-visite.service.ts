@@ -30,6 +30,7 @@ export class VisiteService {
     
     data.color={primary:'#FF000'}
     const options = { headers: this.headers };
+    console.log('data before sending', data)
     return this.http.post(`${this.url}typevisites`, data, options);
   }
 
@@ -39,16 +40,20 @@ export class VisiteService {
     return this.http.put(`${this.url}typevisites/${data.id}`, data, options);
   }
 
-  deleteData(id: number,ex:any): Observable<any> {
+  deleteData(id: number): Observable<any> {
     const options = { headers: this.headers };
     return this.http.patch(`${this.url}typevisites/${id}`, options);
   }
+  deleteVisite(id: number): Observable<any> {
+    const options = { headers: this.headers };
+    return this.http.patch(`${this.url}visites/${id}`, options);
+  }
   
-  addDatav(data: any,ex:any): Observable<any> {
+  addDatav(data: any): Observable<any> {
     
     console.log('data received fro visite', data)
     const options = { headers: this.headers };
-    return this.http.post(`${this.url}visites?employeeId=${data.employee.id}&primaryTypeId=${data.visite.id}`, data, options);
+    return this.http.post(`${this.url}visites`, data, options);
   }
   getAll(){
     console.log('all from visite')
@@ -70,6 +75,14 @@ export class VisiteService {
   getByEmployee(id):Observable<any>{
     const options = { headers: this.headers };
     return this.http.get(`${this.url}visites/employee/${id}`, options);
+  }
+  getByDateVis(id):Observable<any>{
+    const options = { headers: this.headers };
+    return this.http.get(`${this.url}visites/date/${id}`, options)
+  }
+  getbyTypeVis(id):Observable<any>{
+  const options = { headers: this.headers };
+  return this.http.get(`${this.url}visites/type/${id}`,options)
   }
   
 }

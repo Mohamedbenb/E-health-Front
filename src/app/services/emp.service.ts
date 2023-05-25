@@ -7,7 +7,7 @@ import { Employee } from '../models/Employee';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class EmpService {
   //employees:Employee[];
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
@@ -15,13 +15,13 @@ export class EmployeeService {
   url=environment.url
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    const options = { headers: this.headers };
+//   getData(): Observable<any> {
+//     const options = { headers: this.headers };
     
-    //console.log(this.http.get('http://localhost:8080/api/uniops/41/employees', options));
-    return this.http.get(`${this.url}employees/`, options);
-  }
-  getbyuni(id:any): Observable<any> {
+//     //console.log(this.http.get('http://localhost:8080/api/uniops/41/employees', options));
+//     return this.http.get(`${this.url}employees/`, options);
+//   }
+  getData(id:any): Observable<any> {
     const options = { headers: this.headers };
     
     //console.log(this.http.get('http://localhost:8080/api/uniops/41/employees', options));
@@ -36,16 +36,12 @@ export class EmployeeService {
   updateData(data: any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', data);
-    return this.http.put(`${this.url}employees/${data.id}`, data, options);
+    return this.http.put(`${this.url}employees/1/${data.id}`, data, options);
   }
 
   deleteData(id: number): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.patch(`${this.url}employees/${id}`, options);
-  }
-  getOne(id): Observable<any> {
-    const options = { headers: this.headers };
-    return this.http.get(`${this.url}employees/${id}`,options)
+    return this.http.patch(`${this.url}employees/1/${id}`, options);
   }
   filterEmployees(value: string,employees): Employee[] {
     

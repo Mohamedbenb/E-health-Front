@@ -13,3 +13,37 @@
 .custom-timepicker ::ng-deep .timepicker-list {
   max-height: 200px; /* Adjust the desired height here */
 }
+.custom-card {
+  width: 600px; /* Set the desired width value */
+}
+.selected-items {
+  margin-top: 8px;
+}
+
+.selected-item {
+  display: inline-block;
+  padding: 4px;
+  background-color: #f1efef;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+.select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Adjust the distance as needed */
+  display: flexbox;
+}
+.select-wrapper {
+  display: flex;
+  align-items: end;
+  margin-bottom: 10px; /* Adjust the distance between each select element */
+}
+.seleted-item {
+  margin-right: 80px; /* Adjust the distance between the selected item and the select element */
+}
+.nb-select {
+  width: 100%; /* Ensure the select element takes up the full width */
+}
+
+

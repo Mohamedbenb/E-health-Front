@@ -24,6 +24,7 @@ export class EmployeesComponent implements OnInit{
   fields = [
     { name: 'firstname', type: 'text', title:'Prénom', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'lastname', type: 'text', title:'Nom', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'postetrav', type: 'text', title:'Poste de Travaille', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'email', type: 'email', title:'Email', validators: [Validators.required, Validators.email] },
     { name: 'matricule', type: 'number', title:'Matricule', validators: [Validators.required, Validators.minLength(8)]},
     { name: 'datenai', type: 'nb-datepicker', title: 'Date de naissance', validators: [Validators.required] },
@@ -58,13 +59,25 @@ export class EmployeesComponent implements OnInit{
       title: 'EVREST',
       type: 'custom',
       renderComponent: MyCheckboxComponent,
-      hide:false
+      hide:false,
+      
     },
     email: {
       title: 'E-mail',
       type: 'string',
       hide:false
       
+    },
+    uniopname: {
+      title: 'Unité opérationelle',
+      type: 'string',
+      hide:false
+      
+    },
+    postetrav:{
+      title:'Poste de travail',
+      type:'string',
+      hide:false
     },
     age: {
       title: 'Age',
@@ -81,7 +94,7 @@ export class EmployeesComponent implements OnInit{
   selectedOptions: any[] = [];
   settings = {
     columns: this.cols,
-    selectMode: 'multi',
+    
     ...actionSettings
     }
 

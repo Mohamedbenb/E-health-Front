@@ -33,8 +33,8 @@
         
         <br>
         <div class="buttons-container">
-            <button class="cancel" nbButton status="danger" (click)="onCancel()">Cancel</button>
-            <button  nbButton  status="success" [disabled]="modalForm.invalid"  [class.btn-pulse]="submitted"> Submit</button>
+            <button class="cancel" nbButton status="danger" (click)="onCancel()">Annuler</button>
+            <button  nbButton  status="success" [disabled]="modalForm.invalid"  [class.btn-pulse]="submitted"> Confirmer</button>
         </div>
     
     </form>
@@ -46,8 +46,8 @@
       <nb-card-body>
       <form #modalForm="ngForm" (ngSubmit)="onDelete()" aria-labelledby="title">
         <div class="buttons-container">
-          <button class="cancel"   status="success"  nbButton (click)="onCancel()">Cancel</button>
-          <button  nbButton status="danger" type="submit"> delete</button>
+          <button class="cancel"   status="success"  nbButton (click)="onCancel()">Annuler</button>
+          <button  nbButton status="danger" type="submit"> Confirmer</button>
         </div>
       </form>
     </nb-card-body>

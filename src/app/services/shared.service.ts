@@ -33,8 +33,8 @@ export class SharedService {
       ...actionSettings
     }
   }
-  loadTableData(service: any): Observable<LocalDataSource> {
-    return service.getData().pipe(
+  loadTableData(service: any,ex): Observable<LocalDataSource> {
+    return service.getData(ex).pipe(
       map((data: any) => new LocalDataSource(data)),
       catchError((error: any) => {
         console.error('Error loading table data:', error);

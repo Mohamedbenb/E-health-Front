@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { SocieteService } from '../services/societe.service';
 import { NbDialogService } from '@nebular/theme';
 import { DialogNamePromptComponent } from './dialog-name-prompt/dialog-name-prompt.component';
+import { VisiteService } from '../services/service-visite.service';
 
 
 const colors: any = {
@@ -80,9 +81,14 @@ export class DragCompComponent implements OnInit {
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
         const options = { headers: this.headers };
-        this.http.patch(`http://localhost:8080/api/datecals/${event.id}`, options).subscribe(response => {
-          console.log('Event deleted:',response);
-        });
+        
+          this.visiteService.getByDateVis(event.id).subscribe((data)=>{
+            this.visiteService.deleteVisite(data.id).subscribe(()=>{
+              this.getEvents()
+              console.log('success')
+            })
+          })
+      
         
       }
     }
@@ -109,6 +115,7 @@ export class DragCompComponent implements OnInit {
   constructor(private modal: NgbModal, private http: HttpClient,
               private socser: SocieteService,
               private dialogService: NbDialogService,
+              private visiteService: VisiteService
     ) { }
 
   /**
@@ -211,14 +218,13 @@ export class DragCompComponent implements OnInit {
     console.log(this.societe)
     this.dialogService.open(DialogNamePromptComponent,{
       context:{
-        societe:this.societe
+        
       }
-    })
-      .onClose.subscribe(()=>{this.getEvents()
-                              this.refresh.next();
-                              this.ngOnInit()
-      
-      });
+    }).onClose.subscribe(()=>{
+      this.getEvents()
+      console.log('Calwzed')
+      this.refresh.next();
+});
     
   }
 

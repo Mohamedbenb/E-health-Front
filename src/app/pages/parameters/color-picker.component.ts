@@ -20,10 +20,9 @@ newColor:Color
     ) { }
     ngOnInit(): void {
       
-      const id= this.rowData.color.id
-      console.log('rowData',id)
-        this.newValue=this.rowData.color.primary
-        console.log('new value',this.newValue)
+      
+        this.newValue=this.rowData.color?.primary
+        
 
     }
 

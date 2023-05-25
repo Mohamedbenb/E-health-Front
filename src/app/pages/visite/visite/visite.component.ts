@@ -3,6 +3,7 @@ import { SocieteService } from '../../../services/societe.service';
 import { VisiteService } from '../../../services/service-visite.service';
 import { FormControl } from '@angular/forms';
 import { Visite } from '../../../models/Visite';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-visite',
@@ -27,6 +28,7 @@ export class VisiteComponent implements OnInit {
   inapteDefinitifReason: string = '';
   constructor(private Service: SocieteService,
               private visiteService: VisiteService,
+              private router: Router
     ) {}
 
    ngOnInit() {
@@ -68,8 +70,10 @@ getCombinedText(): string {
 onSubmit(){
   const combinedText = this.getCombinedText();
   console.log(combinedText)
-  this.visiteService.vaidate(this.selectedVisite.id,combinedText).subscribe(() => {
-    console.log('success')
+  this.visiteService.vaidate(this.selectedVisite.id,combinedText).subscribe((data) => {
+    console.log('success',data)
+  
+    this.router.navigate(['pages/historique'], { state: data });
   }, (error) => {
     console.error('Error updating table data:', error);
   });
