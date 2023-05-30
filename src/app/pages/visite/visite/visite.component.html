@@ -3,21 +3,32 @@
       <nb-card>
         <nb-card-body>
           <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
-            <h2 class="title">Nouvelle visite </h2>
+            <h2 class="title">Nouvel examen </h2>
             
   
           </div>
-          <nb-card>
+         
             <nb-card-body>
-          <nb-select placeholder="Select Groups"  (selectedChange)="onChange($event)">
-            <nb-option *ngFor="let option of visites" [value]="option">
-                {{ option.employee.firstname }} {{option.primaryType.type}}
-              </nb-option>
-          </nb-select>
-        </nb-card-body>
-      </nb-card>
-        <nb-card>
+              <nb-select placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
+                <nb-option [value]="1">Examen médicale</nb-option>
+                <nb-option [value]="2">Examen complémentaire</nb-option>
+              </nb-select>
+            </nb-card-body>
+          
+              <ng-container *ngIf="choice == 1">
+                
+                <nb-card>
+                <nb-card-body>
+                  <nb-select placeholder="Select Groups"  (selectedChange)="onChange($event)">
+                    <nb-option *ngFor="let option of visites" [value]="option">
+                        {{ option.employee.firstname }} {{option.primaryType.type}}
+                      </nb-option>
+                  </nb-select>
+                </nb-card-body>
+      
+        
           <nb-card-body>
+            <ng-container *ngIf="selectedVisite">
             <div class="header">
               <h3>L'ENTREPRISE:</h3>
               <br>
@@ -87,11 +98,60 @@
                 <div>
                   <button nbButton status="primary" (click)="onSubmit()">Valider</button>
                 </div>
-                
+              </ng-container>
+              
+              
+              
+            </nb-card-body>
+          </nb-card>
+          
+          </ng-container>
+          <ng-container *ngIf="choice ==2">
+            <nb-card>
+            <nb-card-body>
+              
+              <nb-select placeholder="Select Groups"  (selectedChange)="onChangeExam($event)">
+                <nb-option *ngFor="let option of examens" [value]="option">
+                    {{ option.employee.firstname }} {{option.typeExam.type}}
+                  </nb-option>
+              </nb-select>
+            
+              <ng-container *ngIf="selectedExam">
+                <div class="header">
+                  <h3>LE TRAVAILLEUR</h3>
+                </div>
+                <br>
+                <br>
+                <div class="name bold">Nom et Prénom : {{selectedExam.employee?.firstname}} {{selectedExam.employee?.lastname}}</div>
+                <br>
+                <div class="name bold">Date de naissaince: {{selectedExam.employee?.datenai}}</div>
+                <br>
+                <div class="name bold">Qualifications professionelles: {{selectedExam.employee?.postetrav}}</div>
+                <br>
+                <div class="name bold">Date de recrutement: {{selectedExam.employee?.daterecru}} &nbsp; &nbsp; Poste de travail: {{selectedExam.employee?.postetrav}}</div>
+                <br>
+                <br>
+                <br>
+                <h6><Strong>Type d'examen: </Strong> {{selectedExam.typeExam.type}}</h6>
+            <textarea nbInput  [formControl]="recommendationFormControl" type="text" fullWidth placeholder="Recommandation"></textarea>
+            <input nbInput
+          placeholder="Rappel"
+          [formControl]="dateFormControl"
+          [nbDatepicker]="formpicker">
+          <nb-datepicker  #formpicker></nb-datepicker>
+          <br>
+          <div>
+            <button nbButton status="primary" (click)="onSubmitExam()">Valider</button>
+          </div>
+          </ng-container>
+          </nb-card-body>
+        </nb-card>
+          </ng-container>
+
+      
+        
         </nb-card-body>
-      </nb-card>
-        </nb-card-body>
-      </nb-card>
+        </nb-card>
     </div>
   </div>
   

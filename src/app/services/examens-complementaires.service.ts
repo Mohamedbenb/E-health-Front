@@ -34,4 +34,18 @@ export class ExamensComplementairesService {
     console.log('exreceived in updateTableData:', ex);
     return this.http.patch(`${this.url}examens/del/${id}`, options);
   }
+  getAllunv(){
+    console.log('all from visite')
+    const options = { headers: this.headers };
+    //console.log(this.http.get('http://localhost:8080/api/uniops/${ex}/employees', options));
+    return this.http.get(`${this.url}examens/unvalid`, options);
+  }
+  validate(id:number,data:any){
+    const options = { headers: this.headers };
+    return this.http.put(`${this.url}examens/validate/${id}`,data,options)
+  }
+  getByEmployee(id):Observable<any>{
+    const options = { headers: this.headers };
+    return this.http.get(`${this.url}examens/${id}`, options);
+  }
 }

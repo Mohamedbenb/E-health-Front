@@ -39,12 +39,20 @@
           <nb-card-body class="name bold"><strong>Matricule</strong>:   {{employee?.matricule}}<strong>&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong> {{employee?.firstname}} {{employee?.lastname}}<strong>&nbsp;&nbsp;&nbsp;Age: {{employee?.age}}</strong></nb-card-body>
           <br>
           <br>
-        <ng2-smart-table
-        [settings]="settings"
-        [source]="tableData"
-        
->
-      </ng2-smart-table>
+          <nb-tabset [(selectedIndex)]="activeTabIndex">
+            <nb-tab tabTitle="Examens médicales" [active]="isTabActive(0)">
+              <ng2-smart-table
+              [settings]="settings"
+              [source]="tableData">
+            </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Examen complémentaires" [active]="isTabActive(1)">
+              <ng2-smart-table
+              [settings]="settingsExam"
+              [source]="tableDataExam">
+            </ng2-smart-table>
+            </nb-tab>
+    </nb-tabset>
   </ng-container>
   </nb-card-body>
 </nb-card>

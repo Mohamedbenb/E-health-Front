@@ -90,44 +90,35 @@
   
                         <div class="col-md-4 bottom_space">
                           <div class="btn-group">
-                            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                            <button nbButton status="primary"  class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
                               (viewDateChange)="activeDayIsOpen = false">
                               Précendent
-                            </div>
-                            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                            </button>
+                            <button nbButton class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
                               Aujourd'hui
-                            </div>
-                            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                            </button>
+                            <button nbButton status="primary"  mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
                               (viewDateChange)="activeDayIsOpen = false">
                               Suivant
-                            </div>
+                          </button>
                           </div>
                         </div>
                         <div class="col-md-4 text-center align-self-center bottom_space">
-                          <h3 class="text-uppercase mb-0">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                          <h3 class="text-uppercase mb-0">{{ viewDate | calendarDate:(view + 'ViewTitle'):'fr' }}</h3>
                         </div>
                         <div class="col-md-4 text-right bottom_space">
-                          <div class="btn-group">
-                            <div class="btn btn-primary" (click)="view = CalendarView.Month"
-                              [class.active]="view === CalendarView.Month">
-                              Mois
-                            </div>
-                            <div class="btn btn-primary" (click)="view = CalendarView.Week"
-                              [class.active]="view === CalendarView.Week">
-                              Semaine
-                            </div>
-                            <div class="btn btn-primary" (click)="view = CalendarView.Day"
-                              [class.active]="view === CalendarView.Day">
-                              Jour
-                            </div>
-                          </div>
+                          <nb-button-group  (valueChange)="updateView($event)">
+                            <button nbButton value="month" pressed [nbButtonToggle]="view === 'Month'">Mois</button>
+                            <button nbButton value="week" [nbButtonToggle]="view === 'Week'">Semaine</button>
+                            <button nbButton value="day" [nbButtonToggle]="view === 'Day'">Jour</button>
+                          </nb-button-group>
                         </div>
   
                       </div>
                       <div class="row">
                         <div class="col-12">
-                          <button class="btn btn-raised btn-primary pull-right" (click)="addEvent()">
-                            Ajouter évennement
+                          <button nbButton status="primary"  class="btn btn-raised btn-primary pull-right" (click)="addEvent()">
+                            Ajouter Rendez-vous
                           </button>
                         </div>
                       </div>

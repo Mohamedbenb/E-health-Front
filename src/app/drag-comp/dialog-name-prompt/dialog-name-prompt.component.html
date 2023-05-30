@@ -18,7 +18,13 @@
                 {{ option.title }}
               </nb-option>
             </nb-option-group>
-  
+
+        </nb-select>
+        <br>
+        <br>
+        <nb-select placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
+          <nb-option [value]="1">Examen médicale</nb-option>
+          <nb-option [value]="2">Examen complémentaire</nb-option>
         </nb-select>
 
                      
@@ -126,11 +132,21 @@
                 <span class="seleted-item">
                   {{ item.employee.firstname }} {{ item.employee.lastname }}
                 </span>
+                <ng-container *ngIf="selectedExam == 1 else examComp">
                 <nb-select size="small" placeholder="Type de visite" [(ngModel)]="item.visite" >
                   <nb-option *ngFor="let option of typevis" [value]="option" >
                     {{ option.type }}
                   </nb-option>
                 </nb-select>
+              </ng-container>
+              <ng-template #examComp>
+                <nb-select placeholder="Type d'examen" [(ngModel)]="item.typeExam">
+                  <nb-option *ngFor="let option of typeExam" [value]="option" item.typeExam >
+                    {{ option.type }}
+                  </nb-option>
+                </nb-select>
+
+              </ng-template>
               </div>
             </ng-container>
           </div>
@@ -145,7 +161,7 @@
     </nb-card-body>
     <nb-card-footer>
       <button class="cancel" nbButton status="danger" (click)="cancel()">Annuler</button>
-      <button nbButton status="success" (click)="submit()" [disabled]="!isLastStep">Confirmer</button>
+      <button nbButton status="primary" (click)="submit()" [disabled]="!isLastStep">Confirmer</button>
   
   
     </nb-card-footer>

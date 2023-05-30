@@ -62,10 +62,10 @@ export class DragCompComponent implements OnInit {
   jsonevent: any[];
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
-  CalendarView = CalendarView;
+  //CalendarView = CalendarView;
   newEvent: CalendarEvent;
   viewDate: Date = new Date();
-  activeDayIsOpen = true;
+  activeDayIsOpen = false;
   modalData: {action: string;
           event: CalendarEvent;
   };
@@ -93,6 +93,7 @@ export class DragCompComponent implements OnInit {
       }
     }
   ];
+  
 
   refresh: Subject<any> = new Subject();
 
@@ -159,6 +160,11 @@ export class DragCompComponent implements OnInit {
    * @param date      Clicked date in datepicker
    * @param events      Events of selected date
    */
+  //view: string = 'Month';
+
+  updateView(value: CalendarView): void {
+    this.view = value;
+  }
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;

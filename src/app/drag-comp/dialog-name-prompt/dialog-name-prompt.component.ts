@@ -13,6 +13,11 @@ import { VisiteService } from '../../services/service-visite.service';
 import { Color } from '../../models/Color';
 
 import { TypeVisite } from '../../models/TypeVisite';
+import { ExamService } from '../../services/service-exam.service';
+import { ExamensComplementairesService } from '../../services/examens-complementaires.service';
+import { Examen } from '../../models/Examen';
+import { TypeExam } from '../../models/TypeExam';
+import { TypeExamService } from '../../services/type-exam.service';
 
 @Component({
   selector: 'ngx-dialog-name-prompt',
@@ -24,8 +29,10 @@ export class DialogNamePromptComponent implements OnInit {
   
   selectedName: string;
   selectedIndex: number;
-  selectedItems: { employee: Employee, visite: TypeVisite }[] = [];
+  selectedItems: { employee: Employee, visite: TypeVisite, typeExam:TypeExam }[] = [];
+  selectedExamen:{ employee:Employee, typeExam:TypeExam}
   request:{employeeId:number, primaryTypeId:number, datevis:Datecal}[]=[]
+  requestExam:{employeeId:number, typeExamId:number, datevis:Datecal}[]=[]
   filteredOptions$: Observable<Employee[]>;
   inputFormControl: FormControl;
   employeeFormControl=new FormControl;
@@ -35,7 +42,8 @@ export class DialogNamePromptComponent implements OnInit {
   time = new FormControl(new Date());
   time2 = new FormControl(new Date())
   
-  
+  selectedExam:any
+  typeExam:any
   datecal=new Datecal;
 
   
@@ -51,6 +59,8 @@ export class DialogNamePromptComponent implements OnInit {
     private societeService: SocieteService,
     private employeeService: EmployeeService,
     private viser: VisiteService,
+    private examService: ExamensComplementairesService,
+    private typeExamService: TypeExamService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +76,10 @@ export class DialogNamePromptComponent implements OnInit {
     this.viser.getData().subscribe((data)=>{
       console.log(data)
       this.typevis = data
+    })
+    this.typeExamService.getData().subscribe((response)=>{
+      this.typeExam=response;
+      console.log('type examen',this.typeExam)
     })
   }
 
@@ -137,7 +151,7 @@ export class DialogNamePromptComponent implements OnInit {
     console.log('checked',checked);
     console.log('called');
     if (checked) {
-      const newItem = { employee: option, visite: null };
+      const newItem = { employee: option, visite: null, typeExam:null };
 
       this.selectedItems.push(newItem);
       console.log('selected items updated', this.selectedItems);
@@ -153,7 +167,7 @@ export class DialogNamePromptComponent implements OnInit {
   
 
 selectedItemsState: { [key: string]: boolean } = {};
-  removeSelectedItem(item: { employee: Employee, visite: TypeVisite }): void {
+  removeSelectedItem(item: { employee: Employee, visite: TypeVisite, typeExam: TypeExam }): void {
     const index = this.selectedItems.indexOf(item);
     if (index !== -1) {
       this.selectedItems.splice(index, 1); 
@@ -178,6 +192,9 @@ selectedItemsState: { [key: string]: boolean } = {};
     this.datevalue2 = this.dateFormControl.value;
     this.datevalue2.setHours(this.time2.value.getHours())
     this.datevalue2.setMinutes(this.time2.value.getMinutes())
+    if (this.selectedExam==1)
+
+  {    
     this.selectedItems.forEach((item)=>{
     
       const datevis = new Datecal
@@ -192,16 +209,40 @@ selectedItemsState: { [key: string]: boolean } = {};
       const newItem = {employeeId:item.employee.id, primaryTypeId:item.visite.id, datevis:datevis}
       this.request.push(newItem) 
       })
+      
 
     console.log('requestbody',this.request)
     
    
    
     this.viser.addDatav(this.request).subscribe(()=>{console.log('done');this.ref.close()})
-    }
+      } else {
+        this.selectedItems.forEach((item)=>{
+          const dateExam = new Datecal
+          dateExam.color = new Color
+          dateExam.start=this.datevalue;
+          dateExam.end=this.datevalue2;
+          dateExam.title=item.typeExam.type+' '+item.employee.firstname + ' ' + item.employee.lastname
+          console.log('item.visite.color.id',item.typeExam.color.id)
+          dateExam.color.id=0;
+          dateExam.color.id=item.typeExam.color.id
+          const newItem = {employeeId:item.employee.id, typeExamId:item.typeExam.id, dateExam:dateExam, datevis:null}
+          this.requestExam.push(newItem) 
+          })
+          this.examService.addData(this.requestExam,0).subscribe((response)=>{console.log('response',response);this.ref.close()})
+          console.log('requestbody',this.requestExam)
+        }
+    } 
+      
+    
   }
   clicked(event:any){
     console.log(event)
+  }
+  typeRdv(event){
+    this.selectedExam=event
+    console.log('type exam',event)
+
   }
   
   

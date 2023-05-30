@@ -4,6 +4,8 @@ import { VisiteService } from '../../../services/service-visite.service';
 import { FormControl } from '@angular/forms';
 import { Visite } from '../../../models/Visite';
 import { Router } from '@angular/router';
+import { ExamensComplementairesService } from '../../../services/examens-complementaires.service';
+import { Examen } from '../../../models/Examen';
 
 @Component({
   selector: 'ngx-visite',
@@ -12,28 +14,35 @@ import { Router } from '@angular/router';
 })
 export class VisiteComponent implements OnInit {
   visites:Visite[] = [];
+  choice:any
   ex:any
+  examens:Examen[]=[]
   selectedItemFormControl:FormControl
-  selectedVisite=new Visite
+  selectedVisite: Visite
+  selectedExam:Examen
   apteAuPoste: boolean = false;
   amenagementPoste: boolean = false;
   changementPoste: boolean = false;
   inapteTemporaire: boolean = false;
   inapteDefinitif: boolean = false;
-  
+  dateFormControl=new FormControl(new Date());
+  recommendationFormControl=new FormControl();
   apteAuPosteDetails: string = '';
   amenagementPosteDetails: string = '';
   changementPosteDetails: string = '';
   inapteTemporairePeriod: string = '';
   inapteDefinitifReason: string = '';
+  examRequest:{recommandation:string, dateReport:Date}
   constructor(private Service: SocieteService,
               private visiteService: VisiteService,
-              private router: Router
+              private router: Router,
+              private examCompService:ExamensComplementairesService
     ) {}
 
    ngOnInit() {
-
+    this.examRequest={recommandation:'', dateReport: new Date()}
     this.getvisites()
+    this.getExamens()
   }
 
 getvisites()
@@ -43,9 +52,23 @@ getvisites()
     console.log('done?',this.visites)
   })
 }
+getExamens(){
+  this.examCompService.getAllunv().subscribe((response:Examen[])=>{
+    this.examens=response;
+    console.log('done?',this.examens)
+  })
+}
+typeRdv(event){
+  this.choice=event
+}
 onChange(event:any){
   console.log(event)
   this.selectedVisite=event
+  console.log(this.selectedVisite)
+}
+onChangeExam(event:any){
+  console.log(event)
+  this.selectedExam=event
   console.log(this.selectedVisite)
 }
 getCombinedText(): string {
@@ -67,15 +90,33 @@ getCombinedText(): string {
   }
   return combinedText;
 }
+
 onSubmit(){
+  let datas:{res : Visite [], index: number}
   const combinedText = this.getCombinedText();
   console.log(combinedText)
-  this.visiteService.vaidate(this.selectedVisite.id,combinedText).subscribe((data) => {
+  this.visiteService.vaidate(this.selectedVisite.id,combinedText).subscribe((data:Visite[]) => {
     console.log('success',data)
-  
-    this.router.navigate(['pages/historique'], { state: data });
+    datas.res=data
+    datas.index=1
+    this.router.navigate(['pages/historique'], { state: datas });
   }, (error) => {
     console.error('Error updating table data:', error);
   });
+}
+datas:any
+onSubmitExam(){
+  
+this.examRequest.recommandation=this.recommendationFormControl.value
+this.examRequest.dateReport=this.dateFormControl.value
+this.examCompService.validate(this.selectedExam.id,this.examRequest).subscribe((data)=>{
+const index=1;
+this.datas=data;
+this.datas.index=index
+  console.log('response',data)
+  this.router.navigate(['pages/historique'], { state: data });
+},(error)=>{
+  console.log(error)
+})
 }
 }

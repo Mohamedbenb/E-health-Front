@@ -8,7 +8,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   
   {
-    title: 'Nouvelle Visite',
+    title: 'Nouvel Examen',
     icon: 'file-add-outline',
     link: '/pages/visite',
   },

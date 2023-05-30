@@ -5,7 +5,7 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NbAlertModule,
+  NbButtonGroupModule,
   NbButtonModule,
   NbCardComponent,
   NbCardModule,
@@ -39,7 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TokenInterceptor } from './token-interceptor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -56,6 +57,7 @@ import { BlockUIModule } from 'ng-block-ui';
 import { BlockTemplateComponent } from './drag-comp/blockui/block-template.component';
 import { NotificationService } from './services/notification.service';
 import { WebSocketService } from './services/web-socket.service';
+import localeFr from '@angular/common/locales/fr';
 
 
 
@@ -77,6 +79,7 @@ import { WebSocketService } from './services/web-socket.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NbButtonGroupModule,
     AppRoutingModule,    
     NgxWebstorageModule.forRoot(),
     ToastrModule.forRoot(),
@@ -101,6 +104,7 @@ import { WebSocketService } from './services/web-socket.service';
     NbCheckboxModule,
     //NgxAuthRoutingModule,
     ReactiveFormsModule,
+    CommonModule,
     
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
@@ -124,8 +128,12 @@ import { WebSocketService } from './services/web-socket.service';
       
       
     },
+    { provide: LOCALE_ID, useValue: 'fr-FR' }
 
   ],
 })
 export class AppModule {
+  constructor(){
+    registerLocaleData(localeFr);
+  }
 }

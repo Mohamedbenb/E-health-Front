@@ -17,6 +17,7 @@ import { ExamensComplementairesService } from '../../services/examens-complement
 import { LinkComponent } from './linkComponents/link.component';
 import { LinkComponent2 } from './linkComponents/link.component2';
 import { LinkComponent3 } from './linkComponents/link.component3';
+import { TypeExamService } from '../../services/type-exam.service';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class ParametersComponent {
 
   ];
   fields3 = [
-    { name: 'title', type: 'text', title:'Type', validators: [Validators.required, Validators.minLength(2)] },
+    { name: 'type', type: 'text', title:'Type', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'frequence', type: 'text', title:'fréquence', validators: [Validators.required, Validators.minLength(1)] },
     
 
@@ -126,7 +127,7 @@ export class ParametersComponent {
 
   }
   cols3={
-    title: {
+    type: {
       title: 'Type',
       type: 'custom',
       renderComponent:LinkComponent3
@@ -135,6 +136,12 @@ export class ParametersComponent {
     frequence: {
       title: 'Fréquence',
       type: 'number',
+    },
+    color: {
+      title: 'Code couleur',
+      type: 'custom',
+      renderComponent: ColorPickerCellComponent,
+      
     },
 
   }
@@ -170,7 +177,7 @@ export class ParametersComponent {
   constructor(private Service: SocieteService,
               private SharedService: SharedService,
               private servmal: MalProfService,
-              private servx: ExamensComplementairesService,
+              private typeExamService: TypeExamService,
               private servv: VisiteService,
               
     ) {
@@ -248,7 +255,7 @@ private getService():any{
     case 'tab2':
       return this.servmal;
     case 'tab3':
-      return this.servx;
+      return this.typeExamService;
     case 'tab4':
       return this.servv;
     default:
