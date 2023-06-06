@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NbDialogRef, NbStepChangeEvent, NbStepperComponent } from '@nebular/theme';
 import { EmployeeService } from '../../services/employee.service';
 import { Observable } from 'rxjs';
@@ -18,6 +18,7 @@ import { ExamensComplementairesService } from '../../services/examens-complement
 import { Examen } from '../../models/Examen';
 import { TypeExam } from '../../models/TypeExam';
 import { TypeExamService } from '../../services/type-exam.service';
+import { CalendarService } from '../../services/calendar.service';
 
 @Component({
   selector: 'ngx-dialog-name-prompt',
@@ -26,7 +27,7 @@ import { TypeExamService } from '../../services/type-exam.service';
   styleUrls: ['dialog-name-prompt.component.scss'],
 })
 export class DialogNamePromptComponent implements OnInit {
-  
+  @Output() newItemAdded = new EventEmitter<void>();
   selectedName: string;
   selectedIndex: number;
   selectedItems: { employee: Employee, visite: TypeVisite, typeExam:TypeExam }[] = [];
@@ -60,7 +61,8 @@ export class DialogNamePromptComponent implements OnInit {
     private employeeService: EmployeeService,
     private viser: VisiteService,
     private examService: ExamensComplementairesService,
-    private typeExamService: TypeExamService
+    private typeExamService: TypeExamService,
+    private calendarService: CalendarService,
   ) {}
 
   ngOnInit(): void {
@@ -215,7 +217,7 @@ selectedItemsState: { [key: string]: boolean } = {};
     
    
    
-    this.viser.addDatav(this.request).subscribe(()=>{console.log('done');this.ref.close()})
+    this.viser.addDatav(this.request).subscribe(()=>{this.calendarService.triggerNewItemAdded();this.ref.close()})
       } else {
         this.selectedItems.forEach((item)=>{
           const dateExam = new Datecal
@@ -229,7 +231,7 @@ selectedItemsState: { [key: string]: boolean } = {};
           const newItem = {employeeId:item.employee.id, typeExamId:item.typeExam.id, dateExam:dateExam, datevis:null}
           this.requestExam.push(newItem) 
           })
-          this.examService.addData(this.requestExam,0).subscribe((response)=>{console.log('response',response);this.ref.close()})
+          this.examService.addData(this.requestExam,0).subscribe((response)=>{this.calendarService.triggerNewItemAdded();this.ref.close()})
           console.log('requestbody',this.requestExam)
         }
     } 

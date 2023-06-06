@@ -2,15 +2,16 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
 
-  {
-    title: 'Navigation',
-    group: true,
-  },
+
   
   {
     title: 'Nouvel Examen',
     icon: 'file-add-outline',
     link: '/pages/visite',
+    badge: {
+      text: '',
+      status: '',
+    },
   },
   {
     title: 'Déclaration',
@@ -45,6 +46,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Paramétrage',
     icon: 'settings-outline',
     link: '/pages/parametrage',
-  },  
+  },
+  // {
+  //   title: 'Chat',
+  //   icon: 'message-circle-outline',
+  //   link: '/pages/chat',
+  // },  
 
 ];
+
+

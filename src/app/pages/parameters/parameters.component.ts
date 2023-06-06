@@ -65,7 +65,7 @@ export class ParametersComponent {
   cols1={
 
     title: {
-      title: 'Nom',
+      title: 'Nom de la société',
       type: 'string',
       
     },
@@ -156,11 +156,7 @@ export class ParametersComponent {
       title: 'Fréquence',
       type: 'number',
     },
-    remarque: {
-      title: 'Remarque',
-      type: 'string',
-      
-    },
+
     color: {
       title: 'Code couleur',
       type: 'custom',

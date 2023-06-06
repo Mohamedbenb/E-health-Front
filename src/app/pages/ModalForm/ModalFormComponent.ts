@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
-import { NbDialogRef, NB_DIALOG_CONFIG, NbDatepickerAdapter } from '@nebular/theme';
+import { NbDialogRef, NB_DIALOG_CONFIG, NbDatepickerAdapter, NbToastrService, NbComponentStatus } from '@nebular/theme';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomTableService } from '../../custom-table.service';
 import { SocieteService } from '../../services/societe.service';
 import { Societe } from '../../models/Societe';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-actions',
@@ -14,6 +15,7 @@ export class ModalFormComponent implements OnInit{
   fields = [];
   submitted : boolean;
   dialogForm: any;
+  @Input() emp:string
   @Input() dialogTitle: string;
   @Input() action: string;
   @Input() dialogData: any;
@@ -29,27 +31,45 @@ export class ModalFormComponent implements OnInit{
   deleteMode = false;
   protected cd: ChangeDetectorRef;
   
-  constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>, private societeService: SocieteService
+  constructor(private formBuilder: FormBuilder, cd: ChangeDetectorRef,protected ref: NbDialogRef<ModalFormComponent>, private societeService: SocieteService, private toastrService: NbToastrService
     //private readonly datepickeradapter: NbDatepickerAdapter<Date>,
     //private customTableService: CustomTableService,
     ) {}
     
-
+    valueChangesSubscriptions: Subscription[] = [];
   
   ngOnInit(): void {
 
     const formGroupConfig = {};
     this.fields.forEach((field) => {
-      formGroupConfig[field.name] = ['', field.validators];
+      if(field.type==='nb-datepicker')
+      formGroupConfig[field.name] = [''];
+      else{
+        formGroupConfig[field.name] = ['', field.validators];
+      }
       console.log('field name ',field.name)
-    });
+      
+  });
+    
 
-    this.modalForm = this.formBuilder.group(formGroupConfig);
-    console.log('form',this.modalForm.getRawValue())
+
+    
+  this.modalForm = this.formBuilder.group(formGroupConfig);
     if (this.action === 'edit') {
+      if( this.emp==='employee'){    
+        
+        this.modalForm.get('datenai').setValue(new Date());
+        this.modalForm.get('daterecru').setValue(new Date());
+        console.log('form',this.modalForm.getRawValue())
+      }
       //this.populate(this.formData,this.dialogData);
+    if(this.dialogData.datenai)
+      {      
+      this.dialogData.datenai=new Date (this.dialogData.datenai)
+      this.dialogData.daterecru=new Date (this.dialogData.daterecru)
+    }
       this.modalForm.patchValue(this.dialogData)
-
+      
       //console.log('Form valuess:',this.dialogForm)
       this.submitted =false;
       
@@ -57,6 +77,7 @@ export class ModalFormComponent implements OnInit{
       console.log('edit',this.dialogData)
       
     }
+    
    //this.modalForm = this.formBuilder.group({});
    //Object.keys(this.formData).forEach(key => {
    //  this.modalForm.addControl(key, this.formBuilder.control(''));
@@ -67,6 +88,20 @@ export class ModalFormComponent implements OnInit{
    // this.buildForm(this.formData);
     console.log('extraaa',this.extra)
   }
+  }
+  showToast(status: NbComponentStatus, message: string): void {
+    this.toastrService.show(status, `Toast: ${message}`, { status });
+  }
+  selectedDatenai=''
+  selectedDaterecru=''
+  getFieldValue(event) {
+    console.log (event)
+    this.selectedDatenai=event.toLocaleDateString()
+
+     
+    console.log (event)
+    console.log(this.selectedDatenai)
+
   }
   getFormControlsFields(model:any) {   
     const formGroupFields = {};
@@ -126,8 +161,10 @@ populate(model:any, data:any) {
       
       console.log('Data sent to updateTableData:', this.modalForm.value.id);
       this.customTableService.updateData(this.modalForm.value,this.extra).subscribe(() => {
+        this.showToast('success', 'Form Submitted Successfully');
         this.ref.close();
       }, (error) => {
+        this.showToast('danger', 'Form Submission Failed');
         console.error('Error updating table data:', error);
       });
     }

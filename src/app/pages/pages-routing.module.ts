@@ -6,7 +6,7 @@ import { PagesComponent } from './pages.component';
 
 
 import { DragCompComponent } from '../drag-comp/drag-comp.component';
-import { VisiteComponent } from './visite/visite/visite.component';
+import { VisiteComponent } from './visite/visite.component';
 
 import { ParametersComponent } from './parameters/parameters.component';
 import { EmployeeService } from '../services/employee.service';
@@ -15,6 +15,7 @@ import { StatisticsComponent } from './statistiques/statistics.component';
 import { DeclarationComponent } from './declaration/declaration.component';
 import { HistoriqueComponent } from './historique/historique.component';
 import { DetailsComponent } from './details/details.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 const routes: Routes = [{
@@ -63,6 +64,10 @@ const routes: Routes = [{
     {
       path:'details',
       component:DetailsComponent
+    },
+    {
+      path:'chat',
+      component:ChatComponent
     }
 
 

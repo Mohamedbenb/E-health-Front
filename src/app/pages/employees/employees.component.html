@@ -17,7 +17,9 @@
         </nb-select>
 
       </nb-card-body>
-      <nb-card-body>       
+     
+      <nb-card-body >       
+       
         <ng2-smart-table
           [settings]="settings"
           [source]="tableData"
@@ -27,7 +29,8 @@
           (delete)="onDeleteConfirm($event)"
           (custom)="openAddDialog()">
         </ng2-smart-table>
-      </nb-card-body>
+       </nb-card-body>
+     
     </nb-card>
 
 

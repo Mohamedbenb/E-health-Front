@@ -14,6 +14,12 @@ import { VisiteService } from '../../services/service-visite.service';
 import { DataSource } from '@angular/cdk/collections';
 import { NavigationEnd, Router } from '@angular/router';
 import { ExamensComplementairesService } from '../../services/examens-complementaires.service';
+import { DeclarationService } from '../../services/declaration.service';
+
+import { BooleanComponent1 } from './booleanComponents/boolean.component';
+import { BooleanComponent2 } from './booleanComponents/boolean2.component';
+import { FilterComponent } from './custom.filter.component';
+
 
 @Component({
   selector: 'ngx-historique',
@@ -31,6 +37,7 @@ export class HistoriqueComponent implements OnInit {
   selected=false
   tableData: LocalDataSource;
   tableDataExam: LocalDataSource;
+  tableDataDec: LocalDataSource;
   selectedItem:number
   data:any
   columns={
@@ -71,7 +78,7 @@ export class HistoriqueComponent implements OnInit {
     },
   
   dateValidation: {
-    title: 'Date examen',
+    title: 'Date validation',
     type: 'string',
     valuePrepareFunction: (cell, row) => {
       if (cell) {
@@ -85,7 +92,7 @@ export class HistoriqueComponent implements OnInit {
     },
   },
   rappel: {
-    title: 'Date examen',
+    title: 'Date rappel',
     type: 'string',
     valuePrepareFunction: (cell, row) => {
       if (cell) {
@@ -105,6 +112,7 @@ export class HistoriqueComponent implements OnInit {
   },
 
 }
+
   selectedEmployee=false;
   selectedTabIndex: number = 0;
   toggleTab(index: number) {
@@ -116,6 +124,7 @@ export class HistoriqueComponent implements OnInit {
               private sharedService: SharedService,
               private router: Router,
               private examService:ExamensComplementairesService,
+              private declarationService: DeclarationService
               ) 
               {
                 this.employeeFormControl=new FormControl
@@ -124,19 +133,15 @@ export class HistoriqueComponent implements OnInit {
                 .subscribe(() => {
                   this.data = this.router.getCurrentNavigation()?.extras?.state;
                   if (this.data) {
-                    console.log('Data from nouveau visite',this.data.res);
+                    console.log('Data from nouveau visite',this.data);
+                    
                     this.selectedOption=this.data.employee?.uniop
                     this.selectedItem=this.selectedOption?.id;
                     console.log('selected itme', this.selectedItem)
                     this.getSelectedEmployee(this.data.employee)
-                    this.employee=this.data.res.employee// Access the additional data
+                    this.employee=this.data.employee// Access the additional data
                     this.employeeFormControl.setValue(this.data.employee.firstname + ' ' + this.data.employee.lastname)
-                    this.visiteService.getByEmployee(this.data.employee.id).subscribe((response)=>{
-                      this.tableData = new LocalDataSource(response)
-                    })
-                    this.examService.getByEmployee(this.data.employee.id).subscribe((response)=>{
-                      this.tableDataExam = new LocalDataSource(response)
-                    })
+ 
                   }
                   if(this.data?.index){this.activeTabIndex=this.data.index}
                   subscription.unsubscribe();
@@ -144,15 +149,122 @@ export class HistoriqueComponent implements OnInit {
               }
   settings=this.sharedService.getSettings(this.columns)
   settingsExam=this.sharedService.getSettings(this.columnsExam)
+  settingsDec = {
+    
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+      },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+      },
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true,
+      },
+      actions: {
+        add:true,
+        edit: true,
+        delete: true,
+        position: 'right',
+        },
+
+        noDataMessage:'Pas de données',
+      columns:{
+    
+        type:{
+          title:'Catégorie de la MP',
+          type:'String',
+          valuePrepareFunction: (cell, row) => row.mal && row.mal.title ? row.mal.title : '',
+          editable:false,
+        },
+      
+      dateDec: {
+        title: 'Date de la déclaration MP',
+        type: 'string',
+        valuePrepareFunction: (cell, row) => {
+          if (cell) {
+            const date = new Date(cell);
+            const formattedDate = date.toLocaleDateString();
+            const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return formattedDate + ' ' + formattedTime;
+          } else {
+            return '';
+          }
+        },
+        editable:false,
+      },
+      constat: {
+        title: 'Constatation médicale',
+        type: 'string',
+        editable:false,
+      },
+      depotcnam:{
+        title:'Dépôt CNAM',
+        
+        type: 'custom',
+        
+        
+        renderComponent: BooleanComponent1,
+        
+        valuePrepareFunction: (cell, row) => (cell ? 'Oui' : 'Non'),
+        editable:false,
+        filter: {
+          type: 'custom',
+          component: FilterComponent,
+        },
+        
+      },
+      diagnosticcnam:{
+        title:'Diagnostic CNAM',
+        
+        type: 'custom',
+        renderComponent: BooleanComponent2,
+        
+        valuePrepareFunction: (cell, row) => (cell ? 'Oui' : 'Non'),
+        editable:false,
+        filter: {
+          type: 'custom',
+          component: FilterComponent,
+        },
+      
+      
+        
+      },
+      reponsecnam:{
+        title:'Réponse CNAM',
+        
+        type: 'string',
+         
+        
+      },
+      remarque:{
+        title:'Remarques',
+        type:'string',
+        editable:false,
+      },
+      
+      
+      
+      }
+      
+      
+    
+  }
   tabs = [
     { title: 'Examens médicaux', id: 'tab1' },
    
     { title: 'Examens complémentaires', id: 'tab2' },
+
+    { title: 'Déclarations maladies professionelles', id: 'tab3' },
     
     
     
   ];
-  activeTabIndex: number = 1;
+  activeTabIndex: number = 0;
   isTabActive(index: number): boolean {
     return this.activeTabIndex === index;
   }
@@ -201,12 +313,20 @@ export class HistoriqueComponent implements OnInit {
     this.employee=data
     console.log('selected employee',this.employee)
     this.visiteService.getByEmployee(this.employee.id).subscribe((response)=>{
+      
       this.tableData= new LocalDataSource(response)
     },(error)=>{
       console.log(error)
     })
     this.examService.getByEmployee(this.employee.id).subscribe((response)=>{
+      console.log('exam res', response)
       this.tableDataExam= new LocalDataSource(response)
+    },(error)=>{
+      console.log(error)
+    })
+    this.declarationService.getByEmployee(this.employee.id).subscribe((response)=>{
+      console.log('dec res', response)
+      this.tableDataDec= new LocalDataSource(response)
     },(error)=>{
       console.log(error)
     })

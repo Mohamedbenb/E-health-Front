@@ -40,7 +40,7 @@ import { DialogNamePromptComponent } from '../../drag-comp/dialog-name-prompt/di
   declarations: [
     
     
-    ModalFormComponent,
+    
     
   ],
 })

@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
     //});
     
 
-    this.websocketService.init();
+    //this.websocketService.init();
     
   
     
@@ -57,10 +57,10 @@ private handleNewVisiteEvent(visite: any): void {
 }
 
 subscribeToVisiteEvent() {
-  this.websocketService.subscribeToVisiteEvent((visite: any) => {
+  //this.websocketService.subscribeToVisiteEvent((visite: any) => {
     // Handle the received visite event
-    console.log('New visite event received:', visite);
+    //console.log('New visite event received:', visite);
     // Perform further actions as needed
-  });
+  
 }
 }

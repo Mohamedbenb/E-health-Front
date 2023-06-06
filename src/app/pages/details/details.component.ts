@@ -17,7 +17,10 @@ export class DetailsComponent implements OnInit {
    @Input() rowdata:any
   col1 = {
     
-
+    matricule: {
+      title: 'Matricule',
+      type: 'string',
+      hide:false},
     employee: {
       title: 'Nom et prénom',
       type: 'string',
@@ -55,6 +58,11 @@ export class DetailsComponent implements OnInit {
       hide:false
       
     },
+    matricule: {
+      title: 'Matricule',
+      type: 'string',
+      hide:false},
+
     employee: {
       title: 'Nom et prénom',
       type: 'string',
@@ -78,13 +86,63 @@ export class DetailsComponent implements OnInit {
     },
 
     constat: {
-      title: 'Constation',
+      title: 'Constation médicale',
       type: 'string',
       hide:false
       
     },
 
   }
+  columnsExam={
+    
+    matricule: {
+      title: 'Matricule',
+      type: 'string',
+      hide:false
+      
+    },
+    employee: {
+      title: 'Nom et prénom',
+      type: 'string',
+      hide:false
+      
+    },
+  
+  dateValidation: {
+    title: 'Date de validation',
+    type: 'string',
+    valuePrepareFunction: (cell, row) => {
+      if (cell) {
+        const date = new Date(cell);
+        const formattedDate = date.toLocaleDateString();
+        const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        return formattedDate + ' ' + formattedTime;
+      } else {
+        return '';
+      }
+    },
+  },
+  rappel: {
+    title: 'Date du rappel',
+    type: 'string',
+    valuePrepareFunction: (cell, row) => {
+      if (cell) {
+        const date = new Date(cell);
+        const formattedDate = date.toLocaleDateString();
+        
+        return formattedDate 
+      } else {
+        return '';
+      }
+    },
+  },
+  recommendation:{
+    title:'Recommendation',
+    type:'String',
+    
+  },
+
+}
   
   selectedOptions: any[] = [];
 settings:any
@@ -102,6 +160,7 @@ visiteModel:{recommandation:string, datevalidation:Date, employee:string}[]=[]
 data:any
 source:any;
 tabModel:{tableau:string, dateDec:Date, employee:string, constat:string}[]=[]
+examModel:{employee:string, dateValidation:Date, rappel:Date,recommendation:string,}[]=[]
   constructor(private route: ActivatedRoute, private visiteService: VisiteService, private declarationService: DeclarationService) { }
 
   ngOnInit(): void {
@@ -122,7 +181,7 @@ tabModel:{tableau:string, dateDec:Date, employee:string, constat:string}[]=[]
         this.visiteService.getbyTypeVis(id).subscribe((data)=>{
           console.log('data received', data);
           data.forEach(element =>{
-            const item={recommandation:element.recommendation, datevalidation:element.dateValidation, employee:element.employee.firstname+' '+element.employee.lastname}
+            const item={recommandation:element.recommendation, datevalidation:element.dateValidation, employee:element.employee.firstname+' '+element.employee.lastname, matricule:element.employee.matricule}
             this.visiteModel.push(item)
           })
           console.log('table model ',this.visiteModel)
@@ -150,7 +209,7 @@ tabModel:{tableau:string, dateDec:Date, employee:string, constat:string}[]=[]
         console.log('data received', data.dateDec);
         data.forEach(element =>{
           console.log(element)
-          const item={tableau:element.mal.title, dateDec:element.dateDec, employee:element.emp.firstname+' '+element.emp.lastname, constat:element.constat}
+          const item={tableau:element.mal.title, dateDec:element.dateDec, employee:element.emp.firstname+' '+element.emp.lastname, constat:element.constat, matricule:element.emp.matricule}
           console.log(item)
           this.tabModel.push(item)
         })
@@ -170,6 +229,17 @@ tabModel:{tableau:string, dateDec:Date, employee:string, constat:string}[]=[]
     break
   case'exam': 
   console.log(this.data)
+  this.data?.exams.forEach(element=>{
+    const item={employee:element.employee.firstname+' '+element.employee.lastname, dateValidation:element.dateValidation, rappel:element.rappel,recommendation:element.recommendation, matricule:element.employee.matricule}
+    console.log('Exam Item',item)
+    this.examModel.push(item)
+    
+  })
+  this.tableData=new LocalDataSource(this.examModel)
+  this.settings={
+    columns:this.columnsExam,
+    ...actionSettings
+  }
     break
   default:
     

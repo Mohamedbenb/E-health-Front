@@ -1,53 +1,45 @@
-import { Component, Input } from "@angular/core";
-import { Cell, DefaultFilter, ViewCell } from "ng2-smart-table";
+import { Component, Input, OnInit } from "@angular/core";
+
 
 import { EmployeeService } from "../../services/employee.service";
 
 @Component({
     selector: 'my-checkbox',
-    //template: `{{ displayValue }}`,
+    
     template: `
-    <input type="checkbox" [checked]="rowData.status" (change)="setValue(rowData)">
+     <nb-select [selected]="s" (selectedChange)="onChange($event)">
+      <nb-option [value]="true">Oui</nb-option>
+      <nb-option [value]="false">Non</nb-option>
+    </nb-select>
     
   `,
   })
  
-  export class MyCheckboxComponent extends DefaultFilter implements ViewCell {
+  export class MyCheckboxComponent implements OnInit {
 
     @Input() rowData: any;
     @Input() value: any
-    displayValue: string;
+    
+    s:boolean
     constructor(private serv:EmployeeService) {
-      super();
+      
     }
-    ngOnInit() {
-   
-    }
-  
-    onChange(event: any) {
-      this.value = event.target.status;
-      console.log('value from child click',event.status)
-      //this.cell.setValue(this.value);
-      //this.rowData[this.cell.getId()] = this.value;
+    ngOnInit(): void {
+      this.s=this.rowData.status
     }
   
-    setValue(rowData: any) {
-      rowData.status=!rowData.status
-      this.serv.updateData(rowData).subscribe((data) => {
-        console.log('res',data)
-        
-      }, (error) => {  
-        console.error('Error loading table data:', error);
-        });
-
+    onChange(value: boolean) {
+      
+      console.log('value from child click',value)
+      this.rowData.status=value
+      this.serv.updateData(this.rowData).subscribe((response)=>{
+        console.log(response)
+      })
+      console.log('cell from custom boolean field',this.rowData.status)
+      console.log('value from custom boolean field',this.rowData)
+     
     }
-    ngOnChanges(): void {
-      this.displayValue = this.rowData.status ? 'True' : 'False';
-    }
-    // get displayValue(): string {
-    //   return this.rowData.status ? 'Oui' : 'Non';
-    // }
-    // filterFunction(value: string, search: string): boolean {
-    //   return value.toLowerCase() === search.toLowerCase();
-    // }
+  
+    
+    
   }

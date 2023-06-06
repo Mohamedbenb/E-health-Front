@@ -94,7 +94,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           
         }
       });
-      this.webSocketService.init();
+      //this.webSocketService.init();
       //this.subscribeToVisiteEvent();
   }
 
@@ -133,10 +133,10 @@ if (this.authService.isLoggedIn())
     this.visites.push(visite);
   }
   subscribeToVisiteEvent() {
-    this.webSocketService.subscribeToVisiteEvent((visite: any) => {
+    //this.webSocketService.subscribeToVisiteEvent((visite: any) => {
       // Handle the received visite event
-      console.log('New visite event received:', visite);
+      //console.log('New visite event received:', visite);
       // Perform further actions as needed
-    });
+    //});
   }
 }

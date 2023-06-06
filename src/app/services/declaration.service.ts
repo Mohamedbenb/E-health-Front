@@ -25,6 +25,11 @@ export class DeclarationService {
   updateData(data: any,ex:any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', data);
-    return this.http.put(`${this.url}dec/ed/${data.empid}/${data.malid}/${data.id}`, data, options);
+    return this.http.put(`${this.url}dec/ed/${data.emp.id}/${data.mal.id}/${data.id}`, data, options);
+  }
+  getByEmployee(id): Observable<any> {
+    const options = { headers: this.headers };
+    
+    return this.http.get(`${this.url}dec/emp/${id}`, options);
   }
 }

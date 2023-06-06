@@ -123,6 +123,7 @@ export class DragCompComponent implements OnInit {
    * onInit
    */
   titles:any[]
+  locale: string = "fr"
   ngOnInit() {
     this.socser.getData().subscribe((data) => {
       this.societe = data;

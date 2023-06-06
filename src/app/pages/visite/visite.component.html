@@ -13,6 +13,11 @@
                 <nb-option [value]="1">Examen médicale</nb-option>
                 <nb-option [value]="2">Examen complémentaire</nb-option>
               </nb-select>
+              <!--<app-custom-select placeholde="Choisir le type de rendez-vous">
+                <app-custom-option [value]="1" label="Examen médical" badgeValue="99+"></app-custom-option>
+                <app-custom-option [value]="2" label="Examen complémentaire" badgeValue="99+"></app-custom-option>
+              </app-custom-select>-->
+              
             </nb-card-body>
           
               <ng-container *ngIf="choice == 1">
@@ -67,31 +72,31 @@
                   <div>
                     <nb-checkbox [(ngModel)]="apteAuPoste">Apte au poste(à préciser)</nb-checkbox>
                     <br>
-                    <input nbInput fullWidth *ngIf="apteAuPoste" type="text" placeholder="Spécifier" [(ngModel)]="apteAuPosteDetails" />
+                    <input nbInput fullWidth *ngIf="apteAuPoste" type="text" placeholder="Recommendation" [(ngModel)]="apteAuPosteDetails" />
                   </div>
                   <br>
                   <div>
                     <nb-checkbox [(ngModel)]="amenagementPoste">Apte avec aménagement du poste(à préciser)</nb-checkbox>
                     <br>
-                    <input nbInput fullWidth *ngIf="amenagementPoste" type="text" placeholder="Spécifier"  [(ngModel)]="amenagementPosteDetails"/>
+                    <input nbInput fullWidth *ngIf="amenagementPoste" type="text" placeholder="Recommendation"  [(ngModel)]="amenagementPosteDetails"/>
                   </div>
                   <br>
                   <div>
                     <nb-checkbox [(ngModel)]="changementPoste">Apte avec changement de poste (à préciser)</nb-checkbox>
                     <br>
-                    <input nbInput fullWidth *ngIf="changementPoste" type="text" placeholder="Spécifier" [(ngModel)]="changementPosteDetails"/>
+                    <input nbInput fullWidth *ngIf="changementPoste" type="text" placeholder="Recommendation" [(ngModel)]="changementPosteDetails"/>
                   </div>
                   <br>
                   <div>
                     <nb-checkbox [(ngModel)]="inapteTemporaire">Inapte temporaire au poste (préciser la période)</nb-checkbox>
                     <br>
-                    <input nbInput fullWidth *ngIf="inapteTemporaire" type="text" placeholder="Spécifier période" [(ngModel)]="inapteTemporairePeriod"/>
+                    <input nbInput fullWidth *ngIf="inapteTemporaire" type="text" placeholder="Recommendation" [(ngModel)]="inapteTemporairePeriod"/>
                   </div>
                   <br>
                   <div>
                     <nb-checkbox [(ngModel)]="inapteDefinitif">Inapte définitif à tout poste du travail dans l'entreprise</nb-checkbox>
                     <br>
-                    <input nbInput fullWidth *ngIf="inapteDefinitif" type="text" placeholder="Spécifier raison" [(ngModel)]="inapteDefinitifReason" />
+                    <input nbInput fullWidth *ngIf="inapteDefinitif" type="text" placeholder="Recommendation" [(ngModel)]="inapteDefinitifReason" />
                   </div>
                 </div>
                 <br>

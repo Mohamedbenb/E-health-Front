@@ -9,19 +9,6 @@
 
                 <ng-container mCardBody>
                   <div>
-                    <nb-card>
-                      <nb-card-body>
-                      <nb-select placeholder="Select Groups">
-                        
-                          <nb-option-group *ngFor="let group of societe" [title]="group.title">
-                            <nb-option *ngFor="let option of group.uniops" [value]="group.uniops.indexOf(option)">
-                              {{ option.title }}
-                            </nb-option>
-                          </nb-option-group>
-                
-                      </nb-select>
-                    </nb-card-body>                            
-                    </nb-card>
                   </div>
                   <ng-template #modalContent let-close="close">
                     <div class="modal-header">
@@ -92,7 +79,7 @@
                           <div class="btn-group">
                             <button nbButton status="primary"  class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
                               (viewDateChange)="activeDayIsOpen = false">
-                              Précendent
+                              Précédent
                             </button>
                             <button nbButton class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
                               Aujourd'hui
@@ -123,16 +110,16 @@
                         </div>
                       </div>
                       <div [ngSwitch]="view">
-                        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+                        <mwl-calendar-month-view [locale]="locale" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
                           [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
                           (eventClicked)="handleEvent('Clicked', $event.event)"
                           (eventTimesChanged)="eventTimesChanged($event)">
                         </mwl-calendar-month-view>
-                        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
+                        <mwl-calendar-week-view [locale]="locale" *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events"
                           [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
                           (eventTimesChanged)="eventTimesChanged($event)">
                         </mwl-calendar-week-view>
-                        <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
+                        <mwl-calendar-day-view [locale]="locale" *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events"
                           [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
                           (eventTimesChanged)="eventTimesChanged($event)">
                         </mwl-calendar-day-view>

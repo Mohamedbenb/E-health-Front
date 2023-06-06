@@ -29,6 +29,7 @@ export const actionSettings ={
     position: 'right',
     },
     mode:'external',
+    noDataMessage:'Pas de données',
 }
 export const columns={
 

@@ -29,6 +29,8 @@ import {
   
   NbTimepickerModule,
   
+  NbToastrModule,
+  
   NbWindowModule,
 } from '@nebular/theme';
 
@@ -40,7 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TokenInterceptor } from './token-interceptor';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -51,12 +53,13 @@ import { DragCompComponent } from './drag-comp/drag-comp.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { DateTimePickerComponent } from './drag-comp/DateTimePickerComponent';
-import { NgbDatepickerModule, NgbModalModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateParserFormatter, NgbDatepickerModule, NgbModalModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockTemplateComponent } from './drag-comp/blockui/block-template.component';
 import { NotificationService } from './services/notification.service';
 import { WebSocketService } from './services/web-socket.service';
+//import {NbDateFnsDateModule} from '@nebular/date-fns'
 import localeFr from '@angular/common/locales/fr';
 
 
@@ -64,8 +67,9 @@ import localeFr from '@angular/common/locales/fr';
 
 
 
+
 @NgModule({
-  declarations: [AppComponent, DragCompComponent, DateTimePickerComponent],
+  declarations: [AppComponent, DragCompComponent, DateTimePickerComponent,],
   imports: [
     NbLayoutModule,
     Modalmodule,
@@ -82,10 +86,12 @@ import localeFr from '@angular/common/locales/fr';
     NbButtonGroupModule,
     AppRoutingModule,    
     NgxWebstorageModule.forRoot(),
-    ToastrModule.forRoot(),
+    NbToastrModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
+    
     NbDatepickerModule.forRoot(),
+   // NbDateFnsDateModule.forRoot({}),
     NbTimepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
@@ -128,7 +134,8 @@ import localeFr from '@angular/common/locales/fr';
       
       
     },
-    { provide: LOCALE_ID, useValue: 'fr-FR' }
+    { provide: LOCALE_ID, useValue: 'en-US' },
+        //DatePipe
 
   ],
 })

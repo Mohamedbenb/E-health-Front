@@ -1,6 +1,6 @@
 <nb-card>
   <nb-card-body>
-      <nb-card-header centered><h2>Choisir L'unitée opérationelle</h2></nb-card-header>
+      <nb-card-header centered><h4>Choisir L'unitée opérationelle</h4></nb-card-header>
       <br>
       <nb-select placeholder="Séléctionner" [(selected)]="selectedItem">
                       
@@ -13,13 +13,15 @@
       </nb-select>
   </nb-card-body>
   <nb-card-body>
+    
       <ng-container *ngIf="selectedOption">
+        <h4>Choisir le collaborateur</h4>
           <input
            
             [formControl]="employeeFormControl"
             nbInput
             type="text"
-            placeholder="Enter value"
+            placeholder="Taper le nom ou matricule"
             [nbAutocomplete]="auto"
             fullWidth
             
@@ -50,6 +52,12 @@
               <ng2-smart-table
               [settings]="settingsExam"
               [source]="tableDataExam">
+            </ng2-smart-table>
+            </nb-tab>
+            <nb-tab tabTitle="Déclarations maladies professionelles" [active]="isTabActive(2)">
+              <ng2-smart-table
+              [settings]="settingsDec"
+              [source]="tableDataDec">
             </ng2-smart-table>
             </nb-tab>
     </nb-tabset>

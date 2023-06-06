@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { SocieteService } from '../../../services/societe.service';
-import { VisiteService } from '../../../services/service-visite.service';
+import { SocieteService } from '../../services/societe.service';
+import { VisiteService } from '../../services/service-visite.service';
 import { FormControl } from '@angular/forms';
-import { Visite } from '../../../models/Visite';
+import { Visite } from '../../models/Visite';
 import { Router } from '@angular/router';
-import { ExamensComplementairesService } from '../../../services/examens-complementaires.service';
-import { Examen } from '../../../models/Examen';
+import { ExamensComplementairesService } from '../../services/examens-complementaires.service';
+import { Examen } from '../../models/Examen';
+import { CalendarService } from '../../services/calendar.service';
 
 @Component({
   selector: 'ngx-visite',
@@ -36,7 +37,8 @@ export class VisiteComponent implements OnInit {
   constructor(private Service: SocieteService,
               private visiteService: VisiteService,
               private router: Router,
-              private examCompService:ExamensComplementairesService
+              private examCompService: ExamensComplementairesService,
+              private calendarService: CalendarService,
     ) {}
 
    ngOnInit() {
@@ -97,9 +99,9 @@ onSubmit(){
   console.log(combinedText)
   this.visiteService.vaidate(this.selectedVisite.id,combinedText).subscribe((data:Visite[]) => {
     console.log('success',data)
-    datas.res=data
-    datas.index=1
-    this.router.navigate(['pages/historique'], { state: datas });
+
+    this.calendarService.triggerNewItemAdded()
+    this.router.navigate(['pages/historique'], { state: data });
   }, (error) => {
     console.error('Error updating table data:', error);
   });
@@ -114,6 +116,7 @@ const index=1;
 this.datas=data;
 this.datas.index=index
   console.log('response',data)
+  this.calendarService.triggerNewItemAdded()
   this.router.navigate(['pages/historique'], { state: data });
 },(error)=>{
   console.log(error)

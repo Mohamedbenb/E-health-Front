@@ -1,16 +1,17 @@
 import { Component, OnInit} from '@angular/core';
-import {  NbDialogService } from '@nebular/theme';
+import {  NbComponentStatus, NbDialogService, NbToastrService } from '@nebular/theme';
 import {  LocalDataSource } from 'ng2-smart-table';
 
 import { ModalFormComponent } from '../ModalForm/ModalFormComponent';
 import { MyCheckboxComponent } from './chkboxComponent';
 import { actionSettings } from '../../constants';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 import { EmployeeService } from '../../services/employee.service';
 import { SocieteService } from '../../services/societe.service';
 import { Observable } from 'rxjs';
 import { Societe } from '../../models/Societe';
+import { FilterComponent } from '../historique/custom.filter.component';
 
 
 @Component({
@@ -20,6 +21,21 @@ import { Societe } from '../../models/Societe';
 })
 export class EmployeesComponent implements OnInit{
   modalForm: FormGroup;
+   dateValidator(): ValidatorFn {
+    return (control: FormControl): { [key: string]: any } | null => {
+      const value = control.value;
+  
+      // Check the date format and return validation error if it doesn't match
+      const validDateFormat = /^\d{2}\s\w{3}\.\s\d{4}$/;
+      if (!validDateFormat.test(value)) {
+        return { invalidDateFormat: true };
+      }
+  
+      // Additional date validations can be performed here if needed
+  
+      return null; // Return null if the date is valid
+    };
+  }
   formData = {firstname: '', matricule: '',status: false, lastname: '', email: '', datenai: new Date(),daterecru: new Date()};
   fields = [
     { name: 'firstname', type: 'text', title:'Prénom', validators: [Validators.required, Validators.minLength(2)] },
@@ -27,10 +43,12 @@ export class EmployeesComponent implements OnInit{
     { name: 'postetrav', type: 'text', title:'Poste de Travaille', validators: [Validators.required, Validators.minLength(2)] },
     { name: 'email', type: 'email', title:'Email', validators: [Validators.required, Validators.email] },
     { name: 'matricule', type: 'number', title:'Matricule', validators: [Validators.required, Validators.minLength(8)]},
-    { name: 'datenai', type: 'nb-datepicker', title: 'Date de naissance', validators: [Validators.required] },
-    { name: 'daterecru', type: 'nb-datepicker', title: "Date d'embauche", validators: [Validators.required] },
-    { name: 'uniop', type: 'select', title: "Unité operationelle", validators: [Validators.required],optionGroups: [] },
+    { name: 'datenai', type: 'nb-datepicker', title: 'Date de naissance', validators: [this.dateValidator()] },
+    { name: 'daterecru', type: 'nb-datepicker', title: "Date d'embauche", validators: [this.dateValidator()] },
+    
   ];
+
+  item={ name: 'uniop', type: 'select', title: "Unité operationelle", validators: [Validators.required],optionGroups: [] }
   extra=1;
   tableData: LocalDataSource;
   societes:Societe[]
@@ -46,7 +64,7 @@ export class EmployeesComponent implements OnInit{
       
     },
     lastname: {
-      title: 'Prenom',
+      title: 'Prénom',
       type: 'string',
       hide:false
     },
@@ -55,10 +73,15 @@ export class EmployeesComponent implements OnInit{
       type: 'number',
       hide:false
     },
-    Status: {
+    status: {
       title: 'EVREST',
       type: 'custom',
       renderComponent: MyCheckboxComponent,
+      valuePrepareFunction: (cell, row) => (cell ? 'Oui' : 'Non'),
+      filter: {
+        type: 'custom',
+        component: FilterComponent,
+      },
       hide:false,
       
     },
@@ -110,6 +133,7 @@ export class EmployeesComponent implements OnInit{
   constructor(private customTableService: EmployeeService,
               private dialogService: NbDialogService,
               private societeService: SocieteService,
+              private toastrService: NbToastrService
              
               
     ) {
@@ -129,22 +153,29 @@ export class EmployeesComponent implements OnInit{
     this.settings = Object.assign({}, this.settings, { columns: this.cols })
     
   }
-
+field:any[]=[]
   
   ngOnInit() {
-    
-    //this.societe$ = this.Ser.getData();
-    this.societeService.getData().subscribe((data)=>{
-      console.log('heeeey')
-      this.societes=data;
-      const optionGroups = data.map((societe) => ({
-        title: societe.title,
-        uniops: societe.uniops,
-      }));
-      console.log('optionGroups', optionGroups);
-    
-      this.fields.find((field) => field.name === 'uniop').optionGroups = optionGroups;
+    this.fields.forEach((element)=>{
+      this.field.push(element)
     })
+    console.log('field',this.field)
+    console.log('fields',this.fields)
+    this.field.push(this.item)
+    console.log('fields2',this.fields)
+    console.log('field',this.field)
+    //this.societe$ = this.Ser.getData();
+    //  this.societeService.getData().subscribe((data)=>{
+    //    console.log('heeeey')
+    //    this.societes=data;
+    //    const optionGroups = data.map((societe) => ({
+    //      title: societe.title,
+    //      uniops: societe.uniops,
+    //    }));
+    //    console.log('optionGroups', optionGroups);
+
+    //    this.fields.find((field) => field.name === 'uniop').optionGroups = optionGroups;
+    //  })
   
     this.loadTableData();
     this.selectedOptions = [this.cols.firstname.title,this.cols.lastname.title];
@@ -152,7 +183,23 @@ export class EmployeesComponent implements OnInit{
     
     
 }
-
+showToast(status: NbComponentStatus) {
+  this.toastrService.show(status, `Toast: `, { status });
+}
+addSelectElement(fields:any){
+  
+  this.societeService.getData().subscribe((data)=>{
+    console.log('heeeey')
+    this.societes=data;
+    const optionGroups = data.map((societe) => ({
+      title: societe.title,
+      uniops: societe.uniops,
+    }));
+    console.log('optionGroups', optionGroups);
+  
+    fields.find((field) => field.name === 'uniop').optionGroups = optionGroups;
+  })
+}
 
   loadTableData() {
     this.customTableService.getData().subscribe((data) => {
@@ -168,6 +215,7 @@ export class EmployeesComponent implements OnInit{
     const tableData = event.data;
     this.dialogService.open(ModalFormComponent, {
       context: {
+        emp:'employee',
         dialogTitle: 'delete Item',
         action: 'delete',
         dialogData:tableData,
@@ -179,14 +227,17 @@ export class EmployeesComponent implements OnInit{
   }
 
   openAddDialog() {
+    
+    this.addSelectElement(this.field)
     console.log('checkpoint',this.formData)
     this.dialogService.open(ModalFormComponent, {
       context: {
+        emp:'employee',
         dialogTitle: 'Add Item',
         action: 'add',
         customTableService: this.customTableService,
         extra:this.extra,
-        fields:this.fields,
+        fields:this.field,
         modalForm:this.modalForm,
       },}).onClose.subscribe(() => {
         console.log('updating')
@@ -204,6 +255,7 @@ export class EmployeesComponent implements OnInit{
     // open the dialog with pre-filled fields
     this.dialogService.open(ModalFormComponent, {
       context: {
+        emp:'employee',
         dialogTitle: 'Edit Item',
         action: 'edit',
         dialogData: tableData,
@@ -214,6 +266,7 @@ export class EmployeesComponent implements OnInit{
       },
     },).onClose.subscribe(() => {
       console.log('updating',this.tableData)
+      //this.showToast('success')
       this.loadTableData();
     })
     }

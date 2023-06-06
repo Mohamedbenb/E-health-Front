@@ -3,7 +3,7 @@
 
 
   <nb-card class="custom-card">
-    <nb-card-header>Enter your name</nb-card-header>
+    <nb-card-header>Ajouter Rendez-vous</nb-card-header>
     <nb-card-body>
       <nb-stepper #stepper (stepChange)="handleStepChange($event)" orientation="horizontal">
         <nb-step label="Première étape">
@@ -22,7 +22,7 @@
         </nb-select>
         <br>
         <br>
-        <nb-select placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
+        <nb-select  placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
           <nb-option [value]="1">Examen médicale</nb-option>
           <nb-option [value]="2">Examen complémentaire</nb-option>
         </nb-select>
@@ -35,7 +35,7 @@
          <br>
          
           <button nbButton disabled nbStepperNext style="margin-right:50px">Précédent &nbsp; &nbsp;&nbsp;</button>
-          <button nbButton nbStepperNext>Suivant</button>
+          <button nbButton [disabled]="!selectedExam || !uniopid" nbStepperNext>Suivant</button>
         </nb-step>
         <nb-step label="Deuxième étape">
           <br>
@@ -48,11 +48,12 @@
               type="text"
               placeholder="Choisir collaborateur(s)"
               [nbAutocomplete]="auto"
-              style="margin-left: 0%;"            
+              style="margin-left: 0%;"
+              fullWidth            
               />
               <div class="selected-items">
                 <span *ngFor="let item of selectedItems" class="selected-item">
-                  {{ item.employee.firstname }} {{ item.employee.lastname }}
+                   {{ item.employee.firstname }} {{ item.employee.lastname }}
                   <button nbButton   size="small" (click)="removeSelectedItem(item)">
                     <nb-icon icon="close-outline"></nb-icon>
                   </button>
@@ -70,7 +71,7 @@
                   [checked]="selectedItemsState[option.id]"
                   (change)="toggleSelection(option, $event.target.checked)"
                 >
-                {{ option.firstname }} {{ option.lastname }}</nb-checkbox>
+                <strong>Matricule</strong>: &nbsp;{{option.matricule}}  <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nom et Prénom:</strong>  &nbsp;{{ option.firstname }} {{option.lastname}}</nb-checkbox>
              
             </nb-option>
             </nb-autocomplete>

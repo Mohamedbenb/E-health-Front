@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MalProfService } from '../../services/mal-prof.service';
 import { MalProf } from '../../models/MalProf';
 import { DeclarationService } from '../../services/declaration.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-declaration',
@@ -35,12 +36,13 @@ export class DeclarationComponent implements OnInit {
               private employeeService: EmployeeService,
               private malProfService: MalProfService,
               private declarationService: DeclarationService,
+              private router: Router,
       ) {
   }
 
   ngOnInit() {
     
-    this.employee=new Employee;
+    
     this.employeeFormControl=new FormControl;
     this.constatFormControl=new FormControl;
     this.firstForm = this.fb.group({
@@ -114,7 +116,7 @@ export class DeclarationComponent implements OnInit {
   trackByFn(item) {
     return item.id;
   }
-  
+  datas:any
   onSubmit(){
     this.request = {
       empid: this.employee.id,
@@ -123,8 +125,13 @@ export class DeclarationComponent implements OnInit {
       dateDec: new Date()
     };
     console.log(this.request)
-    this.declarationService.addData(this.request).subscribe((res)=>{
-      console.log(res)
+    this.declarationService.addData(this.request).subscribe((data)=>{
+      const index=2;
+      this.datas=data;
+      this.datas.index=index
+      this.datas.employee=data.emp
+      console.log('response',data)
+      this.router.navigate(['pages/historique'], { state: data });
     })
   }
 

@@ -11,7 +11,7 @@ import { UniopService } from "../../services/uniop.service";
     styleUrls: ['./uniops.component.scss'],
     template: `
 <div class="uniops-container">
-  <nb-select placeholder="Unités opérationelles" [(ngModel)]="selectedUniopIndex">
+  <nb-select placeholder="Unités opérationelles" [(ngModel)]="selectedUniopIndex" style="Width:50px">
     <nb-option *ngFor="let item of uniops" [value]="uniops.indexOf(item)">{{item.title}}</nb-option>
   </nb-select>
 
@@ -49,7 +49,7 @@ import { UniopService } from "../../services/uniop.service";
       this.customEvent.emit()
     }
     uniops
-    selectedUniopIndex: number;
+    selectedUniopIndex=0;
     constructor(private Service: UniopService,
       private dialogService: NbDialogService,) {}
       
