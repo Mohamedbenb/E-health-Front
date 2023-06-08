@@ -18,7 +18,7 @@ import { DeclarationService } from '../../services/declaration.service';
 
 import { BooleanComponent1 } from './booleanComponents/boolean.component';
 import { BooleanComponent2 } from './booleanComponents/boolean2.component';
-import { FilterComponent } from './custom.filter.component';
+import { FilterComponent } from '../../shared/custom.filter.component';
 
 
 @Component({

@@ -41,7 +41,7 @@ export class EmpService {
 
   deleteData(id: number): Observable<any> {
     const options = { headers: this.headers };
-    return this.http.patch(`${this.url}employees/1/${id}`, options);
+    return this.http.patch(`${this.url}employees/${id}`, options);
   }
   filterEmployees(value: string,employees): Employee[] {
     

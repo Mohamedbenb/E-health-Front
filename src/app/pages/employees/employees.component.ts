@@ -11,7 +11,7 @@ import { EmployeeService } from '../../services/employee.service';
 import { SocieteService } from '../../services/societe.service';
 import { Observable } from 'rxjs';
 import { Societe } from '../../models/Societe';
-import { FilterComponent } from '../historique/custom.filter.component';
+import { FilterComponent } from '../../shared/custom.filter.component';
 
 
 @Component({

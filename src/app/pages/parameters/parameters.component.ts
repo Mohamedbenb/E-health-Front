@@ -92,7 +92,7 @@ export class ParametersComponent {
     Uniops: {
       title: 'Unités opérationelles',
       type: 'custom',
-      
+      width:'px',
       renderComponent: UniopsComponent,
       onComponentInitFunction: (instance) => {
       instance.customEvent.subscribe(() => {

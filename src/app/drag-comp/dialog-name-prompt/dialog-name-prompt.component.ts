@@ -246,6 +246,9 @@ selectedItemsState: { [key: string]: boolean } = {};
     console.log('type exam',event)
 
   }
+  selectchange(){
+    
+  }
   
   
 }

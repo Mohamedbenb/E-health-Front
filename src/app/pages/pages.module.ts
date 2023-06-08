@@ -40,7 +40,8 @@ import { CustomSelectComponent } from './visite/custom.select.component';
 import { ChatComponent } from './chat/chat.component';
 import { BooleanComponent2 } from './historique/booleanComponents/boolean2.component';
 import { MyCheckboxComponent } from './employees/chkboxComponent';
-import { FilterComponent } from './historique/custom.filter.component';
+import { FilterComponent } from '../shared/custom.filter.component';
+import { ReshumComponent } from './parameters/reshum.component';
 
 //import { BooleanRendererComponent } from './historique/boolean.renderer.component';
 
@@ -117,7 +118,8 @@ const components = [
     CustomOptionComponent,
     CustomSelectComponent,
     ChatComponent,
-    FilterComponent
+    FilterComponent,
+    ReshumComponent,
     
     //BooleanRendererComponent
     

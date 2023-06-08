@@ -11,8 +11,7 @@
           
           <br>
           <br>
-          <nb-select placeholder="Séléctionner l'unité opérationelle" >
-                        
+          <nb-select  fullWidth placeholder="Séléctionner l'unité opérationelle" (selectedChange)="selectchange()">
             <nb-option-group *ngFor="let group of societes" [title]="group.title">
               <nb-option *ngFor="let option of group.uniops" [value]="option" (click)="selectUniOp(option)">
                 {{ option.title }}
@@ -22,7 +21,7 @@
         </nb-select>
         <br>
         <br>
-        <nb-select  placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
+        <nb-select fullWidth placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
           <nb-option [value]="1">Examen médicale</nb-option>
           <nb-option [value]="2">Examen complémentaire</nb-option>
         </nb-select>

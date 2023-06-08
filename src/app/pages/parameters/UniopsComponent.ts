@@ -11,7 +11,7 @@ import { UniopService } from "../../services/uniop.service";
     styleUrls: ['./uniops.component.scss'],
     template: `
 <div class="uniops-container">
-  <nb-select placeholder="Unités opérationelles" [(ngModel)]="selectedUniopIndex" style="Width:50px">
+  <nb-select placeholder="Unités opérationelles" [(ngModel)]="selectedUniopIndex" >
     <nb-option *ngFor="let item of uniops" [value]="uniops.indexOf(item)">{{item.title}}</nb-option>
   </nb-select>
 
@@ -37,6 +37,7 @@ import { UniopService } from "../../services/uniop.service";
 
     fields = [
       { name: 'title', type: 'text', title:'Nom', validators: [Validators.required, Validators.minLength(2)] },
+      { name: 'reshum', type: 'email', title:'Email', validators: [Validators.required, Validators.email] },
 
     ];
     modalForm: FormGroup;
