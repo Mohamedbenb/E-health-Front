@@ -36,7 +36,7 @@ export class EmpService {
   updateData(data: any): Observable<any> {
     const options = { headers: this.headers };
     console.log('Data received in updateTableData:', data);
-    return this.http.put(`${this.url}employees/1/${data.id}`, data, options);
+    return this.http.put(`${this.url}employees/${data.id}`, data, options);
   }
 
   deleteData(id: number): Observable<any> {

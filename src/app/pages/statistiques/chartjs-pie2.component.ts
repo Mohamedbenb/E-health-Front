@@ -2,27 +2,28 @@ import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 
 @Component({
-  selector: 'ngx-chartjs-pie',
+  selector: 'ngx-chartjs-pie2',
   template: `
     <chart type="pie" [data]="data" [options]="options"></chart>
   `,
 })
-export class ChartjsPieComponent implements OnDestroy {
+export class ChartjsPie2Component implements OnDestroy {
   data: any;
   options: any;
   themeSubscription: any;
-
+  colors: any
+  chartjs: any
   constructor(private theme: NbThemeService) {
     this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
-      const colors: any = config.variables;
-      const chartjs: any = config.variables.chartjs;
+       this.colors = config.variables;
+       this.chartjs = config.variables.chartjs;
 
       this.data = {
-        labels: ['Pas complété', 'Complété'],
+        labels: ['Download Sales', 'In-Store Sales', 'Mail Sales'],
         datasets: [{
-          data: [ 500, 100],
-          backgroundColor: [ colors.infoLight, colors.successLight],
+          data: [300, 500, 100],
+          backgroundColor: [this.colors.primaryLight, this.colors.infoLight, this.colors.successLight],
         }],
       };
 
@@ -43,7 +44,7 @@ export class ChartjsPieComponent implements OnDestroy {
         },
         legend: {
           labels: {
-            fontColor: chartjs.textColor,
+            fontColor: this.chartjs.textColor,
           },
         },
       };

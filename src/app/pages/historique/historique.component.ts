@@ -19,6 +19,7 @@ import { DeclarationService } from '../../services/declaration.service';
 import { BooleanComponent1 } from './booleanComponents/boolean.component';
 import { BooleanComponent2 } from './booleanComponents/boolean2.component';
 import { FilterComponent } from '../../shared/custom.filter.component';
+import { ResponseComponent } from './booleanComponents/response.component';
 
 
 @Component({
@@ -49,7 +50,21 @@ export class HistoriqueComponent implements OnInit {
       },
     
     dateValidation: {
-      title: 'Date de la visite',
+      title: 'Date de la 1ére visite',
+      type: 'string',
+      valuePrepareFunction: (cell, row) => {
+        if (cell) {
+          const date = new Date(cell);
+          const formattedDate = date.toLocaleDateString();
+          const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          return formattedDate + ' ' + formattedTime;
+        } else {
+          return '';
+        }
+      },
+    },
+    dateValidation2: {
+      title: 'Date de la 2éme visite',
       type: 'string',
       valuePrepareFunction: (cell, row) => {
         if (cell) {
@@ -91,6 +106,7 @@ export class HistoriqueComponent implements OnInit {
       }
     },
   },
+  
   rappel: {
     title: 'Date rappel',
     type: 'string',
@@ -166,9 +182,9 @@ export class HistoriqueComponent implements OnInit {
         confirmDelete: true,
       },
       actions: {
-        add:true,
-        edit: true,
-        delete: true,
+        add:false,
+        edit: false,
+        delete: false,
         position: 'right',
         },
 
@@ -236,8 +252,10 @@ export class HistoriqueComponent implements OnInit {
       },
       reponsecnam:{
         title:'Réponse CNAM',
-        
-        type: 'string',
+        type: 'custom',
+        renderComponent: ResponseComponent,
+        editable:false,
+        //valuePrepareFunction: (cell, row) => (cell ? 'Accepté' : 'Refusé'),
          
         
       },

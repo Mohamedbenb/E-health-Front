@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Visite } from '../models/Visite';
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,10 @@ export class VisiteService {
   getbyTypeVis(id):Observable<any>{
   const options = { headers: this.headers };
   return this.http.get(`${this.url}visites/type/${id}`,options)
+  }
+  getIncomplete(id1,id2):Observable<any>{
+    const options = { headers: this.headers };
+    return this.http.get(`${this.url}visites/employee/${id1}/${id2}`,options)
   }
   
 }

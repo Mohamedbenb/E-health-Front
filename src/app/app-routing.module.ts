@@ -27,7 +27,7 @@ export const routes: Routes = [
   .then(m => m.SmartTableModule),
  },
  // { path: 'login', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  //{ path: '', redirectTo: 'pages', pathMatch: 'full' },
   {path:'cal', component:DragCompComponent}
 
 

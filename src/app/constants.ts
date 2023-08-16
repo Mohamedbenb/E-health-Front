@@ -23,9 +23,9 @@ export const actionSettings ={
 
   },
   actions: {
-    add:true,
-    edit: true,
-    delete: true,
+    add:false,
+    edit: false,
+    delete: false,
     position: 'right',
     },
     mode:'external',

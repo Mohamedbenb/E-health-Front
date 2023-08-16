@@ -42,6 +42,9 @@ import { BooleanComponent2 } from './historique/booleanComponents/boolean2.compo
 import { MyCheckboxComponent } from './employees/chkboxComponent';
 import { FilterComponent } from '../shared/custom.filter.component';
 import { ReshumComponent } from './parameters/reshum.component';
+import { ResponseComponent } from './historique/booleanComponents/response.component';
+import { ChartjsPie2Component } from './statistiques/chartjs-pie2.component';
+import { ChartjsBar2Component } from './statistiques/chartjs-bar2.component';
 
 //import { BooleanRendererComponent } from './historique/boolean.renderer.component';
 
@@ -99,6 +102,7 @@ const components = [
     VisiteComponent,
     StatisticsComponent,
     ChartjsBarComponent,
+    ChartjsBar2Component,
     ChartjsBarHorizontalComponent,
     ChartjsPieComponent,
     ParametersComponent,
@@ -120,6 +124,8 @@ const components = [
     ChatComponent,
     FilterComponent,
     ReshumComponent,
+    ResponseComponent,
+    ChartjsPie2Component,
     
     //BooleanRendererComponent
     

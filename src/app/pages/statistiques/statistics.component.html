@@ -2,7 +2,7 @@
 
     <div class="col-lg-6">
       <nb-card>
-        <nb-card-header>Pie</nb-card-header>
+        <nb-card-header>Suivit médicale spéciale</nb-card-header>
         <nb-card-body>
           <ngx-chartjs-pie></ngx-chartjs-pie>
         </nb-card-body>
@@ -10,11 +10,49 @@
     </div>
     <div class="col-lg-6">
       <nb-card>
-        <nb-card-header>Bar</nb-card-header>
+        <nb-card-header> 
+          Type de visite:          
+          <nb-select  placeholder="Type de visite"  [(ngModel)]="selectedOption" (ngModelChange)="fetchDataAndGenerateChart(selectedOption);">
+          <nb-option *ngFor="let option of typevis" [value]="option">
+            {{ option.type }} {{option.remarque}}
+          </nb-option>
+        </nb-select>
+        <br>
+        Unité opérationlle:
+        <nb-select placeholder="Séléctionner l'unité opérationelle" (selectedChange)="selectchange()">
+          <nb-option-group *ngFor="let group of societes" [title]="group.title">
+            <nb-option *ngFor="let option of group.uniops" [value]="option" (click)="selectUniOp(option)">
+              {{ option.title }}
+            </nb-option>
+          </nb-option-group>
+        </nb-select>
+      </nb-card-header>
         <nb-card-body>
-          <ngx-chartjs-bar></ngx-chartjs-bar>
+          <ngx-chartjs-bar [data]="data"></ngx-chartjs-bar>
         </nb-card-body>
       </nb-card>
     </div>
+
+</div>
+
+<div class="row">
+
+  
+  <div class="col-lg-7">
+    <nb-card>
+      <nb-card-header> 
+        Type d'examen: 
+        <nb-select [selected]="1"  placeholder="Choisir le type de rendez-vous &nbsp; &nbsp; "(selectedChange)="typeRdv($event)">
+          <nb-option [value]="1">Vaccination Rx</nb-option>
+          <nb-option [value]="2">Examen complémentaire</nb-option>
+        </nb-select>          
+        
+     
+    </nb-card-header>
+      <nb-card-body>
+        <ngx-chartjs-bar2></ngx-chartjs-bar2>
+      </nb-card-body>
+    </nb-card>
+  </div>
 
 </div>

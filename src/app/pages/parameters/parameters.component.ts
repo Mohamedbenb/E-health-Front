@@ -152,6 +152,10 @@ export class ParametersComponent {
       renderComponent: LinkComponent,
       
     },
+    remarque: {
+      title: 'Type secondaire',
+      type: 'number',
+    },
     frequency: {
       title: 'Fréquence',
       type: 'number',
@@ -163,6 +167,7 @@ export class ParametersComponent {
       renderComponent: ColorPickerCellComponent,
       
     },
+
   }
   receiveMessage(message: string) {
     console.log('Received message in ParentComponent:', message);

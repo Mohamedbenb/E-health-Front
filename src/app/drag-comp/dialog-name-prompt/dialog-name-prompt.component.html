@@ -126,30 +126,45 @@
           <br>
           <br>
         
-          <div class="select-container">
+          <table>
             <ng-container *ngFor="let item of selectedItems; let i=index">
-              <div class="select-wrapper">
-                <span class="seleted-item">
-                  {{ item.employee.firstname }} {{ item.employee.lastname }}
-                </span>
-                <ng-container *ngIf="selectedExam == 1 else examComp">
-                <nb-select size="small" placeholder="Type de visite" [(ngModel)]="item.visite" >
-                  <nb-option *ngFor="let option of typevis" [value]="option" >
-                    {{ option.type }}
-                  </nb-option>
-                </nb-select>
-              </ng-container>
-              <ng-template #examComp>
-                <nb-select placeholder="Type d'examen" [(ngModel)]="item.typeExam">
-                  <nb-option *ngFor="let option of typeExam" [value]="option" item.typeExam >
-                    {{ option.type }}
-                  </nb-option>
-                </nb-select>
-
-              </ng-template>
-              </div>
+              <tr>
+                <td >
+                  <span>
+                    {{ item.employee.firstname }} {{ item.employee.lastname }} &nbsp; &nbsp;
+                  </span>
+                  <ng-container *ngIf="item.visite?.type.toLowerCase()=='sms' && item.visites.length > 0">
+                    <div>
+                      <p>{{ item.employee.firstname }} a les visites suivantes non complétées :</p>
+                      <div *ngFor="let item2 of item.visites">
+                        <ng-container *ngIf="item2.employee.id == item.employee.id">
+                          <nb-checkbox (checkedChange)="addIncomplete(i, item2, $event)">{{item2.primaryType.type}}</nb-checkbox>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="selectedExam == 1 else examComp">
+                    <nb-select size="small" placeholder="Type de visite" [(ngModel)]="item.visite">
+                      <nb-option *ngFor="let option of typevis" [value]="option" (click)="getIncomplete(item.employee.id, option, i)">
+                        {{ option.type }} {{option.remarque}}
+                      </nb-option>
+                    </nb-select>
+                  </ng-container>
+                  <ng-template #examComp>
+                    <nb-select placeholder="Type d'examen" [(ngModel)]="item.typeExam">
+                      <nb-option *ngFor="let option of typeExam" [value]="option" item.typeExam>
+                        {{ option.type }}
+                      </nb-option>
+                    </nb-select>
+                  </ng-template>
+                  
+                </td>
+              </tr>
             </ng-container>
-          </div>
+          </table>
+          
         
           
           <br>

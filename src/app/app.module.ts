@@ -45,7 +45,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Modalmodule } from './pages/ModalForm/modal.module';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -111,6 +111,7 @@ import localeFr from '@angular/common/locales/fr';
     //NgxAuthRoutingModule,
     ReactiveFormsModule,
     CommonModule,
+    NbToastrModule.forRoot(),
     
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
@@ -135,6 +136,7 @@ import localeFr from '@angular/common/locales/fr';
       
     },
     { provide: LOCALE_ID, useValue: 'en-US' },
+    { provide: ToastrService, useValue: ToastrService }
         //DatePipe
 
   ],

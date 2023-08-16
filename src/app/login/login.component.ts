@@ -1,10 +1,11 @@
-import { Component, OnInit, Injector, Inject } from '@angular/core';
+import { Component, OnInit, Injector, Inject, ChangeDetectorRef, ɵɵFactoryDeclaration } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService  }  from 'ngx-toastr' ;
 import { throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { LoginRequestPayload } from './login-request.payload';
+import { NbAuthService, NbAuthSocialLink, NbLoginComponent } from '@nebular/auth';
 
 @Component({
   selector: 'ngxlogin',
@@ -17,8 +18,21 @@ export class LoginComponent implements OnInit {
   loginRequestPayload: LoginRequestPayload;
   registerSuccessMessage: string;
   isError: boolean;
+  protected service: NbAuthService;
+  protected options: {};
+  protected cd: ChangeDetectorRef;
+  protected router: Router;
+  redirectDelay: number;
+  showMessages: any;
+  strategy: string;
+  errors: string[];
+  messages: string[];
+  user: any;
+  submitted: boolean;
+  socialLinks: NbAuthSocialLink[];
+  rememberMe: boolean;
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
-    private router: Router, private toastr: ToastrService) {
+    router: Router, private toastr: ToastrService, service: NbAuthService,  cd: ChangeDetectorRef,) {
     
       this.loginRequestPayload = {
         username: '',
@@ -26,7 +40,8 @@ export class LoginComponent implements OnInit {
       };
     }
 
-
+    static ɵfac: ɵɵFactoryDeclaration<NbLoginComponent, never>;
+    //static ɵcmp: ɵɵComponentDeclaration<NbLoginComponent, "nb-login", never, {}, {}, never, never, false>;
 
 ngOnInit(): void {
   this.loginForm = new FormGroup({

@@ -43,6 +43,12 @@ export class DetailsComponent implements OnInit {
     },
 
     recommandation: {
+      title: 'Recommandation',
+      type: 'string',
+      hide:false
+      
+    },
+    uniop: {
       title: 'Unité opérationelle',
       type: 'string',
       hide:false
@@ -160,7 +166,7 @@ visiteModel:{recommandation:string, datevalidation:Date, employee:string}[]=[]
 data:any
 source:any;
 tabModel:{tableau:string, dateDec:Date, employee:string, constat:string}[]=[]
-examModel:{employee:string, dateValidation:Date, rappel:Date,recommendation:string,}[]=[]
+examModel:{employee:string, dateValidation:Date, rappel:Date,recommendation:string, uniop:string}[]=[]
   constructor(private route: ActivatedRoute, private visiteService: VisiteService, private declarationService: DeclarationService) { }
 
   ngOnInit(): void {
@@ -181,7 +187,7 @@ examModel:{employee:string, dateValidation:Date, rappel:Date,recommendation:stri
         this.visiteService.getbyTypeVis(id).subscribe((data)=>{
           console.log('data received', data);
           data.forEach(element =>{
-            const item={recommandation:element.recommendation, datevalidation:element.dateValidation, employee:element.employee.firstname+' '+element.employee.lastname, matricule:element.employee.matricule}
+            const item={recommandation:element.recommendation, datevalidation:element.dateValidation, employee:element.employee.firstname+' '+element.employee.lastname, matricule:element.employee.matricule, uniop:element.employee.uniopname}
             this.visiteModel.push(item)
           })
           console.log('table model ',this.visiteModel)
@@ -230,7 +236,7 @@ examModel:{employee:string, dateValidation:Date, rappel:Date,recommendation:stri
   case'exam': 
   console.log(this.data)
   this.data?.exams.forEach(element=>{
-    const item={employee:element.employee.firstname+' '+element.employee.lastname, dateValidation:element.dateValidation, rappel:element.rappel,recommendation:element.recommendation, matricule:element.employee.matricule}
+    const item={employee:element.employee.firstname+' '+element.employee.lastname, dateValidation:element.dateValidation, rappel:element.rappel,recommendation:element.recommendation, matricule:element.employee.matricule, uniop:element.employee.uniopname}
     console.log('Exam Item',item)
     this.examModel.push(item)
     

@@ -19,6 +19,7 @@ import { Examen } from '../../models/Examen';
 import { TypeExam } from '../../models/TypeExam';
 import { TypeExamService } from '../../services/type-exam.service';
 import { CalendarService } from '../../services/calendar.service';
+import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'ngx-dialog-name-prompt',
@@ -30,9 +31,9 @@ export class DialogNamePromptComponent implements OnInit {
   @Output() newItemAdded = new EventEmitter<void>();
   selectedName: string;
   selectedIndex: number;
-  selectedItems: { employee: Employee, visite: TypeVisite, typeExam:TypeExam }[] = [];
+  selectedItems: { employee: Employee, visite: TypeVisite, typeExam:TypeExam, visites:number [], visiteIds:any[]}[] = [];
   selectedExamen:{ employee:Employee, typeExam:TypeExam}
-  request:{employeeId:number, primaryTypeId:number, datevis:Datecal}[]=[]
+  request:{employeeId:number, primaryTypeId:number, datevis:Datecal, visiteIds:any[]}[]=[]
   requestExam:{employeeId:number, typeExamId:number, datevis:Datecal}[]=[]
   filteredOptions$: Observable<Employee[]>;
   inputFormControl: FormControl;
@@ -46,7 +47,7 @@ export class DialogNamePromptComponent implements OnInit {
   selectedExam:any
   typeExam:any
   datecal=new Datecal;
-
+  incompleteList: any[]=new Array();
   
   
   employees: Employee[];
@@ -59,13 +60,14 @@ export class DialogNamePromptComponent implements OnInit {
     protected ref: NbDialogRef<DialogNamePromptComponent>,
     private societeService: SocieteService,
     private employeeService: EmployeeService,
-    private viser: VisiteService,
+    private visiteService: VisiteService,
     private examService: ExamensComplementairesService,
     private typeExamService: TypeExamService,
     private calendarService: CalendarService,
   ) {}
 
   ngOnInit(): void {
+    
     console.log('initiated')
     this.datecal.color = new Color();
     this.datecal.color.primary='';
@@ -75,7 +77,7 @@ export class DialogNamePromptComponent implements OnInit {
       console.log('initiated3')
       this.societes=response;
     })
-    this.viser.getData().subscribe((data)=>{
+    this.visiteService.getData().subscribe((data)=>{
       console.log(data)
       this.typevis = data
     })
@@ -122,7 +124,33 @@ export class DialogNamePromptComponent implements OnInit {
       console.error('error getting employees',error)
     });
   }
-
+  getIncomplete(id:number,option:any,i){
+    console.log('option.type',option)
+    console.log('id',id)
+    console.log('option.id',option.id)
+    if (option.type.toLowerCase() === 'sms'){
+      this.visiteService.getIncomplete(id,option.id).subscribe((response)=>{
+        this.selectedItems[i].visites=response;
+        console.log(response)
+      })
+    }
+  }
+  addIncomplete(i:number ,item:any,checked:any){
+    console.log(item)
+    if(checked){
+      this.selectedItems[i].visiteIds.push(item.id);
+      console.log('this.selectedItems',this.selectedItems)
+    }
+    else{
+      const index = this.selectedItems[i].visiteIds.findIndex((i)=>item.id===i)
+      if (index !== -1) {
+        this.selectedItems[i].visiteIds.splice(index, 1);
+      }
+      console.log('this.selectedItems',this.selectedItems)
+    }
+    
+    
+  }
 
 
   changeEvent: NbStepChangeEvent;
@@ -153,7 +181,7 @@ export class DialogNamePromptComponent implements OnInit {
     console.log('checked',checked);
     console.log('called');
     if (checked) {
-      const newItem = { employee: option, visite: null, typeExam:null };
+      const newItem = { employee: option, visite: null, typeExam:null,visites:[], visiteIds: [] };
 
       this.selectedItems.push(newItem);
       console.log('selected items updated', this.selectedItems);
@@ -169,7 +197,7 @@ export class DialogNamePromptComponent implements OnInit {
   
 
 selectedItemsState: { [key: string]: boolean } = {};
-  removeSelectedItem(item: { employee: Employee, visite: TypeVisite, typeExam: TypeExam }): void {
+  removeSelectedItem(item: { employee: Employee, visite: TypeVisite, typeExam: TypeExam, visites:number [],visiteIds:any[]}): void {
     const index = this.selectedItems.indexOf(item);
     if (index !== -1) {
       this.selectedItems.splice(index, 1); 
@@ -204,11 +232,11 @@ selectedItemsState: { [key: string]: boolean } = {};
       datevis.start=this.datevalue;
       datevis.end=this.datevalue2;
       datevis.title=item.visite.type+' '+item.employee.firstname + ' ' + item.employee.lastname
-      console.log('item.visite.color.id',item.visite.color.id)
+      console.log('item.visite.color.id',item.visite.color?.id)
       datevis.color.id=0;
       datevis.color.id=item.visite.color.id
       
-      const newItem = {employeeId:item.employee.id, primaryTypeId:item.visite.id, datevis:datevis}
+      const newItem = {employeeId:item.employee.id, primaryTypeId:item.visite.id, datevis:datevis, visiteIds:item.visiteIds}
       this.request.push(newItem) 
       })
       
@@ -217,7 +245,7 @@ selectedItemsState: { [key: string]: boolean } = {};
     
    
    
-    this.viser.addDatav(this.request).subscribe(()=>{this.calendarService.triggerNewItemAdded();this.ref.close()})
+    this.visiteService.addDatav(this.request).subscribe(()=>{this.calendarService.triggerNewItemAdded();this.ref.close()})
       } else {
         this.selectedItems.forEach((item)=>{
           const dateExam = new Datecal
